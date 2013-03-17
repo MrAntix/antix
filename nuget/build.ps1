@@ -4,9 +4,9 @@ if ($version -Eq $null) {
     $version = Read-Host "Enter Version Number"
 }
 
-$currentPath = (Get-Location).Path
-$sourcePath = "$currentPath\..\source"
-$destinationPath = "$currentPath\Packages\$version"
+$nugetPath = Split-Path -parent $PSCommandPath
+$sourcePath = "$nugetPath\..\source"
+$destinationPath = "$nugetPath\Packages\$version"
 
 # Create Package Structure
 New-Item -Path "$destinationPath" -Type directory -ErrorAction Stop
