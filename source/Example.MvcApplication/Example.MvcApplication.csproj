@@ -110,19 +110,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Antix\Html\HtmlAttribute.cs" />
-    <Compile Include="Antix\Html\HtmlElement.cs" />
-    <Compile Include="Antix\Html\HtmlExtensions.cs" />
-    <Compile Include="Antix\Html\HtmlParser.cs" />
-    <Compile Include="Antix\Html\HtmlQueue.cs" />
-    <Compile Include="Antix\Html\HtmlSettings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>HtmlSettings.settings</DependentUpon>
-    </Compile>
-    <Compile Include="Antix\Html\HtmlText.cs" />
-    <Compile Include="Antix\Html\IHtmlNode.cs" />
-    <Compile Include="Antix\StringExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -152,12 +139,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Antix\Html\HtmlSettings.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>HtmlSettings.Designer.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
