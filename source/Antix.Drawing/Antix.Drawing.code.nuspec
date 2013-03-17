@@ -12,7 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Antix Drawing Common Code</description>
     <copyright>Copyright Antix Software Limited 2013</copyright>
-    <tags>Common Code, Strings</tags>
+    <tags>Common Code, Drawing, Resize Images, Cropping Images</tags>
   </metadata>
   <files>
     <file src="DrawingExtensions.cs" target="content\Antix\Drawing" />
