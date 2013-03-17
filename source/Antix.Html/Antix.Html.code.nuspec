@@ -18,7 +18,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="**\Html*.cs" target="content\Antix\Html" />
+    <file src="**\Html*.cs" target="content\Antix\Html" exclude="**\*.Designer.cs" />
     <file src="**\Html*.settings" target="content\Antix\Html" />
     <file src="..\..\nuget\Install.ps1" target="tools" />
   </files>
