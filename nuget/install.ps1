@@ -2,47 +2,37 @@ param($installPath, $toolsPath, $package, $project)
 
 $project.Save()
 
-# Find .settings files without generator set, sets and associates with designer file
-$xml = [XML] (Get-Content $project.FullName)
-$xmlns = $xml.Project.GetAttribute("xmlns")
+function UpdateProjectItem{
+    param($projectItem, [string]$namespace)
 
-$nsmgr = New-Object System.Xml.XmlNamespaceManager -ArgumentList $xml.NameTable
-$nsmgr.AddNamespace('ns',$xmlns)
+    Write-Host $projectItem.Name
 
-$nodes = $xml.Project.SelectNodes("//ns:*[@Include[substring(., string-length()-8)='.settings']]",$nsmgr)
-$nodes | ForEach-Object { 
-    if( $_.Generator -eq $null ) {
-        Write-Host $_
+    if ($projectItem.Kind -eq "{6BB5F8EF-4483-11D3-8BCF-00C04F8EC28C}") {
+        $newNamespace = $namespace + "." + $projectItem.Name 
 
-        $newNode = $xml.CreateElement("Generator", $xmlns)
-        $newNode.InnerXml = "PublicSettingsSingleFileGenerator"
-        $_.AppendChild($newNode)
+		UpdateProjectItems $projectItem.ProjectItems $newNamespace
+	}
 
-        $include = $_.Attributes["Include"].Value;
-        $lastSlashIndex = $include.LastIndexOf('\')+1
-        $name = $include.Substring($lastSlashIndex, $include.Length -$lastSlashIndex - 9)
-        $depName = "$name.Designer.cs"
+    elseif( $projectItem.Name.EndsWith(".settings") ) {
 
-        $newNode = $xml.CreateElement("LastGenOutput", $xmlns)
-        $newNode.InnerXml = $depName
-        $_.AppendChild($newNode)
+        $property = $projectItem.Properties.Item("CustomTool");
 
-        $depNameLength = $depName.Length - 1;
-        $xpath = "//ns:Compile[@Include[substring(., string-length()-$depNameLength)='$depName']]"
-        $dep = $xml.Project.SelectSingleNode($xpath, $nsmgr)
+        if($property.Value -eq "") {
+            Write-Host "Running custom tool on " + $projectItem.Name 
+            $property.Value = "PublicSettingsSingleFileGenerator"
+            $property = $projectItem.Properties.Item("CustomToolNamespace");
+            $property.Value = $namespace.TrimStart(".")
 
-        $newNode = $xml.CreateElement("AutoGen", $xmlns)
-        $newNode.InnerXml = "True"
-        $dep.AppendChild($newNode)
-
-        $newNode = $xml.CreateElement("DesignTimeSharedInput", $xmlns)
-        $newNode.InnerXml = "True"
-        $dep.AppendChild($newNode)
-
-        $newNode = $xml.CreateElement("DependentUpon", $xmlns)
-        $newNode.InnerXml = "$name.settings"
-        $dep.AppendChild($newNode)
+            $projectItem.Object.RunCustomTool()
+        }
     }
 }
 
-$xml.Save($project.FullName)
+function UpdateProjectItems(  ) {
+    param($projectItems, [string]$namespace)
+	$projectItems | ForEach-Object { UpdateProjectItem $_ $namespace }
+}
+
+UpdateProjectItems $project.ProjectItems ""
+
+$project.Save()
