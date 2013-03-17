@@ -5,8 +5,6 @@ $project.Save()
 function UpdateProjectItem{
     param($projectItem, [string]$namespace)
 
-    Write-Host $projectItem.Name
-
     if ($projectItem.Kind -eq "{6BB5F8EF-4483-11D3-8BCF-00C04F8EC28C}") {
         $newNamespace = $namespace + "." + $projectItem.Name 
 
@@ -18,7 +16,7 @@ function UpdateProjectItem{
         $property = $projectItem.Properties.Item("CustomTool");
 
         if($property.Value -eq "") {
-            Write-Host "Running custom tool on " + $projectItem.Name 
+            Write-Host "Running custom tool on"$projectItem.Name 
             $property.Value = "PublicSettingsSingleFileGenerator"
             $property = $projectItem.Properties.Item("CustomToolNamespace");
             $property.Value = $namespace.TrimStart(".")
