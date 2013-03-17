@@ -9,7 +9,7 @@ $xmlns = $xml.Project.GetAttribute("xmlns")
 $nsmgr = New-Object System.Xml.XmlNamespaceManager -ArgumentList $xml.NameTable
 $nsmgr.AddNamespace('ns',$xmlns)
 
-$nodes = $xml.Project.SelectNodes("//ns:Content[@Include[substring(., string-length()-8)='.settings']]",$nsmgr)
+$nodes = $xml.Project.SelectNodes("//ns:*[@Include[substring(., string-length()-8)='.settings']]",$nsmgr)
 $nodes | ForEach-Object { 
     if( $_.Generator -eq $null ) {
         Write-Host $_
