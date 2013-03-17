@@ -10,15 +10,15 @@ namespace Antix.Html
         static readonly string[] HtmlInlineElements;
         static readonly string[] HtmlNonContainers;
 
+        readonly List<HtmlAttribute> _attributes;
+        readonly List<IHtmlNode> _children;
+        string _name;
+
         static HtmlElement()
         {
             HtmlNonContainers = HtmlSettings.Default.HtmlNonContainers.Split(',');
             HtmlInlineElements = HtmlSettings.Default.HtmlInlineElements.Split(',');
         }
-
-        readonly List<HtmlAttribute> _attributes;
-        readonly List<IHtmlNode> _children;
-        string _name;
 
         internal HtmlElement(
             string name)
@@ -36,7 +36,7 @@ namespace Antix.Html
 
         public string Name
         {
-            get{return _name;}
+            get { return _name; }
             set
             {
                 Debug.Assert(value != null, "value != null");
