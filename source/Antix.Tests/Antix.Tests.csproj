@@ -53,6 +53,7 @@
     <Compile Include="Html\ParseAttributeTests.cs" />
     <Compile Include="Html\ParseElementTest.cs" />
     <Compile Include="Html\TextTest.cs" />
+    <Compile Include="ToSafeFileNameTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -66,6 +67,10 @@
     <ProjectReference Include="..\Antix.Html\Antix.Html.csproj">
       <Project>{4F3C8CC9-B7EA-4506-8DF8-A1EEA81556DF}</Project>
       <Name>Antix.Html</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Antix\Antix.csproj">
+      <Project>{2CBCF1F8-DA37-4E27-B785-819633D50E21}</Project>
+      <Name>Antix</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
