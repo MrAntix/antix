@@ -32,9 +32,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,6 +60,7 @@
     <Compile Include="Html\TextTest.cs" />
     <Compile Include="ToSafeFileNameTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Web\PersistentOutputCacheTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -67,6 +73,10 @@
     <ProjectReference Include="..\Antix.Html\Antix.Html.csproj">
       <Project>{4F3C8CC9-B7EA-4506-8DF8-A1EEA81556DF}</Project>
       <Name>Antix.Html</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Antix.Web\Antix.Web.csproj">
+      <Project>{44CEEA48-C485-4E8E-B405-A46910A8EBA3}</Project>
+      <Name>Antix.Web</Name>
     </ProjectReference>
     <ProjectReference Include="..\Antix\Antix.csproj">
       <Project>{2CBCF1F8-DA37-4E27-B785-819633D50E21}</Project>
