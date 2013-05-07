@@ -1,10 +1,10 @@
 namespace Antix.Data.Keywords.Processing
 {
-    public class KeywordBuilderProvider : IKeywordBuilderProvider
+    public class KeywordsBuilderProvider : IKeywordsBuilderProvider
     {
         readonly IKeywordProcessor _processor;
 
-        public KeywordBuilderProvider(
+        public KeywordsBuilderProvider(
             IKeywordProcessor processor)
         {
             _processor = processor;

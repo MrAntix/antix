@@ -11,7 +11,7 @@ namespace Antix.Tests.Data.Keywords
         static IKeywordsIndexer GetService()
         {
             return new KeywordsIndexer(
-                new KeywordBuilderProvider(
+                new KeywordsBuilderProvider(
                     SplitByWhitespaceKeywordProcessor.Create()
                     )
                 );

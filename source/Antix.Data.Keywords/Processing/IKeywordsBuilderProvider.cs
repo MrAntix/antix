@@ -1,6 +1,6 @@
 namespace Antix.Data.Keywords.Processing
 {
-    public interface IKeywordBuilderProvider
+    public interface IKeywordsBuilderProvider
     {
         IKeywordsBuilder<T> Create<T>();
     }

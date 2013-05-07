@@ -6,11 +6,11 @@ namespace Antix.Data.Keywords
 {
     public class KeywordsIndexer : IKeywordsIndexer
     {
-        readonly IKeywordBuilderProvider _builderProvider;
+        readonly IKeywordsBuilderProvider _builderProvider;
         internal readonly IDictionary<Type, IKeywordsBuilder> Builders;
 
         public KeywordsIndexer(
-            IKeywordBuilderProvider builderProvider)
+            IKeywordsBuilderProvider builderProvider)
         {
             _builderProvider = builderProvider;
             Builders = new Dictionary<Type, IKeywordsBuilder>();

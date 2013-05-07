@@ -44,10 +44,10 @@
     <Compile Include="Entities\IIndexedEntity.cs" />
     <Compile Include="Entities\IKeyword.cs" />
     <Compile Include="IKeywordsIndexer.cs" />
-    <Compile Include="Processing\IKeywordBuilderProvider.cs" />
+    <Compile Include="Processing\IKeywordsBuilderProvider.cs" />
     <Compile Include="Processing\IKeywordProcessor.cs" />
     <Compile Include="Processing\IKeywordsBuilder.cs" />
-    <Compile Include="Processing\KeywordBuilderProvider.cs" />
+    <Compile Include="Processing\KeywordsBuilderProvider.cs" />
     <Compile Include="Processing\KeywordsBuilder.cs" />
     <Compile Include="KeywordsIndexer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
