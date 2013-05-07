@@ -2,6 +2,7 @@
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Example.MvcApplication.App_Start;
 
 namespace Example.MvcApplication
 {

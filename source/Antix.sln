@@ -25,6 +25,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.MvcApplication", "E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.Drawing", "Antix.Drawing\Antix.Drawing.csproj", "{7106F36D-65FB-473A-A4E7-80F5FFDCC016}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.Data.Keywords", "Antix.Data.Keywords\Antix.Data.Keywords.csproj", "{1DED5C8F-85D6-4B11-8E51-FB5D8F984550}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.Data.Keywords.EF", "Antix.Data.Keywords.EF\Antix.Data.Keywords.EF.csproj", "{814DC821-B84A-4B43-A2DF-F8003DE122D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +63,14 @@ Global
 		{7106F36D-65FB-473A-A4E7-80F5FFDCC016}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7106F36D-65FB-473A-A4E7-80F5FFDCC016}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7106F36D-65FB-473A-A4E7-80F5FFDCC016}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DED5C8F-85D6-4B11-8E51-FB5D8F984550}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DED5C8F-85D6-4B11-8E51-FB5D8F984550}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DED5C8F-85D6-4B11-8E51-FB5D8F984550}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DED5C8F-85D6-4B11-8E51-FB5D8F984550}.Release|Any CPU.Build.0 = Release|Any CPU
+		{814DC821-B84A-4B43-A2DF-F8003DE122D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{814DC821-B84A-4B43-A2DF-F8003DE122D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{814DC821-B84A-4B43-A2DF-F8003DE122D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{814DC821-B84A-4B43-A2DF-F8003DE122D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
