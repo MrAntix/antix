@@ -47,10 +47,10 @@ namespace Antix.Tests.Data.Keywords
             public string Text { get; set; }
             public ICollection<SubEntity> SubCollection { get; set; }
 
-            public IEnumerable<EntityKeyword> Keywords { get; set; }
+            public IEnumerable<IndexedEntityKeyword> Keywords { get; set; }
         }
 
-        class EntityKeyword : IEntityKeyword
+        class IndexedEntityKeyword : IIndexedEntityKeyword
         {
             public IKeyword Keyword { get; set; }
             public int Frequency { get; set; }

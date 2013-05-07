@@ -40,7 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntityTypeNotIndexedException.cs" />
-    <Compile Include="Entities\IEntityKeyword.cs" />
+    <Compile Include="Entities\IIndexedEntityKeyword.cs" />
     <Compile Include="Entities\IIndexedEntity.cs" />
     <Compile Include="Entities\IKeyword.cs" />
     <Compile Include="IKeywordsIndexer.cs" />

@@ -1,6 +1,6 @@
 namespace Antix.Data.Keywords.Entities
 {
-    public interface IEntityKeyword
+    public interface IIndexedEntityKeyword
     {
         IKeyword Keyword { get; }
         int Frequency { get; }
