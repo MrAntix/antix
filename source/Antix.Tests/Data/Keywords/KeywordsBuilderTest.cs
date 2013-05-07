@@ -19,10 +19,10 @@ namespace Antix.Tests.Data.Keywords
             public string Text { get; set; }
         }
 
-        KeywordsBuilder<Entity> GetService()
+        IKeywordsBuilder<Entity> GetService()
         {
             return new KeywordsBuilder<Entity>(
-                new SplitByWhitespaceKeywordProcessor());
+                SplitByWhitespaceKeywordProcessor.Create());
         }
 
         [Fact]

@@ -43,10 +43,13 @@
     <Compile Include="Entities\IEntityKeyword.cs" />
     <Compile Include="Entities\IIndexedEntity.cs" />
     <Compile Include="Entities\IKeyword.cs" />
+    <Compile Include="IKeywordsIndexer.cs" />
+    <Compile Include="Processing\IKeywordBuilderProvider.cs" />
     <Compile Include="Processing\IKeywordProcessor.cs" />
     <Compile Include="Processing\IKeywordsBuilder.cs" />
+    <Compile Include="Processing\KeywordBuilderProvider.cs" />
     <Compile Include="Processing\KeywordsBuilder.cs" />
-    <Compile Include="KeywordsManager.cs" />
+    <Compile Include="KeywordsIndexer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Processing\SplitByWhitespaceKeywordProcessor.cs" />
     <Compile Include="Stemming\Among.cs" />

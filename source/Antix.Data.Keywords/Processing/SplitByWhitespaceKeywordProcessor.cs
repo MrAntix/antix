@@ -5,33 +5,45 @@ using Antix.Data.Keywords.Stemming;
 
 namespace Antix.Data.Keywords.Processing
 {
-    public class SplitByWhitespaceKeywordProcessor : IKeywordProcessor
+    public class SplitByWhitespaceKeywordProcessor :
+        IKeywordProcessor
     {
         readonly IStemmer _stemmer;
+        readonly string[] _stopWords;
 
-        public SplitByWhitespaceKeywordProcessor() :
-            this(new EnglishStemmer())
-        {
-        }
-
-        public SplitByWhitespaceKeywordProcessor(IStemmer stemmer)
+        public SplitByWhitespaceKeywordProcessor(
+            IStemmer stemmer,
+            string[] stopWords)
         {
             _stemmer = stemmer;
+            _stopWords = stopWords;
         }
 
-        public IEnumerable<string> Process(object value)
+        public IEnumerable<string> Process(string value)
         {
-            var valueString = value as string;
-            return valueString == null
+            return value == null
                        ? null
-                       : valueString
+                       : value
                              .ToLower()
-                             .Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries)
+                             .Split(new[] {" ", "\r\n", "\n", "\t"}, StringSplitOptions.RemoveEmptyEntries)
                              .Select(word => _stemmer.Stem(word))
                              .Except(_stopWords);
         }
 
-        readonly string[] _stopWords = new[]
+        /// <summary>
+        ///     <para>Creates a processor</para>
+        /// </summary>
+        /// <param name="stemmer">If not supplied creates and English Stemmer</param>
+        /// <param name="stopWords">If not supplied uses <see cref="EnglishStopWords" /></param>
+        public static SplitByWhitespaceKeywordProcessor Create(
+            IStemmer stemmer = null, string[] stopWords = null)
+        {
+            return new SplitByWhitespaceKeywordProcessor(
+                new EnglishStemmer(),
+                EnglishStopWords);
+        }
+
+        public static readonly string[] EnglishStopWords = new[]
             {
                 "a", "an", "and", "are", "as", "at", "be", "but", "by",
                 "for", "if", "in", "into", "is", "it",

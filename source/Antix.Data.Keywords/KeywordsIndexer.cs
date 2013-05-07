@@ -4,20 +4,21 @@ using Antix.Data.Keywords.Processing;
 
 namespace Antix.Data.Keywords
 {
-    public class KeywordsManager
+    public class KeywordsIndexer : IKeywordsIndexer
     {
+        readonly IKeywordBuilderProvider _builderProvider;
         internal readonly IDictionary<Type, IKeywordsBuilder> Builders;
-        internal readonly IKeywordProcessor Processor;
 
-        public KeywordsManager(IKeywordProcessor processor)
+        public KeywordsIndexer(
+            IKeywordBuilderProvider builderProvider)
         {
-            Processor = processor;
+            _builderProvider = builderProvider;
             Builders = new Dictionary<Type, IKeywordsBuilder>();
         }
 
-        public KeywordsBuilder<T> IndexEntity<T>()
+        public IKeywordsBuilder<T> Entity<T>()
         {
-            var builder = new KeywordsBuilder<T>(Processor);
+            var builder = _builderProvider.Create<T>();
 
             Builders.Add(typeof (T), builder);
 

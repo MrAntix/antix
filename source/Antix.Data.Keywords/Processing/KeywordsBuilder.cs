@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Antix.Data.Keywords.Processing
 {
-    public class KeywordsBuilder<T> : IKeywordsBuilder
+    public class KeywordsBuilder<T> : IKeywordsBuilder<T>
     {
         readonly IKeywordProcessor _processor;
         readonly HashSet<Func<T, IEnumerable<string>>> _items;
@@ -15,14 +15,14 @@ namespace Antix.Data.Keywords.Processing
             _items = new HashSet<Func<T, IEnumerable<string>>>();
         }
 
-        public KeywordsBuilder<T> Index(Func<T, string> func)
+        public IKeywordsBuilder<T> Index(Func<T, string> func)
         {
             _items.Add(e => _processor.Process(func(e)));
 
             return this;
         }
 
-        public KeywordsBuilder<T> For<TProp>(
+        public IKeywordsBuilder<T> For<TProp>(
             Func<T, TProp> func, Action<KeywordsBuilder<TProp>> action)
         {
             _items.Add(e =>
@@ -37,7 +37,7 @@ namespace Antix.Data.Keywords.Processing
             return this;
         }
 
-        public KeywordsBuilder<T> ForEach<TProp>(
+        public IKeywordsBuilder<T> ForEach<TProp>(
             Func<T, IEnumerable<TProp>> func, Action<KeywordsBuilder<TProp>> action)
         {
             _items.Add(e =>

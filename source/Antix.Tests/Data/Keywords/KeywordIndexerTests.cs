@@ -6,12 +6,15 @@ using Xunit;
 
 namespace Antix.Tests.Data.Keywords
 {
-    public class KeywordManagerTests
+    public class KeywordIndexerTests
     {
-        static KeywordsManager GetService()
+        static IKeywordsIndexer GetService()
         {
-            return new KeywordsManager(
-                new SplitByWhitespaceKeywordProcessor());
+            return new KeywordsIndexer(
+                new KeywordBuilderProvider(
+                    SplitByWhitespaceKeywordProcessor.Create()
+                    )
+                );
         }
 
         [Fact]
@@ -30,7 +33,7 @@ namespace Antix.Tests.Data.Keywords
             var manager = GetService();
 
             manager
-                .IndexEntity<Entity>()
+                .Entity<Entity>()
                 .Index(e => e.Text)
                 .ForEach(e => e.SubCollection, b => b.Index(e => e.Text));
 
