@@ -16,9 +16,11 @@
     <dependencies>
       <dependency id="Antix.code"/>
       <dependency id="Antix.Data.Keywords.code"/>
+      <dependency id="EntityFramework" version="5.0.0"/>
     </dependencies>
   </metadata>
   <files>
     <file src="*.cs" target="content\Antix\Data\Keywords\EF" />
+    <file src="Entities\*.cs" target="content\Antix\Data\Keywords\EF\Entities" />
   </files>
 </package>

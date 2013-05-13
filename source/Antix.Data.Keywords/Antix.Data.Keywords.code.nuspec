@@ -19,6 +19,8 @@
   </metadata>
   <files>
     <file src="*.cs" target="content\Antix\Data\Keywords" />
+    <file src="Entities\*.cs" target="content\Antix\Data\Keywords\Entities" />
+    <file src="Processing\*.cs" target="content\Antix\Data\Keywords\Processing" />
     <file src="Stemming\*.cs" target="content\Antix\Data\Keywords\Stemming" />
   </files>
 </package>
