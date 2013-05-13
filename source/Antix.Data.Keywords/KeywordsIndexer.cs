@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Antix.Data.Keywords.Entities;
 using Antix.Data.Keywords.Processing;
 
 namespace Antix.Data.Keywords
@@ -17,6 +18,7 @@ namespace Antix.Data.Keywords
         }
 
         public IKeywordsBuilder<T> Entity<T>()
+            where T : IIndexedEntity
         {
             var builder = _builderProvider.Create<T>();
 
