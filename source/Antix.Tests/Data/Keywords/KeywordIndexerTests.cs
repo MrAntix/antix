@@ -12,7 +12,7 @@ namespace Antix.Tests.Data.Keywords
         {
             return new KeywordsIndexer(
                 new KeywordsBuilderProvider(
-                    SplitByWhitespaceKeywordProcessor.Create()
+                    WordSplitKeywordProcessor.Create()
                     )
                 );
         }

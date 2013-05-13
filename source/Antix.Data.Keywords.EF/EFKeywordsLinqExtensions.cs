@@ -8,7 +8,7 @@ namespace Antix.Data.Keywords.EF
     public static class EFKeywordsLinqExtensions
     {
         public static IKeywordProcessor KeywordProcessor
-            = SplitByWhitespaceKeywordProcessor.Create();
+            = WordSplitKeywordProcessor.Create();
 
         /// <summary>
         ///     <para>

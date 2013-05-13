@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Data\Keywords\KeywordIndexerTests.cs" />
     <Compile Include="Data\Keywords\KeywordsBuilderTest.cs" />
+    <Compile Include="Data\Keywords\WordSplitKeywordProcessorTest.cs" />
     <Compile Include="Drawing\FitTest.cs" />
     <Compile Include="Html\HtmlDataTryConsumeToTest.cs" />
     <Compile Include="Html\ParseAttributeTests.cs" />

@@ -22,7 +22,7 @@ namespace Antix.Tests.Data.Keywords
         IKeywordsBuilder<Entity> GetService()
         {
             return new KeywordsBuilder<Entity>(
-                SplitByWhitespaceKeywordProcessor.Create());
+                WordSplitKeywordProcessor.Create());
         }
 
         [Fact]
@@ -66,14 +66,14 @@ namespace Antix.Tests.Data.Keywords
         public void GetsAllKeywords()
         {
             var entity = new Entity
-                {
-                    Text = "aa bb",
-                    SubCollection = new[]
+            {
+                Text = "aa bb",
+                SubCollection = new[]
                         {
                             new SubEntity {Text = "cc dd ee"},
                             new SubEntity {Text = "ff"}
                         }
-                };
+            };
 
             var builder = GetService()
                 .Index(e => e.Text)
@@ -81,7 +81,7 @@ namespace Antix.Tests.Data.Keywords
 
             var result = builder.Build(entity);
 
-            Assert.Equal(new[] {"aa", "bb", "cc", "dd", "ee", "ff"}, result);
+            Assert.Equal(new[] { "aa", "bb", "cc", "dd", "ee", "ff" }, result);
         }
     }
 }

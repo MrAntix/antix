@@ -51,7 +51,7 @@
     <Compile Include="Processing\KeywordsBuilder.cs" />
     <Compile Include="KeywordsIndexer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Processing\SplitByWhitespaceKeywordProcessor.cs" />
+    <Compile Include="Processing\WordSplitKeywordProcessor.cs" />
     <Compile Include="Stemming\Among.cs" />
     <Compile Include="Stemming\EnglishStemmer.cs" />
     <Compile Include="Stemming\IStemmer.cs" />

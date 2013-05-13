@@ -1,17 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Antix.Data.Keywords.Stemming;
 
 namespace Antix.Data.Keywords.Processing
 {
-    public class SplitByWhitespaceKeywordProcessor :
+    public class WordSplitKeywordProcessor :
         IKeywordProcessor
     {
         readonly IStemmer _stemmer;
         readonly string[] _stopWords;
+        readonly Regex _splitter = new Regex("\\W", RegexOptions.Compiled, new TimeSpan(100));
 
-        public SplitByWhitespaceKeywordProcessor(
+        public WordSplitKeywordProcessor(
             IStemmer stemmer,
             string[] stopWords)
         {
@@ -23,24 +25,25 @@ namespace Antix.Data.Keywords.Processing
         {
             return value == null
                        ? null
-                       : value
-                             .ToLower()
-                             .Split(new[] {" ", "\r\n", "\n", "\t"}, StringSplitOptions.RemoveEmptyEntries)
-                             .Select(word => _stemmer.Stem(word))
-                             .Except(_stopWords);
+                       : _splitter.Split(value.Replace("'", "").ToLower())
+                                  .Where(w => !string.IsNullOrWhiteSpace(w))
+                                  .Select(word => _stemmer.Stem(word))
+                                  .Except(_stopWords);
         }
 
         /// <summary>
         ///     <para>Creates a processor</para>
         /// </summary>
         /// <param name="stemmer">If not supplied creates and English Stemmer</param>
-        /// <param name="stopWords">If not supplied uses <see cref="EnglishStopWords" /></param>
-        public static SplitByWhitespaceKeywordProcessor Create(
+        /// <param name="stopWords">
+        ///     If not supplied uses <see cref="EnglishStopWords" />
+        /// </param>
+        public static WordSplitKeywordProcessor Create(
             IStemmer stemmer = null, string[] stopWords = null)
         {
-            return new SplitByWhitespaceKeywordProcessor(
-                new EnglishStemmer(),
-                EnglishStopWords);
+            return new WordSplitKeywordProcessor(
+                stemmer ?? new EnglishStemmer(),
+                stopWords ?? EnglishStopWords);
         }
 
         public static readonly string[] EnglishStopWords = new[]
