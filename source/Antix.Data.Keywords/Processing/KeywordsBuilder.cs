@@ -24,10 +24,13 @@ namespace Antix.Data.Keywords.Processing
 
         public IKeywordsBuilder<T> For<TProp>(
             Func<T, TProp> func, Action<KeywordsBuilder<TProp>> action)
+            where TProp : class
         {
             _items.Add(e =>
                 {
                     var v = func(e);
+                    if (v == null) return null;
+
                     var b = new KeywordsBuilder<TProp>(_processor);
                     action(b);
 
@@ -39,10 +42,13 @@ namespace Antix.Data.Keywords.Processing
 
         public IKeywordsBuilder<T> ForEach<TProp>(
             Func<T, IEnumerable<TProp>> func, Action<KeywordsBuilder<TProp>> action)
+            where TProp : class
         {
             _items.Add(e =>
                 {
                     var vs = func(e);
+                    if (vs == null) return null;
+
                     var b = new KeywordsBuilder<TProp>(_processor);
                     action(b);
 
