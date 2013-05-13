@@ -41,9 +41,37 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.0.0-alpha3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.0-alpha3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServerCompact">
+      <HintPath>..\packages\EntityFramework.SqlServerCompact.6.0.0-alpha3\lib\net40\EntityFramework.SqlServerCompact.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\Unity.2.1.505.2\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\packages\Unity.2.1.505.2\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlServerCe.Entity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\EntityFramework.SqlServerCompact.6.0.0-alpha3\lib\net40\System.Data.SqlServerCe.Entity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -108,11 +136,64 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Mvc4">
+      <HintPath>..\packages\Unity.Mvc4.1.1.0.0\lib\net40\Unity.Mvc4.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Antix\Data\Keywords\EF\EFKeywordsLinqExtensions.cs" />
+    <Compile Include="Antix\Data\Keywords\EF\EFKeywordsManager.cs" />
+    <Compile Include="Antix\Data\Keywords\EF\Entities\IndexedEntity.cs" />
+    <Compile Include="Antix\Data\Keywords\EF\Entities\IndexedEntityKeyword.cs" />
+    <Compile Include="Antix\Data\Keywords\EF\Entities\Keyword.cs" />
+    <Compile Include="Antix\Data\Keywords\Entities\IIndexedEntity.cs" />
+    <Compile Include="Antix\Data\Keywords\Entities\IIndexedEntityKeyword.cs" />
+    <Compile Include="Antix\Data\Keywords\Entities\IKeyword.cs" />
+    <Compile Include="Antix\Data\Keywords\EntityTypeNotIndexedException.cs" />
+    <Compile Include="Antix\Data\Keywords\IKeywordsIndexer.cs" />
+    <Compile Include="Antix\Data\Keywords\KeywordsIndexer.cs" />
+    <Compile Include="Antix\Data\Keywords\Processing\IKeywordProcessor.cs" />
+    <Compile Include="Antix\Data\Keywords\Processing\IKeywordsBuilder.cs" />
+    <Compile Include="Antix\Data\Keywords\Processing\IKeywordsBuilderProvider.cs" />
+    <Compile Include="Antix\Data\Keywords\Processing\KeywordsBuilder.cs" />
+    <Compile Include="Antix\Data\Keywords\Processing\KeywordsBuilderProvider.cs" />
+    <Compile Include="Antix\Data\Keywords\Processing\WordSplitKeywordProcessor.cs" />
+    <Compile Include="Antix\Data\Keywords\Stemming\Among.cs" />
+    <Compile Include="Antix\Data\Keywords\Stemming\EnglishStemmer.cs" />
+    <Compile Include="Antix\Data\Keywords\Stemming\IStemmer.cs" />
+    <Compile Include="Antix\Data\Keywords\Stemming\StemmerOperations.cs" />
+    <Compile Include="Antix\Drawing\DrawingExtensions.cs" />
+    <Compile Include="Antix\Drawing\ImageTransformOptions.cs" />
+    <Compile Include="Antix\Drawing\JpegImageTranformOptions.cs" />
+    <Compile Include="Antix\Drawing\PngImageTranformOptions.cs" />
+    <Compile Include="Antix\Html\HtmlAttribute.cs" />
+    <Compile Include="Antix\Html\HtmlElement.cs" />
+    <Compile Include="Antix\Html\HtmlExtensions.cs" />
+    <Compile Include="Antix\Html\HtmlParser.cs" />
+    <Compile Include="Antix\Html\HtmlQueue.cs" />
+    <Compile Include="Antix\Html\HtmlSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>HtmlSettings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Antix\Html\HtmlText.cs" />
+    <Compile Include="Antix\Html\IHtmlNode.cs" />
+    <Compile Include="Antix\IO\IOExtensions.cs" />
+    <Compile Include="Antix\StringExtensions.cs" />
+    <Compile Include="Antix\Web\Caching\FileSystemOutputCacheStorage.cs" />
+    <Compile Include="Antix\Web\Caching\IOutputCacheStorage.cs" />
+    <Compile Include="Antix\Web\Caching\PersistentOutputCacheProvider.cs" />
+    <Compile Include="App_Start\KeywordsConfig.cs" />
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="App_Start\Data\BlogEntry.cs" />
+    <Compile Include="App_Start\Data\BlogTag.cs" />
+    <Compile Include="App_Start\Data\DataContext.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\BlogIndexModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -120,6 +201,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Global.asax" />
+    <Content Include="Unity.Mvc4.README.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -128,17 +210,49 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
+    <Content Include="Antix\Html\HtmlSettings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>HtmlSettings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Antix.Html</CustomToolNamespace>
+    </Content>
+    <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
+    <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
+    <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
+    <None Include="_bin_deployableAssemblies\x86\sqlceer40EN.dll" />
+    <None Include="_bin_deployableAssemblies\x86\sqlcecompact40.dll" />
+    <None Include="_bin_deployableAssemblies\x86\sqlceca40.dll" />
+    <None Include="_bin_deployableAssemblies\x86\Microsoft.VC90.CRT\README_ENU.txt" />
+    <None Include="_bin_deployableAssemblies\x86\Microsoft.VC90.CRT\msvcr90.dll" />
+    <None Include="_bin_deployableAssemblies\amd64\sqlcese40.dll" />
+    <None Include="_bin_deployableAssemblies\amd64\sqlceqp40.dll" />
+    <None Include="_bin_deployableAssemblies\amd64\sqlceme40.dll" />
+    <None Include="_bin_deployableAssemblies\amd64\sqlceer40EN.dll" />
+    <None Include="_bin_deployableAssemblies\amd64\sqlcecompact40.dll" />
+    <None Include="_bin_deployableAssemblies\amd64\sqlceca40.dll" />
+    <None Include="_bin_deployableAssemblies\amd64\Microsoft.VC90.CRT\README_ENU.txt" />
+    <None Include="_bin_deployableAssemblies\amd64\Microsoft.VC90.CRT\msvcr90.dll" />
+    <None Include="_bin_deployableAssemblies\x86\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Blog\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\_viewstart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_bin_deployableAssemblies\amd64\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -154,9 +268,9 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>49894</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:49881/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html lang="en-GB">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>@ViewBag.Title</title>
+    </head>
+
+    <body>
+        <div id="Page">
+            <header>
+                <div class="pageContent">
+                    <hgroup>
+                        <h1>Blog</h1>
+                    </hgroup>
+                </div>
+            </header>
+            
+            <div id="Main">
+                <div class="pageContent">
+                    
+                    @RenderBody()
+
+                </div>
+            </div>
+
+            <footer>
+                <div class="pageContent">
+                    Blog by <a href="http://antix.co.uk">antix.co.uk</a>
+                </div>
+            </footer>
+        </div>
+    </body>
+</html>

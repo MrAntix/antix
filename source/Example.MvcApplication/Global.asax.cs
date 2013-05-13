@@ -1,8 +1,10 @@
-﻿using System.Web;
+﻿using System.Data.Entity.Migrations;
+using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Example.MvcApplication.App_Start;
+using Example.MvcApplication.Migrations;
 
 namespace Example.MvcApplication
 {
@@ -17,6 +19,12 @@ namespace Example.MvcApplication
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            Bootstrapper.Initialise();
+
+            var config = new Configuration();
+            var migrator = new DbMigrator(config);
+            migrator.Update();
         }
     }
 }

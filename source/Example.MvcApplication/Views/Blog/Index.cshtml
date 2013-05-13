@@ -1,0 +1,15 @@
+﻿@model Example.MvcApplication.Models.BlogIndexModel
+
+@{
+    ViewBag.Title = "Blog";
+}
+
+<h2>Blog Entries</h2>
+
+@foreach (var entry in Model.BlogEntries)
+{
+    <article>
+        <h3>@entry.Title</h3>
+        @Html.Raw(entry.Summary)
+    </article>
+}
