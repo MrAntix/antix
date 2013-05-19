@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Antix.Data.code</id>
+    <version>$version$</version>
+    <title>Antix Data Code</title>
+    <authors>Anthony Johnston</authors>
+    <owners>Antix Software Limited</owners>
+    <licenseUrl>https://raw.github.com/MrAntix/antix/master/LICENCE.md</licenseUrl>
+    <projectUrl>https://github.com/MrAntix/antix/</projectUrl>
+    <iconUrl>https://raw.github.com/MrAntix/antix/master/graphics/antix_32x32.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Antix data functions</description>
+    <copyright>Copyright Antix Software Limited 2013</copyright>
+    <tags>Data</tags>
+    <dependencies>
+      <dependency id="Antix.code"/>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="*.cs" target="content\Antix\Data" />
+  </files>
+</package>
