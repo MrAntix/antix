@@ -140,48 +140,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Antix\Data\Keywords\EF\EFKeywordsLinqExtensions.cs" />
-    <Compile Include="Antix\Data\Keywords\EF\EFKeywordsManager.cs" />
-    <Compile Include="Antix\Data\Keywords\EF\Entities\IndexedEntity.cs" />
-    <Compile Include="Antix\Data\Keywords\EF\Entities\IndexedEntityKeyword.cs" />
-    <Compile Include="Antix\Data\Keywords\EF\Entities\Keyword.cs" />
-    <Compile Include="Antix\Data\Keywords\Entities\IIndexedEntity.cs" />
-    <Compile Include="Antix\Data\Keywords\Entities\IIndexedEntityKeyword.cs" />
-    <Compile Include="Antix\Data\Keywords\Entities\IKeyword.cs" />
-    <Compile Include="Antix\Data\Keywords\EntityTypeNotIndexedException.cs" />
-    <Compile Include="Antix\Data\Keywords\IKeywordsIndexer.cs" />
-    <Compile Include="Antix\Data\Keywords\KeywordsIndexer.cs" />
-    <Compile Include="Antix\Data\Keywords\Processing\IKeywordProcessor.cs" />
-    <Compile Include="Antix\Data\Keywords\Processing\IKeywordsBuilder.cs" />
-    <Compile Include="Antix\Data\Keywords\Processing\IKeywordsBuilderProvider.cs" />
-    <Compile Include="Antix\Data\Keywords\Processing\KeywordsBuilder.cs" />
-    <Compile Include="Antix\Data\Keywords\Processing\KeywordsBuilderProvider.cs" />
-    <Compile Include="Antix\Data\Keywords\Processing\WordSplitKeywordProcessor.cs" />
-    <Compile Include="Antix\Data\Keywords\Stemming\Among.cs" />
-    <Compile Include="Antix\Data\Keywords\Stemming\EnglishStemmer.cs" />
-    <Compile Include="Antix\Data\Keywords\Stemming\IStemmer.cs" />
-    <Compile Include="Antix\Data\Keywords\Stemming\StemmerOperations.cs" />
-    <Compile Include="Antix\Drawing\DrawingExtensions.cs" />
-    <Compile Include="Antix\Drawing\ImageTransformOptions.cs" />
-    <Compile Include="Antix\Drawing\JpegImageTranformOptions.cs" />
-    <Compile Include="Antix\Drawing\PngImageTranformOptions.cs" />
-    <Compile Include="Antix\Html\HtmlAttribute.cs" />
-    <Compile Include="Antix\Html\HtmlElement.cs" />
-    <Compile Include="Antix\Html\HtmlExtensions.cs" />
-    <Compile Include="Antix\Html\HtmlParser.cs" />
-    <Compile Include="Antix\Html\HtmlQueue.cs" />
-    <Compile Include="Antix\Html\HtmlSettings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>HtmlSettings.settings</DependentUpon>
-    </Compile>
-    <Compile Include="Antix\Html\HtmlText.cs" />
-    <Compile Include="Antix\Html\IHtmlNode.cs" />
-    <Compile Include="Antix\IO\IOExtensions.cs" />
-    <Compile Include="Antix\StringExtensions.cs" />
-    <Compile Include="Antix\Web\Caching\FileSystemOutputCacheStorage.cs" />
-    <Compile Include="Antix\Web\Caching\IOutputCacheStorage.cs" />
-    <Compile Include="Antix\Web\Caching\PersistentOutputCacheProvider.cs" />
     <Compile Include="App_Start\Data\BlogEntryRedirect.cs" />
     <Compile Include="App_Start\KeywordsConfig.cs" />
     <Compile Include="App_Start\Stemming\LocalEnglishStemmer.cs" />
@@ -216,11 +174,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Antix\Html\HtmlSettings.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>HtmlSettings.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>Antix.Html</CustomToolNamespace>
-    </Content>
     <Content Include="Views\Blog\Read.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
@@ -260,6 +213,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="_bin_deployableAssemblies\amd64\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Antix.Data.Keywords.EF\Antix.Data.Keywords.EF.csproj">
+      <Project>{814DC821-B84A-4B43-A2DF-F8003DE122D5}</Project>
+      <Name>Antix.Data.Keywords.EF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Antix.Data.Keywords\Antix.Data.Keywords.csproj">
+      <Project>{1DED5C8F-85D6-4B11-8E51-FB5D8F984550}</Project>
+      <Name>Antix.Data.Keywords</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Antix.Html\Antix.Html.csproj">
+      <Project>{4F3C8CC9-B7EA-4506-8DF8-A1EEA81556DF}</Project>
+      <Name>Antix.Html</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Antix\Antix.csproj">
+      <Project>{2cbcf1f8-da37-4e27-b785-819633d50e21}</Project>
+      <Name>Antix</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
