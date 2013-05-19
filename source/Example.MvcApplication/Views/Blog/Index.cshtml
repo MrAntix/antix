@@ -4,12 +4,13 @@
     ViewBag.Title = "Blog";
 }
 
-<h2>Blog Entries</h2>
-
 @foreach (var entry in Model.BlogEntries)
 {
     <article>
-        <h3>@entry.Title</h3>
+        <header>
+            <h3><a href="@Url.Action("Read", new {id = entry.Identifier})">@entry.Title</a></h3>
+            <h5><time pubdate datetime="@entry.PublishedOn.Rfc">@entry.PublishedOn.Display</time></h5>
+        </header>
         @Html.Raw(entry.Summary)
     </article>
 }

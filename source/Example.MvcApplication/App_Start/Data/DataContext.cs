@@ -31,6 +31,7 @@ namespace Example.MvcApplication.App_Start.Data
 
         public override int SaveChanges()
         {
+
             _keywordsManager.UpdateKeywords(this);
 
             return base.SaveChanges();
@@ -39,8 +40,19 @@ namespace Example.MvcApplication.App_Start.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BlogEntry>()
-                        .HasMany(entry => entry.Tags)
+                        .HasMany(e => e.Tags)
                         .WithMany();
+
+            modelBuilder.Entity<BlogEntry>()
+                        .HasMany(e => e.Redirects)
+                        .WithRequired();
+
+            modelBuilder.Entity<BlogEntryRedirect>()
+                        .HasKey(e => new
+                            {
+                                e.Identifier,
+                                e.BlogEntryId
+                            });
         }
     }
 }

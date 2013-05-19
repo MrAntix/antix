@@ -2,28 +2,18 @@
 
 namespace Example.MvcApplication.Models
 {
-    public struct DateTimeModel
+    public class DateTimeModel
     {
-        readonly DateTime? _value;
-
-        public DateTimeModel(DateTime? value) : this()
-        {
-            _value = value;
-        }
+        public DateTime? Value { get; set; }
 
         public string Rfc
         {
-            get { return string.Format("{0:s}", _value); }
+            get { return string.Format("{0:s}", Value); }
         }
 
         public string Display
         {
-            get { return string.Format("{0:r}", _value); }
-        }
-
-        public static explicit operator DateTimeModel(DateTime? value)
-        {
-            return new DateTimeModel(value);
+            get { return string.Format("{0:r}", Value); }
         }
     }
 }

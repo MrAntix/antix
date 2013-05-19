@@ -3,6 +3,7 @@ using Antix.Data.Keywords;
 using Antix.Data.Keywords.EF;
 using Antix.Data.Keywords.Processing;
 using Example.MvcApplication.App_Start;
+using Example.MvcApplication.App_Start.Stemming;
 using Microsoft.Practices.Unity;
 using Unity.Mvc4;
 
@@ -33,6 +34,12 @@ namespace Example.MvcApplication
 
         public static void RegisterTypes(IUnityContainer container)
         {
+            container.RegisterTypes(
+                AllClasses.FromLoadedAssemblies(), 
+                WithMappings.FromMatchingInterface,
+                WithName.Default
+                );
+
             container.RegisterInstance<IKeywordProcessor>(WordSplitKeywordProcessor.Create());
             container.RegisterType<IKeywordsBuilderProvider, KeywordsBuilderProvider>();
             container.RegisterType<IKeywordsIndexer, EFKeywordsManager>(new ContainerControlledLifetimeManager());

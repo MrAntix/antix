@@ -2,6 +2,7 @@
 {
     public class BlogEntryRedirect
     {
+        public int BlogEntryId { get; set; }
         public string Identifier { get; set; }
     }
 }

@@ -11,8 +11,12 @@
             <header>
                 <div class="pageContent">
                     <hgroup>
-                        <h1>Blog</h1>
+                        <h1><a href="@Url.Action("Index", "Blog")">Blog</a></h1>
                     </hgroup>
+
+                    <form action="@Url.Action("Index", "Blog")" method="GET">
+                        <input name="Search" value="@Request.QueryString["Search"]" type="search" placeholder="(search the blog)" />
+                    </form>
                 </div>
             </header>
             
