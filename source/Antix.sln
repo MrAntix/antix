@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.Data.Keywords", "Anti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.Data.Keywords.EF", "Antix.Data.Keywords.EF\Antix.Data.Keywords.EF.csproj", "{814DC821-B84A-4B43-A2DF-F8003DE122D5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.Data", "Antix.Data\Antix.Data.csproj", "{94F9F413-9951-4E21-9F17-96C5C7E8972C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{814DC821-B84A-4B43-A2DF-F8003DE122D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{814DC821-B84A-4B43-A2DF-F8003DE122D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{814DC821-B84A-4B43-A2DF-F8003DE122D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94F9F413-9951-4E21-9F17-96C5C7E8972C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94F9F413-9951-4E21-9F17-96C5C7E8972C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94F9F413-9951-4E21-9F17-96C5C7E8972C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94F9F413-9951-4E21-9F17-96C5C7E8972C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

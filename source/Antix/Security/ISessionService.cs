@@ -1,6 +1,6 @@
 ﻿namespace Antix.Security
 {
-    public interface IUserService
+    public interface ISessionService
     {
         Session Login(string identifier, string password);
         bool Logout(string identifier);
