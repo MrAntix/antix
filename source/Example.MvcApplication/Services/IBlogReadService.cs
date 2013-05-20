@@ -10,9 +10,9 @@ namespace Example.MvcApplication.Services
     {
         Task<IEnumerable<T>> SearchAsync<T>(
             string text, bool includeUnpublished, int index, int pageSize, 
-            Expression<Func<BlogEntry, T>> projection);
+            Expression<Func<BlogEntryData, T>> projection);
 
         T TryGetByIdentifier<T>(string identifier, 
-            Expression<Func<BlogEntry, T>> projection);
+            Expression<Func<BlogEntryData, T>> projection);
     }
 }

@@ -25,7 +25,7 @@ namespace Example.MvcApplication.Services
 
         public async Task<IEnumerable<T>> SearchAsync<T>(
             string text, bool includeUnpublished, int index, int pageSize,
-            Expression<Func<BlogEntry, T>> projection)
+            Expression<Func<BlogEntryData, T>> projection)
         {
             var blogEntries = _dataContext.BlogEntries.AsQueryable();
 
@@ -45,7 +45,7 @@ namespace Example.MvcApplication.Services
 
         public T TryGetByIdentifier<T>(
             string identifier,
-            Expression<Func<BlogEntry, T>> projection)
+            Expression<Func<BlogEntryData, T>> projection)
         {
             return _dataContext.BlogEntries
                                .Where(e => e.Identifier == identifier)

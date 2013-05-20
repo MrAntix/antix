@@ -1,4 +1,4 @@
-﻿namespace Antix.Security
+﻿namespace Antix.Security.Users
 {
     public class SessionUser
     {

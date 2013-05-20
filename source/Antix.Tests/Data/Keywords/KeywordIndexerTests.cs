@@ -21,14 +21,14 @@ namespace Antix.Tests.Data.Keywords
         public void GetsAllKeywords()
         {
             var entity = new Entity
-            {
-                Text = "aa bb",
-                SubCollection = new[]
+                {
+                    Text = "aa bb",
+                    SubCollection = new[]
                         {
                             new SubEntity {Text = "cc dd ee"},
                             new SubEntity {Text = "ff"}
                         }
-            };
+                };
 
             var manager = GetService();
 
@@ -39,17 +39,17 @@ namespace Antix.Tests.Data.Keywords
 
             var result = manager.GetKeywords(entity);
 
-            Assert.Equal(new[] { "aa", "bb", "cc", "dd", "ee", "ff" }, result);
+            Assert.Equal(new[] {"aa", "bb", "cc", "dd", "ee", "ff"}, result);
         }
 
         [Fact]
         public void GetsAllKeywordsWhenSubCollectionIsNull()
         {
             var entity = new Entity
-            {
-                Text = "aa bb",
-                SubCollection = null
-            };
+                {
+                    Text = "aa bb",
+                    SubCollection = null
+                };
 
             var manager = GetService();
 
@@ -60,10 +60,10 @@ namespace Antix.Tests.Data.Keywords
 
             var result = manager.GetKeywords(entity);
 
-            Assert.Equal(new[] { "aa", "bb" }, result);
+            Assert.Equal(new[] {"aa", "bb"}, result);
         }
 
-        class Entity:IIndexedEntity
+        class Entity : IIndexedEntity
         {
             public string Text { get; set; }
             public ICollection<SubEntity> SubCollection { get; set; }

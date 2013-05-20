@@ -1,6 +1,6 @@
 ﻿namespace Example.MvcApplication.App_Start.Data
 {
-    public class BlogTag
+    public class BlogTagData
     {
         public int Id { get; set; }
         public string Title { get; set; }

@@ -11,7 +11,7 @@ namespace Example.MvcApplication.App_Start
             var htmlParser = new HtmlParser();
 
             indexer
-                .Entity<BlogEntry>()
+                .Entity<BlogEntryData>()
                 .Index(entry => entry.Title)
                 .Index(entry => entry.Author)
                 .Index(entry => htmlParser.Parse(entry.Summary).ToText())

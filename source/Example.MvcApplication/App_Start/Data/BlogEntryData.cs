@@ -5,9 +5,9 @@ using Antix.Data.Keywords.EF.Entities;
 
 namespace Example.MvcApplication.App_Start.Data
 {
-    public class BlogEntry : IndexedEntity
+    public class BlogEntryData : IndexedEntity
     {
-        public BlogEntry()
+        public BlogEntryData()
         {
             CreatedOn = DateTime.UtcNow;
         }
@@ -26,8 +26,8 @@ namespace Example.MvcApplication.App_Start.Data
 
         public string Author { get; set; }
 
-        public ICollection<BlogTag> Tags { get; set; }
-        public ICollection<BlogEntryRedirect> Redirects { get; set; }
+        public ICollection<BlogTagData> Tags { get; set; }
+        public ICollection<BlogEntryRedirectData> Redirects { get; set; }
 
         public static string GetIdentifier(string title)
         {

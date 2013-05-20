@@ -17,21 +17,32 @@ namespace Example.MvcApplication.App_Start.Data
         }
 
         // Required by migrations
-        public DataContext():this(null){}
-
-        public IDbSet<BlogEntry> BlogEntries
+        public DataContext() : this(null)
         {
-            get { return Set<BlogEntry>(); }
         }
 
-        public IDbSet<BlogTag> BlogTags
+        public IDbSet<BlogEntryData> BlogEntries
         {
-            get { return Set<BlogTag>(); }
+            get { return Set<BlogEntryData>(); }
+        }
+
+        public IDbSet<BlogTagData> BlogTags
+        {
+            get { return Set<BlogTagData>(); }
+        }
+
+        public IDbSet<UserData> Users
+        {
+            get { return Set<UserData>(); }
+        }
+
+        public IDbSet<UserSessionData> UserSessions
+        {
+            get { return Set<UserSessionData>(); }
         }
 
         public override int SaveChanges()
         {
-
             _keywordsManager.UpdateKeywords(this);
 
             return base.SaveChanges();
@@ -39,20 +50,27 @@ namespace Example.MvcApplication.App_Start.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<BlogEntry>()
+            modelBuilder.Entity<BlogEntryData>()
                         .HasMany(e => e.Tags)
                         .WithMany();
 
-            modelBuilder.Entity<BlogEntry>()
+            modelBuilder.Entity<BlogEntryData>()
                         .HasMany(e => e.Redirects)
                         .WithRequired();
 
-            modelBuilder.Entity<BlogEntryRedirect>()
+            modelBuilder.Entity<BlogEntryRedirectData>()
                         .HasKey(e => new
                             {
                                 e.Identifier,
                                 e.BlogEntryId
                             });
+
+            modelBuilder.Entity<UserData>()
+                        .HasRequired(e => e.Email);
+
+            modelBuilder.Entity<UserSessionData>()
+                        .HasRequired(e => e.User)
+                        .WithMany();
         }
     }
 }

@@ -140,18 +140,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\Data\BlogEntryRedirect.cs" />
+    <Compile Include="App_Start\Data\BlogEntryRedirectData.cs" />
+    <Compile Include="App_Start\Data\UserData.cs" />
+    <Compile Include="App_Start\Data\UserSessionData.cs" />
     <Compile Include="App_Start\KeywordsConfig.cs" />
+    <Compile Include="App_Start\Services\SessionDataService.cs" />
     <Compile Include="App_Start\Stemming\LocalEnglishStemmer.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Controllers\Api\BlogController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Models\BlogEntryInfoModel.cs" />
     <Compile Include="Models\BlogEntryModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="App_Start\Data\BlogEntry.cs" />
-    <Compile Include="App_Start\Data\BlogTag.cs" />
+    <Compile Include="App_Start\Data\BlogEntryData.cs" />
+    <Compile Include="App_Start\Data\BlogTagData.cs" />
     <Compile Include="App_Start\Data\DataContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlogIndexModel.cs" />
@@ -165,7 +169,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Global.asax" />
-    <Content Include="Unity.Mvc4.README.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

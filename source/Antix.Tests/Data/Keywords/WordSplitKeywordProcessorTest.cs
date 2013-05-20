@@ -12,7 +12,7 @@ namespace Antix.Tests.Data.Keywords
             var sut = GetService();
             var result = sut.Process("a.b").ToArray();
 
-            Assert.Equal(new[] { "a", "b" }, result);
+            Assert.Equal(new[] {"a", "b"}, result);
         }
 
         [Fact]
@@ -21,7 +21,7 @@ namespace Antix.Tests.Data.Keywords
             var sut = GetService();
             var result = sut.Process("a?b").ToArray();
 
-            Assert.Equal(new[] { "a", "b" }, result);
+            Assert.Equal(new[] {"a", "b"}, result);
         }
 
         [Fact]
@@ -30,7 +30,7 @@ namespace Antix.Tests.Data.Keywords
             var sut = GetService();
             var result = sut.Process("a? b").ToArray();
 
-            Assert.Equal(new[] { "a", "b" }, result);
+            Assert.Equal(new[] {"a", "b"}, result);
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace Antix.Tests.Data.Keywords
             var sut = GetService();
             var result = sut.Process("a'b").ToArray();
 
-            Assert.Equal(new[] { "ab" }, result);
+            Assert.Equal(new[] {"ab"}, result);
         }
 
         IKeywordProcessor GetService()

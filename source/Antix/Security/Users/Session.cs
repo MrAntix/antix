@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Antix.Security
+namespace Antix.Security.Users
 {
     public class Session
     {
@@ -8,7 +8,7 @@ namespace Antix.Security
         public SessionUser User { get; set; }
 
         public DateTime LoginOn { get; set; }
-        public DateTime LogoutOn { get; set; }
+        public DateTime? LogoutOn { get; set; }
 
         public DateTime ExpiresOn { get; set; }
     }
