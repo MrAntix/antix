@@ -41,6 +41,8 @@ namespace Antix.Security.Users
 
         public void Logout(string identifier)
         {
+            Contract.Ensures(!string.IsNullOrWhiteSpace(identifier));
+
             var session = _dataService.TryGet(identifier);
 
             if (session == null) return;
