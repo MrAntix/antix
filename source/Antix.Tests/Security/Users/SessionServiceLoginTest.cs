@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Antix.Tests.Security.Users
 {
-    public class SessionServiceTest
+    public class SessionServiceLoginTest
     {
         const string UserIdentifier = "UserIdentifier";
         const string UserName = "User Name";
