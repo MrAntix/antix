@@ -1,4 +1,4 @@
-﻿namespace Antix.Security.Users
+﻿namespace Antix.Security.Sessions
 {
     public interface ISessionService
     {

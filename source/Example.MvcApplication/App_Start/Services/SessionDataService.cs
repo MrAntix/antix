@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Antix.Security.Users;
+using Antix.Security.Sessions;
 using Example.MvcApplication.App_Start.Data;
 
 namespace Example.MvcApplication.App_Start.Services

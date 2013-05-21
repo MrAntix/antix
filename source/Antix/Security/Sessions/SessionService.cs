@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics.Contracts;
 
-namespace Antix.Security.Users
+namespace Antix.Security.Sessions
 {
     public class SessionService :
         ISessionService

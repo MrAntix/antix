@@ -82,13 +82,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Security\IHashService.cs" />
-    <Compile Include="Security\Users\ISessionDataService.cs" />
-    <Compile Include="Security\Users\ISessionService.cs" />
+    <Compile Include="Security\Sessions\ISessionDataService.cs" />
+    <Compile Include="Security\Sessions\ISessionService.cs" />
     <Compile Include="Security\MD5HashService.cs" />
-    <Compile Include="Security\Users\Session.cs" />
-    <Compile Include="Security\Users\SessionService.cs" />
-    <Compile Include="Security\Users\SessionServiceSettings.cs" />
-    <Compile Include="Security\Users\SessionUser.cs" />
+    <Compile Include="Security\Sessions\Session.cs" />
+    <Compile Include="Security\Sessions\SessionService.cs" />
+    <Compile Include="Security\Sessions\SessionServiceSettings.cs" />
+    <Compile Include="Security\Sessions\SessionUser.cs" />
     <Compile Include="StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +97,9 @@
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Security\Users\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,6 +1,6 @@
 using System;
 
-namespace Antix.Security.Users
+namespace Antix.Security.Sessions
 {
     public class SessionServiceSettings
     {
