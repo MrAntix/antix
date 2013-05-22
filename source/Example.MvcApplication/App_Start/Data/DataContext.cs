@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Web.Http;
 using Antix.Data.Keywords.EF;
 using Microsoft.Practices.Unity;
 
@@ -12,7 +13,7 @@ namespace Example.MvcApplication.App_Start.Data
         {
             _keywordsManager = keywordsManager
                                ?? Bootstrapper
-                                      .Initialise()
+                                      .Initialise(GlobalConfiguration.Configuration)
                                       .Resolve<EFKeywordsManager>();
         }
 
@@ -66,7 +67,7 @@ namespace Example.MvcApplication.App_Start.Data
                             });
 
             modelBuilder.Entity<UserData>()
-                        .HasRequired(e => e.Email);
+                        .HasKey(e => e.Email);
 
             modelBuilder.Entity<UserSessionData>()
                         .HasRequired(e => e.User)

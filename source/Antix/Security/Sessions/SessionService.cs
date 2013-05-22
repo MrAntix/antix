@@ -50,5 +50,19 @@ namespace Antix.Security.Sessions
             session.LogoutOn = DateTime.UtcNow;
             _dataService.Update(session);
         }
+
+        public Session Authenticate(string identifier)
+        {
+            Contract.Ensures(!string.IsNullOrWhiteSpace(identifier));
+
+            var session = _dataService.TryGet(identifier);
+
+            if (session == null) return null;
+
+            session.ExpiresOn = DateTime.UtcNow.AddMinutes(_settings.ExpireMinutes);
+            _dataService.Update(session);
+
+            return session;
+        }
     }
 }

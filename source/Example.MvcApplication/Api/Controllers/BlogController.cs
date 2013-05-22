@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 
-namespace Example.MvcApplication.Controllers.Api
+namespace Example.MvcApplication.Api.Controllers
 {
     public class BlogController : ApiController
     {

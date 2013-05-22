@@ -16,11 +16,12 @@ namespace Example.MvcApplication
         {
             AreaRegistration.RegisterAllAreas();
 
+            Bootstrapper.Initialise(GlobalConfiguration.Configuration);
+
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            Bootstrapper.Initialise();
 
             var config = new Configuration();
             var migrator = new DbMigrator(config);

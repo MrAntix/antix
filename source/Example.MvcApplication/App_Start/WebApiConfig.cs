@@ -1,4 +1,6 @@
 ﻿using System.Web.Http;
+using Antix.Security.Sessions;
+using Example.MvcApplication.Api.Handlers;
 
 namespace Example.MvcApplication.App_Start
 {
@@ -11,6 +13,11 @@ namespace Example.MvcApplication.App_Start
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new {id = RouteParameter.Optional}
                 );
+
+            config.MessageHandlers.Add(
+                new AuthenticationMessageHandler(
+                    (ISessionService) config.DependencyResolver.GetService(typeof (ISessionService))
+                    ));
         }
     }
 }

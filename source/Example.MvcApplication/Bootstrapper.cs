@@ -1,3 +1,4 @@
+using System.Web.Http;
 using System.Web.Mvc;
 using Antix.Data.Keywords;
 using Antix.Data.Keywords.EF;
@@ -11,11 +12,14 @@ namespace Example.MvcApplication
 {
     public static class Bootstrapper
     {
-        public static IUnityContainer Initialise()
+        public static IUnityContainer Initialise(
+            HttpConfiguration webApiConfiguration)
         {
             var container = BuildUnityContainer();
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+            webApiConfiguration.DependencyResolver 
+                = new Unity.WebApi.UnityDependencyResolver(container);
 
             return container;
         }

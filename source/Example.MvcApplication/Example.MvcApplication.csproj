@@ -138,8 +138,14 @@
     <Reference Include="Unity.Mvc4">
       <HintPath>..\packages\Unity.Mvc4.1.1.0.0\lib\net40\Unity.Mvc4.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.WebApi">
+      <HintPath>..\packages\Unity.WebAPI.0.10\lib\net40\Unity.WebApi.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\Filters\AuthorizeTokenAttribute.cs" />
+    <Compile Include="Api\Models\LoginModel.cs" />
+    <Compile Include="Api\Handlers\AuthenticationMessageHandler.cs" />
     <Compile Include="App_Start\Data\BlogEntryRedirectData.cs" />
     <Compile Include="App_Start\Data\UserData.cs" />
     <Compile Include="App_Start\Data\UserSessionData.cs" />
@@ -147,7 +153,8 @@
     <Compile Include="App_Start\Services\SessionDataService.cs" />
     <Compile Include="App_Start\Stemming\LocalEnglishStemmer.cs" />
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Controllers\Api\BlogController.cs" />
+    <Compile Include="Api\Controllers\BlogController.cs" />
+    <Compile Include="Api\Controllers\SessionController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Models\BlogEntryInfoModel.cs" />
     <Compile Include="Models\BlogEntryModel.cs" />
@@ -169,6 +176,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Global.asax" />
+    <Content Include="Unity.WebAPI.README.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -198,6 +206,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="App_Start\Api\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -251,7 +260,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>57906</DevelopmentServerPort>
+          <DevelopmentServerPort>51550</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:49881/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
