@@ -24,7 +24,7 @@ namespace Example.MvcApplication.Tests
             var mockSessionSevice = new Mock<ISessionService>();
             mockSessionSevice
                 .Setup(m => m.Login(It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(new Session { Identifier = expectedSessionIdentifier });
+                .Returns(new Session {Identifier = expectedSessionIdentifier});
 
             var server = GetApiServer(mockSessionSevice.Object);
 
@@ -36,7 +36,7 @@ namespace Example.MvcApplication.Tests
                     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
                     Assert.Equal(
-                        expectedSessionIdentifier, 
+                        expectedSessionIdentifier,
                         response.Headers.GetValues(AuthenticationMessageHandler.TokenHeader).Single());
                 }
             }
@@ -89,11 +89,10 @@ namespace Example.MvcApplication.Tests
 
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
             config.MessageHandlers.Add(new AuthenticationMessageHandler(sessionService));
-            
+
             var server = new HttpServer(config);
 
             return server;
         }
-
     }
 }
