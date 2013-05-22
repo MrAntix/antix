@@ -17,6 +17,7 @@ namespace Example.MvcApplication.Api.Controllers
             _sessionService = sessionService;
         }
 
+        [HttpPost]
         public HttpResponseMessage Login(
             [FromBody] LoginModel model)
         {
@@ -33,8 +34,9 @@ namespace Example.MvcApplication.Api.Controllers
             return Request.CreateResponse(HttpStatusCode.Unauthorized);
         }
 
+        [HttpPost]
         [AuthorizeToken]
-        public void PostLogout()
+        public void Logout()
         {
         }
     }
