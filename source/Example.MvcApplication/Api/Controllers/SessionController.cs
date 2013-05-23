@@ -3,7 +3,6 @@ using System.Net.Http;
 using System.Web.Http;
 using Antix.Security.Sessions;
 using Example.MvcApplication.Api.Filters;
-using Example.MvcApplication.Api.Handlers;
 using Example.MvcApplication.Api.Models;
 
 namespace Example.MvcApplication.Api.Controllers
@@ -26,7 +25,7 @@ namespace Example.MvcApplication.Api.Controllers
             {
                 var response = Request.CreateResponse(HttpStatusCode.OK);
                 response.Headers
-                    .Add(AuthenticationMessageHandler.TokenHeader, session.Identifier);
+                        .Add(TokenAuthorizeAttribute.Header, session.Identifier);
 
                 return response;
             }
@@ -35,9 +34,13 @@ namespace Example.MvcApplication.Api.Controllers
         }
 
         [HttpPost]
-        [AuthorizeToken]
-        public void Logout()
+        [TokenAuthorize]
+        public HttpResponseMessage Logout()
         {
+            var token = Request.GetAuthorizationToken();
+            _sessionService.Logout(token);
+
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
 }

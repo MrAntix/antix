@@ -143,9 +143,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\Filters\AuthorizeTokenAttribute.cs" />
+    <Compile Include="Api\Filters\InjectingFilterProvider.cs" />
+    <Compile Include="Api\Filters\TokenAuthorizeAttribute.cs" />
+    <Compile Include="Api\Filters\TokenAuthorizeFilter.cs" />
     <Compile Include="Api\Models\LoginModel.cs" />
-    <Compile Include="Api\Handlers\AuthenticationMessageHandler.cs" />
     <Compile Include="App_Start\Data\BlogEntryRedirectData.cs" />
     <Compile Include="App_Start\Data\UserData.cs" />
     <Compile Include="App_Start\Data\UserSessionData.cs" />
