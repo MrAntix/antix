@@ -18,7 +18,7 @@ namespace Example.MvcApplication.Tests
     public class using_the_session_controller
     {
         [Fact]
-        public void can_login()
+        public void login_success_returns_correct_status_code()
         {
             const string expectedSessionIdentifier = "expectedSessionIdentifier";
 
@@ -47,7 +47,7 @@ namespace Example.MvcApplication.Tests
         }
 
         [Fact]
-        public void fail_login()
+        public void login_failure_returns_correct_status_code()
         {
             var mockSessionSevice = new Mock<ISessionService>();
             mockSessionSevice
@@ -70,7 +70,7 @@ namespace Example.MvcApplication.Tests
         }
 
         [Fact]
-        public void fail_logout_when_not_authorized()
+        public void logout_fails_when_not_authorized()
         {
             var mockSessionSevice = new Mock<ISessionService>();
 
@@ -90,7 +90,7 @@ namespace Example.MvcApplication.Tests
         }
 
         [Fact]
-        public void fail_logout_when_not_authorized_with_token_mismatch()
+        public void logout_fails_when_not_authorized_with_token_mismatch()
         {
             var mockSessionSevice = new Mock<ISessionService>();
 
@@ -116,7 +116,7 @@ namespace Example.MvcApplication.Tests
         }
 
         [Fact]
-        public void can_logout_when_authorized()
+        public void logout_succeeds_when_authorized()
         {
             var mockSessionSevice = new Mock<ISessionService>();
             mockSessionSevice
@@ -175,7 +175,7 @@ namespace Example.MvcApplication.Tests
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
 
             config.Services.Replace(
-                typeof (IFilterProvider), new InjectingFilterProvider(t => container.Resolve(t)));
+                typeof (IFilterProvider), new ProxyFilterProvider(t => container.Resolve(t)));
 
             var server = new HttpServer(config);
 
