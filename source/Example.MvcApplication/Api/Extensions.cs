@@ -1,7 +1,8 @@
 ﻿using System.Linq;
 using System.Net.Http;
+using Example.MvcApplication.Api.Filters;
 
-namespace Example.MvcApplication.Api.Filters
+namespace Example.MvcApplication.Api
 {
     public static class Extensions
     {

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Security.Principal;
 using System.Threading;
@@ -52,16 +51,6 @@ namespace Example.MvcApplication.Api.Filters
             }
 
             return false;
-        }
-    }
-
-    public static class Extensions
-    {
-        public static string GetAuthorizationToken(this HttpRequestMessage request)
-        {
-            return request.Headers
-                          .GetValues(TokenAuthorizeAttribute.Header)
-                          .Single();
         }
     }
 }

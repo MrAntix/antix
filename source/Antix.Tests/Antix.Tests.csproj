@@ -61,6 +61,7 @@
     <Compile Include="Html\ParseAttributeTests.cs" />
     <Compile Include="Html\ParseElementTest.cs" />
     <Compile Include="Html\TextTest.cs" />
+    <Compile Include="Logging\ilogger_tests.cs" />
     <Compile Include="Security\Sessions\SessionServiceLoginTest.cs" />
     <Compile Include="Security\Sessions\SessionServiceLogoutTest.cs" />
     <Compile Include="ToSafeFileNameTests.cs" />

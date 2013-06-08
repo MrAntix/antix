@@ -7,11 +7,11 @@ using System.Web.Http.Filters;
 
 namespace Example.MvcApplication.Api.Filters
 {
-    public class InjectingFilterProvider : IFilterProvider
+    public class ProxyFilterProvider : IFilterProvider
     {
         readonly Func<Type, object> _resolve;
 
-        public InjectingFilterProvider(Func<Type, object> resolve)
+        public ProxyFilterProvider(Func<Type, object> resolve)
         {
             _resolve = resolve;
         }
@@ -35,8 +35,11 @@ namespace Example.MvcApplication.Api.Filters
                         var ta = fi.Instance as IProxyFilterAttribute;
                         if (ta != null)
                         {
+                            var filter = (IFilter) _resolve(ta.FilterType);
+                            //TODO Set(filter, ta);
+
                             return new FilterInfo(
-                                (IFilter) _resolve(ta.FilterType),
+                                filter,
                                 fi.Scope
                                 );
                         }
@@ -44,10 +47,11 @@ namespace Example.MvcApplication.Api.Filters
                         return fi;
                     });
         }
-    }
 
-    public interface IProxyFilterAttribute
-    {
-        Type FilterType { get; }
+        void Set<T>(IRealFilter<T> real, T proxy) 
+            where T : IProxyFilterAttribute
+        {
+            real.Proxy = proxy;
+        }
     }
 }
