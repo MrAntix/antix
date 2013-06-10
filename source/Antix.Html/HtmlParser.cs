@@ -197,7 +197,9 @@ namespace Antix.Html
             while (html.Any())
             {
                 var c = html.Peek();
-                if (!char.IsLetterOrDigit(c)) break;
+                if (!char.IsLetterOrDigit(c)
+                    && c != '!'
+                    && c != '-') break;
 
                 html.Consume();
                 word.Add(c);

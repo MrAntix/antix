@@ -9,6 +9,7 @@ namespace Antix.Html
     {
         static readonly string[] HtmlInlineElements;
         static readonly string[] HtmlNonContainers;
+        static readonly string[] HtmlNonClosers;
 
         readonly List<HtmlAttribute> _attributes;
         readonly List<IHtmlNode> _children;
@@ -16,8 +17,9 @@ namespace Antix.Html
 
         static HtmlElement()
         {
-            HtmlNonContainers = HtmlSettings.Default.HtmlNonContainers.Split(',');
             HtmlInlineElements = HtmlSettings.Default.HtmlInlineElements.Split(',');
+            HtmlNonContainers = HtmlSettings.Default.HtmlNonContainers.Split(',');
+            HtmlNonClosers = HtmlSettings.Default.HtmlNonClosers.Split(',');
         }
 
         internal HtmlElement(
@@ -56,9 +58,18 @@ namespace Antix.Html
             get { return _children; }
         }
 
+        protected bool IsNonCloser
+        {
+            get { return HtmlNonClosers.Contains(Name); }
+        }
+
         public bool IsNonContainer
         {
-            get { return HtmlNonContainers.Contains(Name); }
+            get
+            {
+                return HtmlNonContainers.Contains(Name)
+                       || IsNonCloser;
+            }
         }
 
         public bool IsInline
@@ -75,6 +86,12 @@ namespace Antix.Html
             {
                 output.Append(" ");
                 item.ToString(output);
+            }
+
+            if (IsNonCloser)
+            {
+                output.Append(">");
+                return;
             }
 
             if (IsNonContainer || IsClosed)

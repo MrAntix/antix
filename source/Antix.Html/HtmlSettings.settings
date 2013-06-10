@@ -1,17 +1,18 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)"
-              GeneratedClassNamespace="Antix.Html" GeneratedClassName="HtmlSettings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Antix.Html" GeneratedClassName="HtmlSettings">
   <Profiles />
   <Settings>
     <Setting Name="HtmlAttributeQuote" Type="System.String" Scope="Application">
       <Value Profile="(Default)">"</Value>
     </Setting>
     <Setting Name="HtmlNonContainers" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">br,hr,meta,link,img,video,audio,param,col</Value>
+      <Value Profile="(Default)">area,audio,base,basefont,br,col,command,embed,frame,hr,img,input,isindex,keygen,link,meta,param,source,track,video,wbr</Value>
     </Setting>
     <Setting Name="HtmlInlineElements" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">em,strong,q,cite,dfn,i,b,sup,sub,small,code,mark,del,s,ins,abbr,span,br</Value>
+      <Value Profile="(Default)">a,em,strong,q,cite,dfn,i,b,sup,sub,small,code,mark,del,s,ins,abbr,span,br</Value>
+    </Setting>
+    <Setting Name="HtmlNonClosers" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">!doctype</Value>
     </Setting>
   </Settings>
 </SettingsFile>

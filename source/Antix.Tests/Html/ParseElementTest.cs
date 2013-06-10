@@ -95,6 +95,12 @@ namespace Antix.Tests.Html
             Exec("<div><p>hello</p><ul><li>one</li><li>two</li></div>", expectedChildCount: 2);
         }
 
+        [Fact]
+        public void doctype()
+        {
+            Exec("<!doctype html>", expectedName: "!doctype", expectedAttributeCount: 1);
+        }
+
         static HtmlElement Exec(
             string html,
             string expectedName = "div",
@@ -104,9 +110,10 @@ namespace Antix.Tests.Html
             var sut = new HtmlParser();
 
             var result = sut.ParseElement(new HtmlQueue(html));
-            Console.Write(result.ToString());
 
             Assert.NotNull(result);
+            Console.Write(result.ToString());
+
             Assert.Equal(expectedName, result.Name);
             Assert.Equal(expectedAttributeCount, result.Attributes.Count);
             Assert.Equal(expectedChildCount, result.Children.Count);
