@@ -214,5 +214,32 @@ namespace Antix.Html
 
             html.TryConsume(closer);
         }
+
+        static readonly string[] InlineElements;
+        static readonly string[] NonContainers;
+        static readonly string[] NonClosers;
+
+        static HtmlParser()
+        {
+            InlineElements = HtmlSettings.Default.HtmlInlineElements.Split(',');
+            NonContainers = HtmlSettings.Default.HtmlNonContainers.Split(',');
+            NonClosers = HtmlSettings.Default.HtmlNonClosers.Split(',');
+        }
+
+        public static bool IsNonCloser(string name)
+        {
+            return NonClosers.Contains(name);
+        }
+
+        public static bool IsNonContainer(string name)
+        {
+            return NonContainers.Contains(name)
+                   || IsNonCloser(name);
+        }
+
+        public static bool IsInline(string name)
+        {
+            return InlineElements.Contains(name);
+        }
     }
 }

@@ -1,26 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
 
 namespace Antix.Html
 {
     public class HtmlElement : IHtmlNode
     {
-        static readonly string[] HtmlInlineElements;
-        static readonly string[] HtmlNonContainers;
-        static readonly string[] HtmlNonClosers;
-
         readonly List<HtmlAttribute> _attributes;
         readonly List<IHtmlNode> _children;
         string _name;
-
-        static HtmlElement()
-        {
-            HtmlInlineElements = HtmlSettings.Default.HtmlInlineElements.Split(',');
-            HtmlNonContainers = HtmlSettings.Default.HtmlNonContainers.Split(',');
-            HtmlNonClosers = HtmlSettings.Default.HtmlNonClosers.Split(',');
-        }
 
         internal HtmlElement(
             string name)
@@ -43,6 +31,10 @@ namespace Antix.Html
             {
                 Debug.Assert(value != null, "value != null");
                 _name = value.ToLower();
+
+                IsNonCloser = HtmlParser.IsNonCloser(_name);
+                IsNonContainer = HtmlParser.IsNonContainer(_name);
+                IsInline = HtmlParser.IsInline(_name);
             }
         }
 
@@ -58,24 +50,11 @@ namespace Antix.Html
             get { return _children; }
         }
 
-        protected bool IsNonCloser
-        {
-            get { return HtmlNonClosers.Contains(Name); }
-        }
+        public bool IsNonCloser { get; private set; }
 
-        public bool IsNonContainer
-        {
-            get
-            {
-                return HtmlNonContainers.Contains(Name)
-                       || IsNonCloser;
-            }
-        }
+        public bool IsNonContainer { get; private set; }
 
-        public bool IsInline
-        {
-            get { return HtmlInlineElements.Contains(Name); }
-        }
+        public bool IsInline { get; private set; }
 
         public void ToString(StringBuilder output)
         {
