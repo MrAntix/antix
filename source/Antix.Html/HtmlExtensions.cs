@@ -16,7 +16,7 @@ namespace Antix.Html
             return output.ToString().Trim();
         }
 
-        static void ToText(
+        public static void ToText(
             this IEnumerable<IHtmlNode> nodes, StringBuilder output)
         {
             foreach (var node in nodes)
@@ -25,7 +25,7 @@ namespace Antix.Html
             }
         }
 
-        static void ToText(
+        public static void ToText(
             this IHtmlNode node, StringBuilder output)
         {
             var textElement = node as HtmlTextElement;
@@ -52,6 +52,23 @@ namespace Antix.Html
                     }
                 }
             }
+        }
+
+        public static string ToString(
+            this IEnumerable<IHtmlNode> nodes)
+        {
+            var output = new StringBuilder();
+
+            nodes.ToString(output);
+
+            return output.ToString().Trim();
+        }
+
+        public static void ToString(
+            this IEnumerable<IHtmlNode> nodes, StringBuilder output)
+        {
+            foreach (var node in nodes)
+                node.ToString(output);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Antix.Html
         readonly List<HtmlAttribute> _attributes;
         readonly List<IHtmlNode> _children;
         string _name;
+        string _declarationCloser;
 
         internal HtmlElement(
             string name)
@@ -33,7 +34,11 @@ namespace Antix.Html
                 Debug.Assert(value != null, "value != null");
                 _name = value.ToLower();
 
-                IsDeclaration = HtmlParser.IsDeclaration(_name);
+                if (HtmlParser.IsDeclaration(_name))
+                {
+                    IsDeclaration = true;
+                    _declarationCloser = HtmlParser.DeclarationCloser(Name);
+                }
                 IsNonContainer = HtmlParser.IsNonContainer(_name);
                 IsInline = HtmlParser.IsInline(_name);
                 IsTextOnlyContainer = HtmlParser.IsTextOnlyContainer(_name);
@@ -67,9 +72,9 @@ namespace Antix.Html
 
             if (IsDeclaration)
             {
-                Children.Single().ToString(output);
+                Children.ToString(output);
 
-                output.Append(HtmlParser.DeclarationCloser(Name));
+                output.Append(_declarationCloser);
                 output.Append(">");
 
                 return;
@@ -88,10 +93,7 @@ namespace Antix.Html
             }
 
             output.Append(">");
-            foreach (var item in Children)
-            {
-                item.ToString(output);
-            }
+            Children.ToString(output);
 
             output.Append("</");
             output.Append(Name);
