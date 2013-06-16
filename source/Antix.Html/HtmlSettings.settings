@@ -14,5 +14,8 @@
     <Setting Name="HtmlNonClosers" Type="System.String" Scope="Application">
       <Value Profile="(Default)">!doctype</Value>
     </Setting>
+    <Setting Name="HtmlTextOnlyContainers" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">script</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

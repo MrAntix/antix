@@ -35,6 +35,7 @@ namespace Antix.Html
                 IsNonCloser = HtmlParser.IsNonCloser(_name);
                 IsNonContainer = HtmlParser.IsNonContainer(_name);
                 IsInline = HtmlParser.IsInline(_name);
+                IsTextOnlyContainer = HtmlParser.IsTextOnlyContainer(_name);
             }
         }
 
@@ -55,6 +56,8 @@ namespace Antix.Html
         public bool IsNonContainer { get; private set; }
 
         public bool IsInline { get; private set; }
+
+        public bool IsTextOnlyContainer { get; private set; }
 
         public void ToString(StringBuilder output)
         {

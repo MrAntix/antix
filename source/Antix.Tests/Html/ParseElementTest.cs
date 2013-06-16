@@ -96,9 +96,27 @@ namespace Antix.Tests.Html
         }
 
         [Fact]
-        public void doctype()
+        public void a_doctype()
         {
             Exec("<!doctype html>", expectedName: "!doctype", expectedAttributeCount: 1);
+        }
+
+        [Fact]
+        public void a_comment()
+        {
+            var el = Exec("<!-- <anything> \"asdkjahsdk\" <asd/>-->", 
+                expectedName: "!--", expectedChildCount: 1);
+
+            Assert.IsType<HtmlTextElement>(el.Children.Single());
+        }
+
+        [Fact]
+        public void a_script_tag()
+        {
+           var el = Exec("<script type=\"lala\">function hi(){ alert(\"<p>Morning</p>\"); } if(2>1) hi();</script>", 
+               expectedName: "script", expectedAttributeCount: 1, expectedChildCount: 1);
+
+            Assert.IsType<HtmlTextElement>(el.Children.Single());
         }
 
         static HtmlElement Exec(

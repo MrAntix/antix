@@ -127,8 +127,13 @@ namespace Antix.Html
                 return element;
             }
 
-            html.TryConsumeIncluding('>');
-            if (!element.IsNonContainer)
+            html.TryConsume('>');
+            if (element.IsTextOnlyContainer)
+            {
+                var textElement = ParseTextElement(html, string.Concat("</", name, ">"));
+                element.Children.Add(textElement);
+            }
+            else if (!element.IsNonContainer)
             {
                 var children = ParseElements(html);
                 element.Children.AddRange(children);
@@ -156,9 +161,21 @@ namespace Antix.Html
         static IHtmlNode ParseTextElement(HtmlQueue html)
         {
             string text;
-            return html.TryConsumeUpto(c => c == '<', out text)
-                       ? new HtmlTextElement {Value = CollapseWhiteSpace(text)}
-                       : null;
+
+            if (!html.TryConsume(c => c == '<', true, false, out text)
+                || text == string.Empty) return null;
+
+            return new HtmlTextElement {Value = CollapseWhiteSpace(text)};
+        }
+
+        static IHtmlNode ParseTextElement(HtmlQueue html, string upto)
+        {
+            string text;
+
+            if (!html.TryConsume(upto, true, false, out text)
+                || text == string.Empty) return null;
+
+            return new HtmlTextElement { Value = CollapseWhiteSpace(text) };
         }
 
         static string CollapseWhiteSpace(string text)
@@ -218,12 +235,14 @@ namespace Antix.Html
         static readonly string[] InlineElements;
         static readonly string[] NonContainers;
         static readonly string[] NonClosers;
+        static readonly string[] TextOnlyContainers;
 
         static HtmlParser()
         {
             InlineElements = HtmlSettings.Default.HtmlInlineElements.Split(',');
             NonContainers = HtmlSettings.Default.HtmlNonContainers.Split(',');
             NonClosers = HtmlSettings.Default.HtmlNonClosers.Split(',');
+            TextOnlyContainers = HtmlSettings.Default.HtmlTextOnlyContainers.Split(',');
         }
 
         public static bool IsNonCloser(string name)
@@ -240,6 +259,11 @@ namespace Antix.Html
         public static bool IsInline(string name)
         {
             return InlineElements.Contains(name);
+        }
+
+        public static bool IsTextOnlyContainer(string name)
+        {
+            return TextOnlyContainers.Contains(name);
         }
     }
 }
