@@ -9,7 +9,7 @@ namespace Antix.Data.Keywords.EF
     public class EFKeywordsManager : KeywordsIndexer
     {
         public EFKeywordsManager(
-            IKeywordsBuilderProvider builderProvider) 
+            IKeywordsBuilderProvider builderProvider)
             : base(builderProvider)
         {
         }

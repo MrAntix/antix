@@ -77,7 +77,7 @@ namespace Antix.Html
         }
 
         public bool TryConsume(
-            Func<char, bool> test, 
+            Func<char, bool> test,
             bool upto, bool including,
             out string consumed)
         {

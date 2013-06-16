@@ -10,7 +10,7 @@ namespace Antix.Tests.Html
         [Fact]
         public void try_consume_succeeds_and_consumes()
         {
-            var queue = new Queue<char>(new[] { 'a', 'b', 'c', 'd' });
+            var queue = new Queue<char>(new[] {'a', 'b', 'c', 'd'});
 
             var result = HtmlQueue.TryConsume(queue, "a", false, true);
 
@@ -22,7 +22,7 @@ namespace Antix.Tests.Html
         [Fact]
         public void try_consume_fails_and_does_not_consume()
         {
-            var queue = new Queue<char>(new[] { 'a', 'b', 'c', 'd' });
+            var queue = new Queue<char>(new[] {'a', 'b', 'c', 'd'});
 
             var result = HtmlQueue.TryConsume(queue, "b", false, true);
 
@@ -70,7 +70,7 @@ namespace Antix.Tests.Html
         [Fact]
         public void string_at_middle_including()
         {
-            var queue = new Queue<char>(new[] { 'a', 'b', 'c', 'd' });
+            var queue = new Queue<char>(new[] {'a', 'b', 'c', 'd'});
 
             var result = HtmlQueue.TryConsume(queue, "bc", true, true);
 
@@ -82,7 +82,7 @@ namespace Antix.Tests.Html
         [Fact]
         public void string_at_middle_not_including()
         {
-            var queue = new Queue<char>(new[] { 'a', 'b', 'c', 'd' });
+            var queue = new Queue<char>(new[] {'a', 'b', 'c', 'd'});
 
             var result = HtmlQueue.TryConsume(queue, "bc", true, false);
 
@@ -94,7 +94,7 @@ namespace Antix.Tests.Html
         [Fact]
         public void string_at_middle_including_get_consumed()
         {
-            var queue = new Queue<char>(new[] { 'a', 'b', 'c', 'd' });
+            var queue = new Queue<char>(new[] {'a', 'b', 'c', 'd'});
 
             string consumed;
             HtmlQueue.TryConsume(queue, "bc", true, true, out consumed);
@@ -105,7 +105,7 @@ namespace Antix.Tests.Html
         [Fact]
         public void string_at_middle_not_including_get_consumed()
         {
-            var queue = new Queue<char>(new[] { 'a', 'b', 'c', 'd' });
+            var queue = new Queue<char>(new[] {'a', 'b', 'c', 'd'});
 
             string consumed;
             HtmlQueue.TryConsume(queue, "bc", true, false, out consumed);

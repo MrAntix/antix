@@ -110,8 +110,8 @@ namespace Antix.Tests.Html
         [Fact]
         public void a_comment()
         {
-            var el = Exec("<!-- <anything> \"other\" <asd/>-->", 
-                expectedName: "!--", expectedChildCount: 1);
+            var el = Exec("<!-- <anything> \"other\" <asd/>-->",
+                          expectedName: "!--", expectedChildCount: 1);
 
             Assert.IsType<HtmlTextElement>(el.Children.Single());
         }
@@ -120,7 +120,7 @@ namespace Antix.Tests.Html
         public void a_script_tag()
         {
             var el = Exec("<script type=\"lala\">function hi(){ alert(\"<p>Morning</p>\"); } if(2>1) hi();</script>",
-                expectedName: "script", expectedAttributeCount: 1, expectedChildCount: 1);
+                          expectedName: "script", expectedAttributeCount: 1, expectedChildCount: 1);
 
             Assert.IsType<HtmlTextElement>(el.Children.Single());
         }
@@ -128,7 +128,8 @@ namespace Antix.Tests.Html
         [Fact]
         public void a_script_tag_with_a_comment()
         {
-            var el = Exec("<script type=\"lala\"><!-- function hi(){ alert(\"</script>\"); } if(2>1) hi(); --></script>",
+            var el = Exec(
+                "<script type=\"lala\"><!-- function hi(){ alert(\"</script>\"); } if(2>1) hi(); --></script>",
                 expectedName: "script", expectedAttributeCount: 1, expectedChildCount: 1);
 
             Assert.IsType<HtmlTextElement>(el.Children.Single());
