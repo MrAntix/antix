@@ -53,19 +53,19 @@ namespace Antix.Html {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("!doctype")]
-        public string HtmlNonClosers {
+        [global::System.Configuration.DefaultSettingValueAttribute("script")]
+        public string HtmlTextOnlyContainers {
             get {
-                return ((string)(this["HtmlNonClosers"]));
+                return ((string)(this["HtmlTextOnlyContainers"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("script")]
-        public string HtmlTextOnlyContainers {
+        [global::System.Configuration.DefaultSettingValueAttribute("!doctype,!--|--")]
+        public string HtmlDeclarations {
             get {
-                return ((string)(this["HtmlTextOnlyContainers"]));
+                return ((string)(this["HtmlDeclarations"]));
             }
         }
     }

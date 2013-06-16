@@ -116,30 +116,40 @@ namespace Antix.Html
             if (string.IsNullOrWhiteSpace(name)) return null;
             var element = new HtmlElement(name);
 
-            var attributes = ParseAttributes(html);
-            element.Attributes.AddRange(attributes);
-
-            html.ConsumeWhiteSpace();
-
-            if (html.TryConsume("/>"))
+            if (element.IsDeclaration)
             {
-                element.IsClosed = true;
-                return element;
-            }
+                var closer = DeclarationCloser(name);
 
-            html.TryConsume('>');
-            if (element.IsTextOnlyContainer)
-            {
-                var textElement = ParseTextElement(html, string.Concat("</", name, ">"));
+                var textElement = ParseTextElement(html, string.Concat(closer, ">"));
                 element.Children.Add(textElement);
             }
-            else if (!element.IsNonContainer)
+            else
             {
-                var children = ParseElements(html);
-                element.Children.AddRange(children);
-            }
+                var attributes = ParseAttributes(html);
+                element.Attributes.AddRange(attributes);
 
-            TryConsumeElementCloser(name, html);
+                html.ConsumeWhiteSpace();
+
+                if (html.TryConsume("/>"))
+                {
+                    element.IsClosed = true;
+                    return element;
+                }
+
+                html.TryConsume('>');
+                if (element.IsTextOnlyContainer)
+                {
+                    var textElement = ParseTextElement(html, string.Concat("</", name, ">"));
+                    element.Children.Add(textElement);
+                }
+                else if (!element.IsNonContainer)
+                {
+                    var children = ParseElements(html);
+                    element.Children.AddRange(children);
+                }
+
+                TryConsumeElementCloser(name, html);
+            }
 
             return element;
         }
@@ -175,7 +185,7 @@ namespace Antix.Html
             if (!html.TryConsume(upto, true, false, out text)
                 || text == string.Empty) return null;
 
-            return new HtmlTextElement { Value = CollapseWhiteSpace(text) };
+            return new HtmlTextElement {Value = CollapseWhiteSpace(text)};
         }
 
         static string CollapseWhiteSpace(string text)
@@ -234,26 +244,33 @@ namespace Antix.Html
 
         static readonly string[] InlineElements;
         static readonly string[] NonContainers;
-        static readonly string[] NonClosers;
+        static readonly string[][] Declarations;
         static readonly string[] TextOnlyContainers;
 
         static HtmlParser()
         {
             InlineElements = HtmlSettings.Default.HtmlInlineElements.Split(',');
             NonContainers = HtmlSettings.Default.HtmlNonContainers.Split(',');
-            NonClosers = HtmlSettings.Default.HtmlNonClosers.Split(',');
+            Declarations = HtmlSettings.Default.HtmlDeclarations.Split(',').Select(i => i.Split('|')).ToArray();
             TextOnlyContainers = HtmlSettings.Default.HtmlTextOnlyContainers.Split(',');
         }
 
-        public static bool IsNonCloser(string name)
+        public static bool IsDeclaration(string name)
         {
-            return NonClosers.Contains(name);
+            return Declarations.Any(d => d[0] == name);
+        }
+
+        public static string DeclarationCloser(string name)
+        {
+            return (from d in Declarations
+                    where d.Length > 1 && d[0] == name
+                    select d[1]).SingleOrDefault();
         }
 
         public static bool IsNonContainer(string name)
         {
             return NonContainers.Contains(name)
-                   || IsNonCloser(name);
+                   || IsDeclaration(name);
         }
 
         public static bool IsInline(string name)

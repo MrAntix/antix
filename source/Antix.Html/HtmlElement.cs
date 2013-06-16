@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 
 namespace Antix.Html
@@ -32,7 +33,7 @@ namespace Antix.Html
                 Debug.Assert(value != null, "value != null");
                 _name = value.ToLower();
 
-                IsNonCloser = HtmlParser.IsNonCloser(_name);
+                IsDeclaration = HtmlParser.IsDeclaration(_name);
                 IsNonContainer = HtmlParser.IsNonContainer(_name);
                 IsInline = HtmlParser.IsInline(_name);
                 IsTextOnlyContainer = HtmlParser.IsTextOnlyContainer(_name);
@@ -51,7 +52,7 @@ namespace Antix.Html
             get { return _children; }
         }
 
-        public bool IsNonCloser { get; private set; }
+        public bool IsDeclaration { get; private set; }
 
         public bool IsNonContainer { get; private set; }
 
@@ -64,16 +65,20 @@ namespace Antix.Html
             output.Append("<");
             output.Append(Name);
 
+            if (IsDeclaration)
+            {
+                Children.Single().ToString(output);
+
+                output.Append(HtmlParser.DeclarationCloser(Name));
+                output.Append(">");
+
+                return;
+            }
+
             foreach (var item in Attributes)
             {
                 output.Append(" ");
                 item.ToString(output);
-            }
-
-            if (IsNonCloser)
-            {
-                output.Append(">");
-                return;
             }
 
             if (IsNonContainer || IsClosed)
