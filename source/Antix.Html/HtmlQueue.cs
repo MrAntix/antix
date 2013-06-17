@@ -27,7 +27,7 @@ namespace Antix.Html
 
         public string Peek(int count)
         {
-            return AsString(_data.Take(count));
+            return ToString(_data.Take(count));
         }
 
         public char Consume()
@@ -37,7 +37,7 @@ namespace Antix.Html
 
         public string Consume(int count)
         {
-            return AsString(
+            return ToString(
                 Enumerable.Range(1, count)
                           .Select(i => _data.Dequeue())
                 );
@@ -122,14 +122,14 @@ namespace Antix.Html
                    && TryConsumeTarget(++dataIndex, target, ++targetIndex);
         }
 
-        static string AsString(IEnumerable<char> data)
+        static string ToString(IEnumerable<char> data)
         {
             return new string(data.ToArray());
         }
 
         public override string ToString()
         {
-            return AsString(_data);
+            return ToString(_data);
         }
     }
 }
