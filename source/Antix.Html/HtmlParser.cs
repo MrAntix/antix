@@ -130,13 +130,13 @@ namespace Antix.Html
 
                 html.ConsumeWhiteSpace();
 
-                if (html.TryConsume("/>", false))
+                if (html.TryConsume("/>", false, true))
                 {
                     element.IsClosed = true;
                     return element;
                 }
 
-                html.TryConsume(">", false);
+                html.TryConsume(">", false, true);
                 if (element.IsTextOnlyContainer)
                 {
                     var textElement = ParseTextElement(html, string.Concat("</", name, ">"));
@@ -160,7 +160,7 @@ namespace Antix.Html
 
             IHtmlNode item;
             while ((item = ParseElement(html)
-                           ?? ParseTextElement(html)) != null)
+                           ?? ParseTextElement(html, "<")) != null)
             {
                 items.Add(item);
             }
@@ -168,22 +168,11 @@ namespace Antix.Html
             return items;
         }
 
-        static IHtmlNode ParseTextElement(HtmlQueue html)
-        {
-            string text;
-            char target;
-
-            if (!html.TryConsume(c => c == '<', true, out text, out target)
-                || text == string.Empty) return null;
-
-            return new HtmlTextElement {Value = CollapseWhiteSpace(text)};
-        }
-
         static IHtmlNode ParseTextElement(HtmlQueue html, string upto)
         {
             string text;
 
-            if (!html.TryConsume(upto, true, out text)
+            if (!html.TryConsume(upto, true, false, out text)
                 || text == string.Empty) return null;
 
             return new HtmlTextElement {Value = CollapseWhiteSpace(text)};
@@ -240,7 +229,7 @@ namespace Antix.Html
         {
             var closer = string.Format("</{0}>", name);
 
-            html.TryConsume(closer, false);
+            html.TryConsume(closer, false, true);
         }
 
         static readonly string[] InlineElements;

@@ -31,7 +31,7 @@ namespace Antix.Tests.Html
         {
             var queue = new HtmlQueue("abcd");
 
-            var result = queue.TryConsume("b",  true);
+            var result = queue.TryConsume("b", true, true);
 
             Assert.True(result);
 
@@ -43,7 +43,7 @@ namespace Antix.Tests.Html
         {
             var queue = new HtmlQueue("abcd");
 
-            var result = queue.TryConsume("x",  true);
+            var result = queue.TryConsume("x", true, true);
 
             Assert.False(result);
 
@@ -56,7 +56,7 @@ namespace Antix.Tests.Html
             var queue = new HtmlQueue("abcd");
 
             string consumed;
-            queue.TryConsume("c", true,  out consumed);
+            queue.TryConsume("c", true, true, out consumed);
 
             Assert.Equal("ab", consumed);
         }
@@ -66,7 +66,7 @@ namespace Antix.Tests.Html
         {
             var queue = new HtmlQueue("abcd");
 
-            var result = queue.TryConsume("",  true);
+            var result = queue.TryConsume("", true, true);
 
             Assert.True(result);
 
@@ -78,7 +78,7 @@ namespace Antix.Tests.Html
         {
             var queue = new HtmlQueue("abcd");
 
-            var result = queue.TryConsume("x",  true);
+            var result = queue.TryConsume("x", true, true);
 
             Assert.False(result);
 
@@ -90,7 +90,7 @@ namespace Antix.Tests.Html
         {
             var queue = new HtmlQueue("abcd");
 
-            var result = queue.TryConsume("ab", true);
+            var result = queue.TryConsume("ab", true, true);
 
             Assert.True(result);
 
@@ -102,7 +102,7 @@ namespace Antix.Tests.Html
         {
             var queue = new HtmlQueue("abcd");
 
-            var result = queue.TryConsume("cd",  true);
+            var result = queue.TryConsume("cd", true, true);
 
             Assert.True(result);
 
@@ -114,20 +114,20 @@ namespace Antix.Tests.Html
         {
             var queue = new HtmlQueue("abcd");
 
-            var result = queue.TryConsume("bc",  true);
+            var result = queue.TryConsume("bc", true, true);
 
             Assert.True(result);
 
             Assert.Equal('d', queue.Peek());
         }
-        
+
         [Fact]
         public void string_at_middle_get_consumed()
         {
             var queue = new HtmlQueue("abcd");
 
             string consumed;
-            queue.TryConsume("bc", true, out consumed);
+            queue.TryConsume("bc", true, true, out consumed);
 
             Assert.Equal("a", consumed);
             Assert.Equal('d', queue.Peek());
