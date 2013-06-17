@@ -35,6 +35,14 @@ namespace Antix.Html
             return _data.Dequeue();
         }
 
+        public string Consume(int count)
+        {
+            return AsString(
+                Enumerable.Range(1, count)
+                          .Select(i => _data.Dequeue())
+                );
+        }
+
         public void ConsumeWhiteSpace()
         {
             while (_data.Any()
@@ -44,45 +52,138 @@ namespace Antix.Html
             }
         }
 
-        public bool TryConsume(char target)
+        public bool TryConsume(
+            string target,
+            bool upto)
         {
-            while (_data.Any())
+            if (_data.Any()
+                && TryConsume(0, target, upto, null))
             {
-                if (target == _data.Dequeue()) return true;
+                Consume(target.Length);
+
+                return true;
             }
 
             return false;
         }
 
-        public bool TryConsume(string target)
-        {
-            if (!_data.Any()) return false;
-
-            var candidate = _data.Take(target.Length);
-            if (target != AsString(candidate)) return false;
-
-            for (var i = 0; i < target.Length && _data.Any(); i++)
-                _data.Dequeue();
-
-            return true;
-        }
-
         public bool TryConsume(
             string target,
-            bool upto, bool including,
+            bool upto,
             out string consumed)
         {
-            return TryConsume(
-                _data, target, upto, including, out consumed);
+            var consumedList = new List<char>();
+
+            if (_data.Any()
+                && TryConsume(0, target, upto, consumedList))
+            {
+                Consume(target.Length);
+
+                consumed = new string(consumedList.ToArray());
+                return true;
+            }
+
+            consumed = null;
+            return false;
+        }
+
+        bool TryConsume(
+            int dataIndex,
+            string target,
+            bool upto,
+            ICollection<char> consumed)
+        {
+            if (dataIndex == _data.Count) return false;
+
+            if (TryConsumeTarget(dataIndex, target, 0))
+                return true;
+
+            if (upto
+                && TryConsume(++dataIndex, target, true, consumed))
+            {
+                var c = _data.Dequeue();
+                if (consumed != null) consumed.Add(c);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        bool TryConsumeTarget(
+            int dataIndex,
+            string target, int targetIndex)
+        {
+            if (targetIndex == target.Length) return true;
+
+            return target[targetIndex] == _data.ElementAt(dataIndex)
+                   && TryConsumeTarget(++dataIndex, target, ++targetIndex);
         }
 
         public bool TryConsume(
             Func<char, bool> test,
-            bool upto, bool including,
-            out string consumed)
+            bool upto,
+            out string consumed,
+            out char target)
         {
-            return TryConsume(
-                _data, test, upto, including, out consumed);
+            var consumedList = new List<char>();
+
+            if (_data.Any()
+                && TryConsume(0, test, upto, consumedList, out target))
+            {
+                Consume(); // target
+                consumed = new string(consumedList.ToArray());
+                return true;
+            }
+
+            consumed = null;
+            target = default(char);
+            return false;
+        }
+
+        bool TryConsume(
+            int dataIndex,
+            Func<char, bool> test,
+            bool upto,
+            ICollection<char> consumed,
+            out char target)
+        {
+            if (dataIndex == _data.Count)
+            {
+                target = default(char);
+                return false;
+            }
+
+            if (TryConsumeTarget(dataIndex, test, out target))
+                return true;
+
+            if (upto
+                && TryConsume(dataIndex, test, true, consumed, out target))
+            {
+                var c = _data.Dequeue();
+                if (consumed != null) consumed.Add(c);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        bool TryConsumeTarget(
+            int dataIndex,
+            Func<char, bool> test,
+            out char target)
+        {
+            var c = _data.ElementAt(dataIndex);
+            if (test(c))
+            {
+                target = c;
+
+                return true;
+            }
+
+            target = default(char);
+            return false;
         }
 
         static string AsString(IEnumerable<char> data)
@@ -93,140 +194,6 @@ namespace Antix.Html
         public override string ToString()
         {
             return AsString(_data);
-        }
-
-        public static bool TryConsume(
-            Queue<char> data, string target,
-            bool upto, bool including)
-        {
-            return data.Any()
-                   && TryConsume(data, 0, target, upto, including, null);
-        }
-
-        public static bool TryConsume(
-            Queue<char> data, string target,
-            bool upto, bool including,
-            out string consumed)
-        {
-            var consumedList = new List<char>();
-
-            if (data.Any()
-                && TryConsume(data, 0, target, upto, including, consumedList))
-            {
-                consumed = new string(consumedList.ToArray());
-                return true;
-            }
-
-            consumed = null;
-            return false;
-        }
-
-        static bool TryConsume(
-            Queue<char> data, int dataIndex,
-            string target,
-            bool upto, bool including,
-            ICollection<char> consumed)
-        {
-            if (dataIndex == data.Count) return false;
-
-            if (TryConsumeTarget(data, dataIndex, target, 0, including, consumed))
-                return true;
-
-            if (upto
-                && TryConsume(data, ++dataIndex, target, true, including, consumed))
-            {
-                var c = data.Dequeue();
-                if (consumed != null) consumed.Add(c);
-
-                return true;
-            }
-
-            return false;
-        }
-
-        static bool TryConsumeTarget(
-            Queue<char> data, int dataIndex,
-            string target, int targetIndex,
-            bool including,
-            ICollection<char> consumed)
-        {
-            if (targetIndex == target.Length) return true;
-
-            if (target[targetIndex] == data.ElementAt(dataIndex)
-                && TryConsumeTarget(data, ++dataIndex, target, ++targetIndex, including, consumed))
-            {
-                if (including)
-                {
-                    var c = data.Dequeue();
-                    if (consumed != null) consumed.Add(c);
-                }
-
-                return true;
-            }
-
-            return false;
-        }
-
-        public static bool TryConsume(
-            Queue<char> data,
-            Func<char, bool> test,
-            bool upto, bool including,
-            out string consumed)
-        {
-            var consumedList = new List<char>();
-
-            if (data.Any()
-                && TryConsume(data, 0, test, upto, including, consumedList))
-            {
-                consumed = new string(consumedList.ToArray());
-                return true;
-            }
-
-            consumed = null;
-            return false;
-        }
-
-        static bool TryConsume(
-            Queue<char> data, int dataIndex,
-            Func<char, bool> test,
-            bool upto, bool including,
-            ICollection<char> consumed)
-        {
-            if (dataIndex == data.Count) return false;
-
-            if (TryConsumeTarget(data, dataIndex, test, including, consumed))
-                return true;
-
-            if (upto
-                && TryConsume(data, ++dataIndex, test, true, including, consumed))
-            {
-                var c = data.Dequeue();
-                if (consumed != null) consumed.Add(c);
-
-                return true;
-            }
-
-            return false;
-        }
-
-        static bool TryConsumeTarget(
-            Queue<char> data, int dataIndex,
-            Func<char, bool> test,
-            bool including,
-            ICollection<char> consumed)
-        {
-            if (test(data.ElementAt(dataIndex)))
-            {
-                if (including)
-                {
-                    var c = data.Dequeue();
-                    if (consumed != null) consumed.Add(c);
-                }
-
-                return true;
-            }
-
-            return false;
         }
     }
 }
