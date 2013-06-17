@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Antix.Html
@@ -79,7 +78,7 @@ namespace Antix.Html
                 && TryConsume(0, target, seek, consumedList))
             {
                 if (consumeTarget)
-                Consume(target.Length);
+                    Consume(target.Length);
 
                 consumed = new string(consumedList.ToArray());
                 return true;
