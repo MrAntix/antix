@@ -54,17 +54,17 @@ namespace Antix.Html
             }
         }
 
-        public static string ToString(
+        public static string ToHtml(
             this IEnumerable<IHtmlNode> nodes)
         {
             var output = new StringBuilder();
 
-            nodes.ToString(output);
+            nodes.ToHtml(output);
 
             return output.ToString().Trim();
         }
 
-        public static void ToString(
+        public static void ToHtml(
             this IEnumerable<IHtmlNode> nodes, StringBuilder output)
         {
             foreach (var node in nodes)

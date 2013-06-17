@@ -54,10 +54,10 @@ namespace Antix.Html
 
         public bool TryConsume(
             string target,
-            bool upto, bool consumeTarget)
+            bool seek, bool consumeTarget)
         {
             if (_data.Any()
-                && TryConsume(0, target, upto, null))
+                && TryConsume(0, target, seek, null))
             {
                 if (consumeTarget)
                     Consume(target.Length);
@@ -70,13 +70,13 @@ namespace Antix.Html
 
         public bool TryConsume(
             string target,
-            bool upto, bool consumeTarget,
+            bool seek, bool consumeTarget,
             out string consumed)
         {
             var consumedList = new List<char>();
 
             if (_data.Any()
-                && TryConsume(0, target, upto, consumedList))
+                && TryConsume(0, target, seek, consumedList))
             {
                 if (consumeTarget)
                 Consume(target.Length);
@@ -92,7 +92,7 @@ namespace Antix.Html
         bool TryConsume(
             int dataIndex,
             string target,
-            bool upto,
+            bool seek,
             ICollection<char> consumed)
         {
             if (dataIndex == _data.Count) return false;
@@ -100,7 +100,7 @@ namespace Antix.Html
             if (TryConsumeTarget(dataIndex, target, 0))
                 return true;
 
-            if (upto
+            if (seek
                 && TryConsume(++dataIndex, target, true, consumed))
             {
                 var c = _data.Dequeue();

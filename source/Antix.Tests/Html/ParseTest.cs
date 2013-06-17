@@ -35,7 +35,7 @@ namespace Antix.Tests.Html
             var result = sut.Parse(html).ToArray();
 
             Assert.NotNull(result);
-            Console.Write(HtmlExtensions.ToString(result));
+            Console.Write(result.ToHtml());
 
             Assert.Equal(expectedCount, result.Count());
 

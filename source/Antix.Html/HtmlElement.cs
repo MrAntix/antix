@@ -71,7 +71,7 @@ namespace Antix.Html
 
             if (IsDeclaration)
             {
-                Children.ToString(output);
+                Children.ToHtml(output);
 
                 output.Append(_declarationCloser);
                 output.Append(">");
@@ -92,7 +92,7 @@ namespace Antix.Html
             }
 
             output.Append(">");
-            Children.ToString(output);
+            Children.ToHtml(output);
 
             output.Append("</");
             output.Append(Name);

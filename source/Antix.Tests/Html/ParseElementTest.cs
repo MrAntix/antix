@@ -101,6 +101,12 @@ namespace Antix.Tests.Html
             Exec("<div><p>hello</p><ul><li>one</li><li>two</li></div>", expectedChildCount: 2);
         }
 
+        [Fact(Skip = "TODO")]
+        public void unescaped_gt()
+        {
+            Exec("<div>Hello < There</div>", expectedChildCount: 1);
+        }
+
         [Fact]
         public void a_doctype()
         {
