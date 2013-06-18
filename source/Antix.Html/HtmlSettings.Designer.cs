@@ -53,7 +53,7 @@ namespace Antix.Html {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("script")]
+        [global::System.Configuration.DefaultSettingValueAttribute("script,style")]
         public string HtmlTextOnlyContainers {
             get {
                 return ((string)(this["HtmlTextOnlyContainers"]));
