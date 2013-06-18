@@ -56,7 +56,7 @@ namespace Antix.Html
             bool seek, bool consumeTarget)
         {
             if (_data.Any()
-                && TryConsume(0, target, seek, null))
+                && TryConsume(target, seek, null))
             {
                 if (consumeTarget)
                     Consume(target.Length);
@@ -75,7 +75,7 @@ namespace Antix.Html
             var consumedList = new List<char>();
 
             if (_data.Any()
-                && TryConsume(0, target, seek, consumedList))
+                && TryConsume(target, seek, consumedList))
             {
                 if (consumeTarget)
                     Consume(target.Length);
@@ -88,37 +88,40 @@ namespace Antix.Html
             return false;
         }
 
-        bool TryConsume(
-            int dataIndex,
-            string target,
+        bool TryConsume(string target,
             bool seek,
             ICollection<char> consumed)
         {
-            if (dataIndex == _data.Count) return false;
+            if (target.Length > _data.Count) return false;
 
-            if (TryConsumeTarget(dataIndex, target, 0))
-                return true;
+            if (IsTarget(0, target)) return true;
 
-            if (seek
-                && TryConsume(++dataIndex, target, true, consumed))
-            {
-                var c = _data.Dequeue();
-                if (consumed != null) consumed.Add(c);
+            if (seek)
+                for (var i = 1; i <= _data.Count - target.Length; i++)
+                {
+                    if (!IsTarget(i, target)) continue;
 
-                return true;
-            }
+                    for (var ic = 0; ic < i; ic++)
+                    {
+                        var c = _data.Dequeue();
+                        if (consumed != null) consumed.Add(c);
+                    }
+
+                    return true;
+                }
 
             return false;
         }
 
-        bool TryConsumeTarget(
+        bool IsTarget(
             int dataIndex,
-            string target, int targetIndex)
+            string target)
         {
-            if (targetIndex == target.Length) return true;
-
-            return target[targetIndex] == _data.ElementAt(dataIndex)
-                   && TryConsumeTarget(++dataIndex, target, ++targetIndex);
+            return
+                ToString(_data
+                             .Skip(dataIndex)
+                             .Take(target.Length))
+                == target;
         }
 
         static string ToString(IEnumerable<char> data)

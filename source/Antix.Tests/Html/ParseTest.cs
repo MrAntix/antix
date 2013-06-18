@@ -26,6 +26,12 @@ namespace Antix.Tests.Html
             Assert.Equal("Hello ", firstTextNode.Value);
         }
 
+        [Fact]
+        public void basic_document()
+        {
+            Exec("<!doctype html><html><head></head><body></body></html>", expectedCount: 2);
+        }
+
         static IEnumerable<IHtmlNode> Exec(
             string html,
             int expectedCount = 0)

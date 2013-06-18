@@ -120,7 +120,7 @@ namespace Antix.Html
             {
                 var closer = DeclarationCloser(name);
 
-                var textElement = ParseTextElement(html, string.Concat(closer, ">"));
+                var textElement = ParseTextElement(html, string.Concat(closer, ">"), true);
                 element.Children.Add(textElement);
             }
             else
@@ -139,16 +139,17 @@ namespace Antix.Html
                 html.TryConsume(">", false, true);
                 if (element.IsTextOnlyContainer)
                 {
-                    var textElement = ParseTextElement(html, string.Concat("</", name, ">"));
-                    element.Children.Add(textElement);
+                    var textElement = ParseTextElement(
+                        html, string.Concat("</", name, ">"), true);
+                    if (textElement!=null) element.Children.Add(textElement);
                 }
                 else if (!element.IsNonContainer)
                 {
                     var children = ParseElements(html);
                     element.Children.AddRange(children);
-                }
 
-                TryConsumeElementCloser(name, html);
+                    TryConsumeElementCloser(name, html);
+                }
             }
 
             return element;
@@ -160,7 +161,7 @@ namespace Antix.Html
 
             IHtmlNode item;
             while ((item = ParseElement(html)
-                           ?? ParseTextElement(html, "<")) != null)
+                           ?? ParseTextElement(html, "<", false)) != null)
             {
                 items.Add(item);
             }
@@ -168,11 +169,13 @@ namespace Antix.Html
             return items;
         }
 
-        static IHtmlNode ParseTextElement(HtmlQueue html, string upto)
+        static IHtmlNode ParseTextElement(
+            HtmlQueue html, 
+            string upto, bool consumeTarget)
         {
             string text;
 
-            if (!html.TryConsume(upto, true, false, out text)
+            if (!html.TryConsume(upto, true, consumeTarget, out text)
                 || text == string.Empty) return null;
 
             return new HtmlTextElement {Value = CollapseWhiteSpace(text)};

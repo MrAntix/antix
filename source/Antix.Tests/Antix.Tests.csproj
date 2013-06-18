@@ -60,6 +60,7 @@
     <Compile Include="Html\HtmlDataTryConsumeToTest.cs" />
     <Compile Include="Html\ParseAttributeTests.cs" />
     <Compile Include="Html\ParseElementTest.cs" />
+    <Compile Include="Html\ParseWebTest.cs" />
     <Compile Include="Html\ParseTest.cs" />
     <Compile Include="Html\TextTest.cs" />
     <Compile Include="Logging\ilogger_tests.cs" />
@@ -96,6 +97,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Security\Users\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Html\Resources\Google.htm" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
