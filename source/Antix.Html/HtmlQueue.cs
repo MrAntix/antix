@@ -55,8 +55,9 @@ namespace Antix.Html
             string target,
             bool seek, bool consumeTarget)
         {
+            string consumed;
             if (_data.Any()
-                && TryConsume(target, seek, null))
+                && TryConsume(target, seek, out consumed))
             {
                 if (consumeTarget)
                     Consume(target.Length);
@@ -72,15 +73,12 @@ namespace Antix.Html
             bool seek, bool consumeTarget,
             out string consumed)
         {
-            var consumedList = new List<char>();
-
             if (_data.Any()
-                && TryConsume(target, seek, consumedList))
+                && TryConsume(target, seek, out consumed))
             {
                 if (consumeTarget)
                     Consume(target.Length);
 
-                consumed = new string(consumedList.ToArray());
                 return true;
             }
 
@@ -90,26 +88,29 @@ namespace Antix.Html
 
         bool TryConsume(string target,
             bool seek,
-            ICollection<char> consumed)
+            out string consumed)
         {
-            if (target.Length > _data.Count) return false;
+            if (target.Length < _data.Count)
+            {
 
-            if (IsTarget(0, target)) return true;
-
-            if (seek)
-                for (var i = 1; i <= _data.Count - target.Length; i++)
+                if (IsTarget(0, target))
                 {
-                    if (!IsTarget(i, target)) continue;
-
-                    for (var ic = 0; ic < i; ic++)
-                    {
-                        var c = _data.Dequeue();
-                        if (consumed != null) consumed.Add(c);
-                    }
-
+                    consumed = string.Empty;
                     return true;
                 }
 
+                if (seek)
+                    for (var i = 1; i <= _data.Count - target.Length; i++)
+                    {
+                        if (!IsTarget(i, target)) continue;
+
+                        consumed = Consume(i);
+
+                        return true;
+                    }
+            }
+
+            consumed = null;
             return false;
         }
 
