@@ -30,7 +30,7 @@ namespace Antix.Html
         public string Peek(
             int count)
         {
-            if (_index+count > _html.Length)
+            if (_index + count > _html.Length)
                 throw new InvalidOperationException();
 
             return _html.Substring(_index, count);

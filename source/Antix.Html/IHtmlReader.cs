@@ -9,7 +9,7 @@ namespace Antix.Html
         string Peek(int count);
         char Consume();
         string Consume(int count);
-        void Consume(Func<char,bool> match);
+        void Consume(Func<char, bool> match);
 
         bool TryConsume(
             string target,
