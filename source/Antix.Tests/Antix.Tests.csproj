@@ -104,7 +104,10 @@
     <Folder Include="Security\Users\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Html\Resources\Google.htm" />
+    <EmbeddedResource Include="Html\Resources\SmallPage.htm" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Html\Resources\BigPage.htm" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
