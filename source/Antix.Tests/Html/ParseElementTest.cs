@@ -149,7 +149,7 @@ namespace Antix.Tests.Html
         {
             var sut = new HtmlParser();
 
-            var result = sut.ParseElement(new HtmlQueue(html));
+            var result = sut.ParseElement(new HtmlReader(html));
 
             Assert.NotNull(result);
             Console.Write(result.ToString());

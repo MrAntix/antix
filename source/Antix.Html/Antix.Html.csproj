@@ -40,7 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HtmlAttribute.cs" />
-    <Compile Include="HtmlQueue.cs" />
+    <Compile Include="HtmlReader.cs" />
     <Compile Include="HtmlElement.cs" />
     <Compile Include="HtmlExtensions.cs" />
     <Compile Include="HtmlParser.cs" />
@@ -51,6 +51,7 @@
     </Compile>
     <Compile Include="HtmlText.cs" />
     <Compile Include="IHtmlNode.cs" />
+    <Compile Include="IHtmlReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

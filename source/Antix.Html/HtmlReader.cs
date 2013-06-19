@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace Antix.Html
 {
-    public class HtmlQueue
+    public class HtmlReader : IHtmlReader
     {
         readonly Queue<char> _data;
 
-        public HtmlQueue(string data)
+        public HtmlReader(string data)
         {
             _data = new Queue<char>(data);
         }

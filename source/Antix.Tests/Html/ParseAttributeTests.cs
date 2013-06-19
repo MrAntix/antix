@@ -64,7 +64,7 @@ namespace Antix.Tests.Html
         {
             var sut = new HtmlParser();
 
-            var result = sut.ParseAttribute(new HtmlQueue(html));
+            var result = sut.ParseAttribute(new HtmlReader(html));
 
             Assert.NotNull(result);
             Assert.Equal(expectedName, result.Name);
@@ -87,7 +87,7 @@ namespace Antix.Tests.Html
         {
             var sut = new HtmlParser();
 
-            var result = sut.ParseAttribute(new HtmlQueue(html));
+            var result = sut.ParseAttribute(new HtmlReader(html));
 
             Assert.Null(result);
         }
@@ -99,7 +99,7 @@ namespace Antix.Tests.Html
 
             var sut = new HtmlParser();
 
-            var queue = new HtmlQueue(value);
+            var queue = new HtmlReader(value);
 
             var result = sut.ParseAttribute(queue);
             Assert.NotNull(result);

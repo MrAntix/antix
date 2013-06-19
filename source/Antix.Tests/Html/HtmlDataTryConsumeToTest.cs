@@ -9,7 +9,7 @@ namespace Antix.Tests.Html
         [Fact]
         public void consume_some()
         {
-            var queue = new HtmlQueue("abcd");
+            var queue = new HtmlReader("abcd");
 
             var result = queue.Consume(2);
 
@@ -20,7 +20,7 @@ namespace Antix.Tests.Html
         [Fact]
         public void consume_too_many()
         {
-            var queue = new HtmlQueue("abcd");
+            var queue = new HtmlReader("abcd");
 
             Assert.Throws<InvalidOperationException>(
                 () => queue.Consume(5));
@@ -29,7 +29,7 @@ namespace Antix.Tests.Html
         [Fact]
         public void try_consume_succeeds_and_consumes()
         {
-            var queue = new HtmlQueue("abcd");
+            var queue = new HtmlReader("abcd");
 
             var result = queue.TryConsume("b", true, true);
 
@@ -41,7 +41,7 @@ namespace Antix.Tests.Html
         [Fact]
         public void try_consume_fails_and_does_not_consume()
         {
-            var queue = new HtmlQueue("abcd");
+            var queue = new HtmlReader("abcd");
 
             var result = queue.TryConsume("x", true, true);
 
@@ -53,7 +53,7 @@ namespace Antix.Tests.Html
         [Fact]
         public void consumed_does_not_include_the_target()
         {
-            var queue = new HtmlQueue("abcd");
+            var queue = new HtmlReader("abcd");
 
             string consumed;
             queue.TryConsume("c", true, true, out consumed);
@@ -64,7 +64,7 @@ namespace Antix.Tests.Html
         [Fact]
         public void nothing_to_find()
         {
-            var queue = new HtmlQueue("abcd");
+            var queue = new HtmlReader("abcd");
 
             var result = queue.TryConsume("", true, true);
 
@@ -76,7 +76,7 @@ namespace Antix.Tests.Html
         [Fact]
         public void not_in_queue()
         {
-            var queue = new HtmlQueue("abcd");
+            var queue = new HtmlReader("abcd");
 
             var result = queue.TryConsume("x", true, true);
 
@@ -88,7 +88,7 @@ namespace Antix.Tests.Html
         [Fact]
         public void string_at_beginning()
         {
-            var queue = new HtmlQueue("abcd");
+            var queue = new HtmlReader("abcd");
 
             var result = queue.TryConsume("ab", true, true);
 
@@ -100,7 +100,7 @@ namespace Antix.Tests.Html
         [Fact]
         public void string_at_end()
         {
-            var queue = new HtmlQueue("abcd");
+            var queue = new HtmlReader("abcd");
 
             var result = queue.TryConsume("cd", true, true);
 
@@ -112,7 +112,7 @@ namespace Antix.Tests.Html
         [Fact]
         public void string_at_middle()
         {
-            var queue = new HtmlQueue("abcd");
+            var queue = new HtmlReader("abcd");
 
             var result = queue.TryConsume("bc", true, true);
 
@@ -124,7 +124,7 @@ namespace Antix.Tests.Html
         [Fact]
         public void string_at_middle_get_consumed()
         {
-            var queue = new HtmlQueue("abcd");
+            var queue = new HtmlReader("abcd");
 
             string consumed;
             queue.TryConsume("bc", true, true, out consumed);

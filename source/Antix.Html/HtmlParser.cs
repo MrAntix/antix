@@ -9,10 +9,10 @@ namespace Antix.Html
 
         public IEnumerable<IHtmlNode> Parse(string html)
         {
-            return ParseElements(new HtmlQueue(html));
+            return ParseElements(new HtmlReader(html));
         }
 
-        public HtmlAttribute ParseAttribute(HtmlQueue html)
+        public HtmlAttribute ParseAttribute(HtmlReader html)
         {
             var name = ParseAttributeName(html);
             if (string.IsNullOrWhiteSpace(name)) return null;
@@ -24,7 +24,7 @@ namespace Antix.Html
                 };
         }
 
-        static string ParseAttributeName(HtmlQueue html)
+        static string ParseAttributeName(HtmlReader html)
         {
             var word = new List<char>();
             var hasWhitespace = false;
@@ -48,7 +48,7 @@ namespace Antix.Html
             return string.Join("", word);
         }
 
-        static string ParseAttributeValue(HtmlQueue html)
+        static string ParseAttributeValue(HtmlReader html)
         {
             if (html.Peek() != '=') return null;
 
@@ -108,7 +108,7 @@ namespace Antix.Html
             return string.Join("", word);
         }
 
-        public HtmlElement ParseElement(HtmlQueue html)
+        public HtmlElement ParseElement(HtmlReader html)
         {
             html.Consume(char.IsWhiteSpace);
 
@@ -155,7 +155,7 @@ namespace Antix.Html
             return element;
         }
 
-        IEnumerable<IHtmlNode> ParseElements(HtmlQueue html)
+        IEnumerable<IHtmlNode> ParseElements(HtmlReader html)
         {
             var items = new List<IHtmlNode>();
 
@@ -170,7 +170,7 @@ namespace Antix.Html
         }
 
         static IHtmlNode ParseTextElement(
-            HtmlQueue html, 
+            HtmlReader html, 
             string upto, bool consumeTarget)
         {
             string text;
@@ -193,7 +193,7 @@ namespace Antix.Html
                 );
         }
 
-        IEnumerable<HtmlAttribute> ParseAttributes(HtmlQueue html)
+        IEnumerable<HtmlAttribute> ParseAttributes(HtmlReader html)
         {
             var items = new List<HtmlAttribute>();
 
@@ -206,7 +206,7 @@ namespace Antix.Html
             return items;
         }
 
-        static string ParseElementOpener(HtmlQueue html)
+        static string ParseElementOpener(HtmlReader html)
         {
             if (html.Peek() != '<') return null;
 
@@ -228,7 +228,7 @@ namespace Antix.Html
             return string.Join("", word);
         }
 
-        static void TryConsumeElementCloser(string name, HtmlQueue html)
+        static void TryConsumeElementCloser(string name, HtmlReader html)
         {
             var closer = string.Format("</{0}>", name);
 
