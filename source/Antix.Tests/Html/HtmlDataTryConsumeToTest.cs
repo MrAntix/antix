@@ -32,6 +32,15 @@ namespace Antix.Tests.Html
         }
 
         [Fact]
+        public void consume_just_enough()
+        {
+            var reader = GetReader("abcd");
+
+            Assert.DoesNotThrow(() => reader.Consume(4));
+            Assert.False(reader.Any());
+        }
+
+        [Fact]
         public void try_consume_succeeds_and_consumes()
         {
             var reader = GetReader("abcd");

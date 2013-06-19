@@ -1,139 +1,100 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Antix.Html
 {
     public class HtmlReader : IHtmlReader
     {
-        readonly Queue<char> _data;
+        readonly string _html;
+        int _index;
 
-        public HtmlReader(string data)
+        public HtmlReader(
+            string html)
         {
-            _data = new Queue<char>(data);
+            _html = html;
+            _index = 0;
         }
 
         public bool Any()
         {
-            return _data.Any();
+            return _html.Length - _index > 0;
         }
 
         public char Peek()
         {
-            return _data.Any()
-                       ? _data.Peek()
-                       : (char) 0;
+            return
+                _index >= _html.Length
+                    ? (char) 0
+                    : _html[_index];
         }
 
-        public string Peek(int count)
+        public string Peek(
+            int count)
         {
-            return ToString(_data.Take(count));
+            if (_index+count > _html.Length)
+                throw new InvalidOperationException();
+
+            return _html.Substring(_index, count);
         }
 
         public char Consume()
         {
-            return _data.Dequeue();
+            return _html[_index++];
         }
 
         public string Consume(int count)
         {
-            return ToString(
-                Enumerable.Range(1, count)
-                          .Select(i => _data.Dequeue())
-                );
+            var consumed = Peek(count);
+            _index += count;
+
+            return consumed;
         }
 
-        public void Consume(Func<char,bool> match)
+        public void Consume(
+            Func<char, bool> match)
         {
-            while (_data.Any()
-                   && match(_data.Peek()))
-            {
-                _data.Dequeue();
-            }
-        }
-
-        public bool TryConsume(
-            string target,
-            bool seek, bool consumeTarget)
-        {
-            string consumed;
-            if (_data.Any()
-                && TryConsume(target, seek, out consumed))
-            {
-                if (consumeTarget)
-                    Consume(target.Length);
-
-                return true;
-            }
-
-            return false;
+            while (match(Peek()))
+                _index++;
         }
 
         public bool TryConsume(
-            string target,
-            bool seek, bool consumeTarget,
-            out string consumed)
+            string target, bool seek, bool consumeTarget)
         {
-            if (_data.Any()
-                && TryConsume(target, seek, out consumed))
-            {
-                if (consumeTarget)
-                    Consume(target.Length);
+            if (_index + target.Length > _html.Length) return false;
 
+            if (Peek(target.Length) == target)
+            {
+                if (consumeTarget) _index += target.Length;
                 return true;
             }
 
-            consumed = null;
-            return false;
-        }
-
-        bool TryConsume(string target,
-            bool seek,
-            out string consumed)
-        {
-            if (target.Length < _data.Count)
-            {
-
-                if (IsTarget(0, target))
+            if (seek)
+                for (var i = _index + 1; i < _html.Length; i++)
                 {
-                    consumed = string.Empty;
+                    if (_html.Substring(i, target.Length) != target) continue;
+
+                    _index = consumeTarget
+                                 ? i + target.Length
+                                 : i;
+
                     return true;
                 }
 
-                if (seek)
-                    for (var i = 1; i <= _data.Count - target.Length; i++)
-                    {
-                        if (!IsTarget(i, target)) continue;
+            return false;
+        }
 
-                        consumed = Consume(i);
-
-                        return true;
-                    }
+        public bool TryConsume(
+            string target, bool seek, bool consumeTarget, out string consumed)
+        {
+            var startIndex = _index;
+            if (TryConsume(target, seek, consumeTarget))
+            {
+                var endIndex = consumeTarget ? _index - target.Length : _index;
+                consumed = _html.Substring(startIndex, endIndex - startIndex);
+                return true;
             }
 
             consumed = null;
             return false;
-        }
-
-        bool IsTarget(
-            int dataIndex,
-            string target)
-        {
-            return
-                ToString(_data
-                             .Skip(dataIndex)
-                             .Take(target.Length))
-                == target;
-        }
-
-        static string ToString(IEnumerable<char> data)
-        {
-            return new string(data.ToArray());
-        }
-
-        public override string ToString()
-        {
-            return ToString(_data);
         }
     }
 }

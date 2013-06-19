@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antix.Testing">
+      <HintPath>..\packages\antix-testing.4.0.0-b01\lib\net40\Antix.Testing.dll</HintPath>
+    </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
@@ -62,6 +65,8 @@
     <Compile Include="Html\ParseElementTest.cs" />
     <Compile Include="Html\ParseWebTest.cs" />
     <Compile Include="Html\ParseTest.cs" />
+    <Compile Include="Html\Services\QueueHtmlReader.cs" />
+    <Compile Include="Html\Services\StringHtmlReader.cs" />
     <Compile Include="Html\TextTest.cs" />
     <Compile Include="Logging\ilogger_tests.cs" />
     <Compile Include="Security\Sessions\SessionServiceLoginTest.cs" />

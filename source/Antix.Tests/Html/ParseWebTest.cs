@@ -2,25 +2,48 @@
 using System.IO;
 using System.Linq;
 using Antix.Html;
+using Antix.Testing;
+using Antix.Tests.Html.Services;
 using Xunit;
 
 namespace Antix.Tests.Html
 {
     public class ParseWebTest
     {
-        [Fact]
-        public void load_google()
+        [Fact(Skip = "Waaaay too slow")]
+        public void parse_google_with_queue_based_reader()
         {
             var htmlString = FindResource("Resources.Google.htm");
 
-            var html = HtmlParser.Create()
+            IHtmlNode[] html = null;
+            var result = Benchmark.Run(
+                () => html = new HtmlParser(s => new QueueHtmlReader(s))
                                  .Parse(htmlString)
-                                 .ToArray();
+                                 .ToArray(),
+                5);
 
             Assert.NotNull(html);
             Assert.Equal(2, html.Count());
 
-            Console.Write(html.ToHtml());
+            Console.Write(result);
+        }
+
+        [Fact]
+        public void parse_google_with_string_based_reader()
+        {
+            var htmlString = FindResource("Resources.Google.htm");
+
+            IHtmlNode[] html = null;
+            var result = Benchmark.Run(
+                () => html = new HtmlParser(s => new StringHtmlReader(s))
+                                 .Parse(htmlString)
+                                 .ToArray(),
+                5);
+
+            Assert.NotNull(html);
+            Assert.Equal(2, html.Count());
+
+            Console.Write(result);
         }
 
         public string FindResource(string name)
