@@ -23,7 +23,7 @@ namespace Antix.Html
             return ParseElements(_createReader(html));
         }
 
-        public HtmlAttribute ParseAttribute(IHtmlReader html)
+        public static HtmlAttribute ParseAttribute(IHtmlReader html)
         {
             var name = ParseAttributeName(html);
             if (string.IsNullOrWhiteSpace(name)) return null;
@@ -119,7 +119,7 @@ namespace Antix.Html
             return string.Join("", word);
         }
 
-        public HtmlElement ParseElement(IHtmlReader html)
+        public static HtmlElement ParseElement(IHtmlReader html)
         {
             html.Consume(char.IsWhiteSpace);
 
@@ -166,7 +166,7 @@ namespace Antix.Html
             return element;
         }
 
-        IEnumerable<IHtmlNode> ParseElements(IHtmlReader html)
+        static IEnumerable<IHtmlNode> ParseElements(IHtmlReader html)
         {
             var items = new List<IHtmlNode>();
 
@@ -204,7 +204,7 @@ namespace Antix.Html
                 );
         }
 
-        IEnumerable<HtmlAttribute> ParseAttributes(IHtmlReader html)
+        static IEnumerable<HtmlAttribute> ParseAttributes(IHtmlReader html)
         {
             var items = new List<HtmlAttribute>();
 

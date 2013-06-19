@@ -62,9 +62,7 @@ namespace Antix.Tests.Html
         static void Exec(string html,
                          string expectedName = "anAttribute", string expectedValue = "aValue")
         {
-            var sut = new HtmlParser(s => new HtmlReader(s));
-
-            var result = sut.ParseAttribute(new HtmlReader(html));
+            var result = HtmlParser.ParseAttribute(new HtmlReader(html));
 
             Assert.NotNull(result);
             Assert.Equal(expectedName, result.Name);
@@ -85,9 +83,7 @@ namespace Antix.Tests.Html
 
         static void ExpectNull(string html)
         {
-            var sut = new HtmlParser(s => new HtmlReader(s));
-
-            var result = sut.ParseAttribute(new HtmlReader(html));
+            var result = HtmlParser.ParseAttribute(new HtmlReader(html));
 
             Assert.Null(result);
         }
@@ -97,16 +93,14 @@ namespace Antix.Tests.Html
         {
             const string value = "anAttribute anotherAttribute";
 
-            var sut = HtmlParser.Create();
+            var reader = new HtmlReader(value);
 
-            var queue = new HtmlReader(value);
-
-            var result = sut.ParseAttribute(queue);
+            var result = HtmlParser.ParseAttribute(reader);
             Assert.NotNull(result);
             Assert.Equal("anAttribute", result.Name);
             Assert.Equal(null, result.Value);
 
-            result = sut.ParseAttribute(queue);
+            result = HtmlParser.ParseAttribute(reader);
             Assert.NotNull(result);
             Assert.Equal("anotherAttribute", result.Name);
             Assert.Equal(null, result.Value);
