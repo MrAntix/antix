@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Antix.Html
@@ -42,10 +43,10 @@ namespace Antix.Html
                 );
         }
 
-        public void ConsumeWhiteSpace()
+        public void Consume(Func<char,bool> match)
         {
             while (_data.Any()
-                   && char.IsWhiteSpace(_data.Peek()))
+                   && match(_data.Peek()))
             {
                 _data.Dequeue();
             }

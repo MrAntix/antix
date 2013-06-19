@@ -110,7 +110,7 @@ namespace Antix.Html
 
         public HtmlElement ParseElement(HtmlQueue html)
         {
-            html.ConsumeWhiteSpace();
+            html.Consume(char.IsWhiteSpace);
 
             var name = ParseElementOpener(html);
             if (string.IsNullOrWhiteSpace(name)) return null;
@@ -128,7 +128,7 @@ namespace Antix.Html
                 var attributes = ParseAttributes(html);
                 element.Attributes.AddRange(attributes);
 
-                html.ConsumeWhiteSpace();
+                html.Consume(char.IsWhiteSpace);
 
                 if (html.TryConsume("/>", false, true))
                 {
