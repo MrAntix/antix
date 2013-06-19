@@ -147,7 +147,7 @@ namespace Antix.Tests.Html
             int expectedAttributeCount = 0,
             int expectedChildCount = 0)
         {
-            var sut = new HtmlParser();
+            var sut = HtmlParser.Create();
 
             var result = sut.ParseElement(new HtmlReader(html));
 

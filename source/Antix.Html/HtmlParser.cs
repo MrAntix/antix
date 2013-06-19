@@ -1,18 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Antix.Html
 {
     public class HtmlParser
     {
-        public static readonly HtmlParser Instance = new HtmlParser();
+        readonly Func<string, IHtmlReader> _createReader;
+
+        public HtmlParser(Func<string, IHtmlReader> createReader)
+        {
+            _createReader = createReader;
+        }
+
+        public static HtmlParser Create()
+        {
+            return new HtmlParser(s => new HtmlReader(s));
+        }
 
         public IEnumerable<IHtmlNode> Parse(string html)
         {
-            return ParseElements(new HtmlReader(html));
+            return ParseElements(_createReader(html));
         }
 
-        public HtmlAttribute ParseAttribute(HtmlReader html)
+        public HtmlAttribute ParseAttribute(IHtmlReader html)
         {
             var name = ParseAttributeName(html);
             if (string.IsNullOrWhiteSpace(name)) return null;
@@ -24,7 +35,7 @@ namespace Antix.Html
                 };
         }
 
-        static string ParseAttributeName(HtmlReader html)
+        static string ParseAttributeName(IHtmlReader html)
         {
             var word = new List<char>();
             var hasWhitespace = false;
@@ -48,7 +59,7 @@ namespace Antix.Html
             return string.Join("", word);
         }
 
-        static string ParseAttributeValue(HtmlReader html)
+        static string ParseAttributeValue(IHtmlReader html)
         {
             if (html.Peek() != '=') return null;
 
@@ -108,7 +119,7 @@ namespace Antix.Html
             return string.Join("", word);
         }
 
-        public HtmlElement ParseElement(HtmlReader html)
+        public HtmlElement ParseElement(IHtmlReader html)
         {
             html.Consume(char.IsWhiteSpace);
 
@@ -141,7 +152,7 @@ namespace Antix.Html
                 {
                     var textElement = ParseTextElement(
                         html, string.Concat("</", name, ">"), true);
-                    if (textElement!=null) element.Children.Add(textElement);
+                    if (textElement != null) element.Children.Add(textElement);
                 }
                 else if (!element.IsNonContainer)
                 {
@@ -155,7 +166,7 @@ namespace Antix.Html
             return element;
         }
 
-        IEnumerable<IHtmlNode> ParseElements(HtmlReader html)
+        IEnumerable<IHtmlNode> ParseElements(IHtmlReader html)
         {
             var items = new List<IHtmlNode>();
 
@@ -170,7 +181,7 @@ namespace Antix.Html
         }
 
         static IHtmlNode ParseTextElement(
-            HtmlReader html, 
+            IHtmlReader html,
             string upto, bool consumeTarget)
         {
             string text;
@@ -193,7 +204,7 @@ namespace Antix.Html
                 );
         }
 
-        IEnumerable<HtmlAttribute> ParseAttributes(HtmlReader html)
+        IEnumerable<HtmlAttribute> ParseAttributes(IHtmlReader html)
         {
             var items = new List<HtmlAttribute>();
 
@@ -206,7 +217,7 @@ namespace Antix.Html
             return items;
         }
 
-        static string ParseElementOpener(HtmlReader html)
+        static string ParseElementOpener(IHtmlReader html)
         {
             if (html.Peek() != '<') return null;
 
@@ -228,7 +239,7 @@ namespace Antix.Html
             return string.Join("", word);
         }
 
-        static void TryConsumeElementCloser(string name, HtmlReader html)
+        static void TryConsumeElementCloser(string name, IHtmlReader html)
         {
             var closer = string.Format("</{0}>", name);
 

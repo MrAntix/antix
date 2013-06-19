@@ -13,7 +13,9 @@ namespace Antix.Tests.Html
         {
             var htmlString = FindResource("Resources.Google.htm");
 
-            var html = HtmlParser.Instance.Parse(htmlString);
+            var html = HtmlParser.Create()
+                                 .Parse(htmlString)
+                                 .ToArray();
 
             Assert.NotNull(html);
             Assert.Equal(2, html.Count());

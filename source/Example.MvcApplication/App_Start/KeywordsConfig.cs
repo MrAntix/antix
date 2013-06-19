@@ -8,7 +8,7 @@ namespace Example.MvcApplication.App_Start
     {
         public static void RegisterKeywordIndexing(IKeywordsIndexer indexer)
         {
-            var htmlParser = new HtmlParser();
+            var htmlParser = HtmlParser.Create();
 
             indexer
                 .Entity<BlogEntryData>()

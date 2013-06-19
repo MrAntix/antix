@@ -13,7 +13,7 @@ namespace Antix.Tests.Html
             const string htmlString =
                 "<span>Line1<br>Line2</span>";
 
-            var htmlParser = new HtmlParser();
+            var htmlParser = HtmlParser.Create();
             var html = htmlParser.Parse(htmlString);
 
             var result = html.ToText();
@@ -27,7 +27,7 @@ namespace Antix.Tests.Html
             const string htmlString =
                 "<span>Line1 <b>Line2</b></span>";
 
-            var htmlParser = new HtmlParser();
+            var htmlParser = HtmlParser.Create();
             var html = htmlParser.Parse(htmlString);
 
             var result = html.ToText();

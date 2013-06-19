@@ -36,7 +36,7 @@ namespace Antix.Tests.Html
             string html,
             int expectedCount = 0)
         {
-            var sut = new HtmlParser();
+            var sut = new HtmlParser(s => new HtmlReader(s));
 
             var result = sut.Parse(html).ToArray();
 
