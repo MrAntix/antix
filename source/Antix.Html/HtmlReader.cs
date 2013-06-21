@@ -68,16 +68,18 @@ namespace Antix.Html
             }
 
             if (seek)
-                for (var i = _index + 1; i < _html.Length; i++)
+            {
+                var targetIndex = _html
+                    .IndexOf(target, _index + 1, StringComparison.Ordinal);
+                if (targetIndex > 0)
                 {
-                    if (_html.Substring(i, target.Length) != target) continue;
-
                     _index = consumeTarget
-                                 ? i + target.Length
-                                 : i;
+                                 ? targetIndex + target.Length
+                                 : targetIndex;
 
                     return true;
                 }
+            }
 
             return false;
         }
