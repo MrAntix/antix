@@ -57,20 +57,38 @@ namespace Antix.Html
         }
 
         public bool TryConsume(
+            string target, bool consumeTarget)
+        {
+            if (_index + target.Length > _html.Length) return false;
+
+            var i = 0;
+            while (i < target.Length
+                && _html[_index + i] == target[i])
+                i++;
+
+            if (i == target.Length)
+            {
+                if (consumeTarget) _index += target.Length;
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool TryConsume(
             string target, bool seek, bool consumeTarget)
         {
             if (_index + target.Length > _html.Length) return false;
 
-            if (Peek(target.Length) == target)
+            if (TryConsume(target, consumeTarget))
             {
-                if (consumeTarget) _index += target.Length;
                 return true;
             }
 
             if (seek)
             {
                 var targetIndex = _html
-                    .IndexOf(target, _index + 1, StringComparison.Ordinal);
+                    .IndexOf(target, _index + 1, StringComparison.OrdinalIgnoreCase);
                 if (targetIndex > 0)
                 {
                     _index = consumeTarget
