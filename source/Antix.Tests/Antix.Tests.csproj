@@ -61,6 +61,9 @@
     <Compile Include="Data\Keywords\WordSplitKeywordProcessorTest.cs" />
     <Compile Include="Drawing\FitTest.cs" />
     <Compile Include="Html\HtmlDataTryConsumeToTest.cs" />
+    <Compile Include="Html\HtmlExtensionsAttrGetTest.cs" />
+    <Compile Include="Html\HtmlExtensionsAttrSetTest.cs" />
+    <Compile Include="Html\HtmlExtensionsQueryTest.cs" />
     <Compile Include="Html\ParseAttributeTests.cs" />
     <Compile Include="Html\ParseElementTest.cs" />
     <Compile Include="Html\ParseWebTest.cs" />

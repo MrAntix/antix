@@ -73,26 +73,31 @@ namespace Antix.Html
                 node.ToString(output);
         }
 
-        public static IEnumerable<HtmlElement> Query(
-            this IEnumerable<IHtmlNode> nodes, Func<HtmlElement, bool> clause)
+        internal static void Search<T>(
+            this IEnumerable<IHtmlNode> nodes,
+            Func<HtmlElement, IEnumerable<T>> getMatches,
+            ICollection<T> matches)
         {
-            var matches = new List<HtmlElement>();
+            foreach (var node in nodes.OfType<HtmlElement>())
+            {
+                foreach (var match in getMatches(node))
+                    matches.Add(match);
 
-            Query(nodes, clause, matches);
-
-            return matches;
+                Search(node.Children, getMatches, matches);
+            }
         }
 
-        static void Query(
-            this IEnumerable<IHtmlNode> nodes, Func<HtmlElement, bool> clause,
+        internal static void Search(
+            this IEnumerable<IHtmlNode> nodes,
+            Func<HtmlElement, bool> isMatch,
             ICollection<HtmlElement> matches)
         {
             foreach (var node in nodes.OfType<HtmlElement>())
             {
-                if (clause(node))
+                if (isMatch(node))
                     matches.Add(node);
 
-                Query(node.Children, clause, matches);
+                Search(node.Children, isMatch, matches);
             }
         }
     }
