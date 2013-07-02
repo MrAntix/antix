@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 
@@ -69,6 +71,29 @@ namespace Antix.Html
         {
             foreach (var node in nodes)
                 node.ToString(output);
+        }
+
+        public static IEnumerable<HtmlElement> Query(
+            this IEnumerable<IHtmlNode> nodes, Func<HtmlElement, bool> clause)
+        {
+            var matches = new List<HtmlElement>();
+
+            Query(nodes, clause, matches);
+
+            return matches;
+        }
+
+        static void Query(
+            this IEnumerable<IHtmlNode> nodes, Func<HtmlElement, bool> clause,
+            ICollection<HtmlElement> matches)
+        {
+            foreach (var node in nodes.OfType<HtmlElement>())
+            {
+                if (clause(node))
+                    matches.Add(node);
+
+                Query(node.Children, clause, matches);
+            }
         }
     }
 }
