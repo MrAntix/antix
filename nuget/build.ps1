@@ -27,8 +27,8 @@ if ($apiKey -ne $null) {
     nuget SetApiKey $apiKey
 
     nuget push $destinationPath\Antix.code.$version.nupkg
-    nuget push $destinationPath\Antix.Keywords.code.$version.nupkg
-    nuget push $destinationPath\Antix.Keywords.EF.code.$version.nupkg
+    nuget push $destinationPath\Antix.Data.Keywords.code.$version.nupkg
+    nuget push $destinationPath\Antix.Data.Keywords.EF.code.$version.nupkg
     nuget push $destinationPath\Antix.Drawing.code.$version.nupkg
     nuget push $destinationPath\Antix.Html.code.$version.nupkg
     nuget push $destinationPath\Antix.Web.code.$version.nupkg
