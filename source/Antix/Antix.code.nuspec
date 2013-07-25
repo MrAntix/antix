@@ -16,8 +16,9 @@
   </metadata>
   <files>
     <!--<file src="**\*.cs" target="content\Antix" exclude="bin\*.cs;obj\*.cs;**\AssemblyInfo.cs" />-->
-    <!--<file src="**" target="content\Antix" exclude="**\*.dll;**\*.designer.cs;**\*.csproj;**\*.pdb;**\*.user;**\*.vspscc;bin\*.cs;bin\*.aspx;bin\*.config;bin\*.asax;bin\*.pubxml" />-->
+    <!--<file src="**" target="content\Antix" exclude="bin\;obj\;**\*.designer.cs;**\*.csproj" />-->
     <file src="StringExtensions.cs" target="content\Antix" />
-    <file src="IO\IOExtensions.cs" target="content\Antix\IO" />
+    <file src="IO\*.cs" target="content\Antix\IO" />
+    <file src="Logging\*.cs" target="content\Antix\Logging" />
   </files>
 </package>
