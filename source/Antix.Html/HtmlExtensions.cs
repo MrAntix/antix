@@ -18,6 +18,16 @@ namespace Antix.Html
             return output.ToString().Trim();
         }
 
+        public static string ToText(
+            this IHtmlNode node)
+        {
+            var output = new StringBuilder();
+
+            node.ToText(output);
+
+            return output.ToString().Trim();
+        }
+
         public static void ToText(
             this IEnumerable<IHtmlNode> nodes, StringBuilder output)
         {
