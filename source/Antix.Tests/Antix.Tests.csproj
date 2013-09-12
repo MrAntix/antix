@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Security\Users\" />
+    <Folder Include="WebApi\Upload\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Html\Resources\SmallPage.htm" />

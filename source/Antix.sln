@@ -31,6 +31,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.Data", "Antix.Data\An
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.MvcApplication.Tests", "Example.MvcApplication.Tests\Example.MvcApplication.Tests.csproj", "{9F983EC4-9DDF-438E-90CC-4BF3E42E9B2F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.WebApi.Upload", "Antix.WebApi.Upload\Antix.WebApi.Upload.csproj", "{F5C43848-0A31-4675-9A61-DB165C95E7CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.WebApi.Upload.Azure", "Antix.WebApi.Upload.Azure\Antix.WebApi.Upload.Azure.csproj", "{8332B3FC-667D-4C5A-9189-95BCE7A95AA8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +81,14 @@ Global
 		{9F983EC4-9DDF-438E-90CC-4BF3E42E9B2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F983EC4-9DDF-438E-90CC-4BF3E42E9B2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F983EC4-9DDF-438E-90CC-4BF3E42E9B2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5C43848-0A31-4675-9A61-DB165C95E7CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5C43848-0A31-4675-9A61-DB165C95E7CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5C43848-0A31-4675-9A61-DB165C95E7CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5C43848-0A31-4675-9A61-DB165C95E7CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8332B3FC-667D-4C5A-9189-95BCE7A95AA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8332B3FC-667D-4C5A-9189-95BCE7A95AA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8332B3FC-667D-4C5A-9189-95BCE7A95AA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8332B3FC-667D-4C5A-9189-95BCE7A95AA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
