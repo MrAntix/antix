@@ -1,18 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Example.MvcApplication.App_Start.Data;
+using Example.MvcApplication.Services.Models;
 
 namespace Example.MvcApplication.Services
 {
     public interface IBlogReadService
     {
-        Task<IEnumerable<T>> SearchAsync<T>(
-            string text, bool includeUnpublished, int index, int pageSize, 
-            Expression<Func<BlogEntryData, T>> projection);
-
-        T TryGetByIdentifier<T>(string identifier, 
-            Expression<Func<BlogEntryData, T>> projection);
+        Task<BlogSearch> SearchAsync(BlogSearch criteria);
+        BlogEntry TryGetByIdentifier(string identifier);
     }
 }

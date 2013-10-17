@@ -1,14 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
+using Example.MvcApplication.Services;
+using Example.MvcApplication.Services.Models;
 
 namespace Example.MvcApplication.Api.Controllers
 {
     public class BlogController : ApiController
     {
-        // GET api/blog
-        public IEnumerable<string> Get()
+        readonly IBlogReadService _readService;
+
+        public BlogController(IBlogReadService readService)
         {
-            return new[] {"value1", "value2"};
+            _readService = readService;
+        }
+
+        public async Task<BlogSearch> Get(
+            [FromBody] BlogSearch model)
+        {
+            var results = await _readService.SearchAsync(model);
+
+
+            return model;
         }
 
         // GET api/blog/5
