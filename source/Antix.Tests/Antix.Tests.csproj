@@ -76,6 +76,7 @@
     <Compile Include="Security\Sessions\SessionServiceLogoutTest.cs" />
     <Compile Include="ToSafeFileNameTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TrimEndTests.cs" />
     <Compile Include="Web\PersistentOutputCacheTests.cs" />
   </ItemGroup>
   <ItemGroup>

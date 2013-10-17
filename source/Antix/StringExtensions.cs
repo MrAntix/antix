@@ -11,8 +11,14 @@ namespace Antix
             if (string.IsNullOrEmpty(value)
                 || string.IsNullOrEmpty(trimString)) return value;
 
-            return value.Substring(0,
-                                   value.LastIndexOf(trimString, comparisonType));
+            var lastIndex = value.Length;
+            int index;
+            while ((index = value.LastIndexOf(trimString, lastIndex, comparisonType)) != -1)
+                lastIndex = index;
+
+            return lastIndex != value.Length
+                       ? value.Substring(0, lastIndex)
+                       : value;
         }
     }
 }
