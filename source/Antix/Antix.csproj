@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StringSearch.cs" />
     <Compile Include="IO\IOExtensions.cs" />
     <Compile Include="Logging\ILogAdapter.cs" />
     <Compile Include="Logging\LoggerExtensionsDebug.cs" />
