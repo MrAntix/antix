@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace Antix
 {
@@ -183,6 +184,67 @@ namespace Antix
         public static string Tail(this string text, string uptoItem)
         {
             return Tail(text, uptoItem, StringComparison.CurrentCulture);
+        }
+
+
+        /// <summary>
+        ///   <para>Case insensitive contains</para>
+        /// </summary>
+        /// <param name = "text">Text to check</param>
+        /// <param name = "value">Value to check for</param>
+        /// <param name = "comparisonType">Comparison Type</param>
+        /// <returns>True if matched</returns>
+        public static bool Contains(this string text, string value, StringComparison comparisonType)
+        {
+            if (string.IsNullOrEmpty(text)) return false;
+            if (string.IsNullOrEmpty(value)) return true;
+
+            return text.IndexOf(value, comparisonType) > -1;
+        }
+
+        /// <summary>
+        ///   <para>Case insensitive replace</para>
+        /// </summary>
+        /// <param name = "text">Incoming text string</param>
+        /// <param name = "oldValue">Token to be replaced</param>
+        /// <param name = "newValue">Replacement token</param>
+        /// <param name = "comparisonType">Comparison provider</param>
+        /// <returns>Resultant text</returns>
+        public static string Replace(this string text, string oldValue, string newValue, StringComparison comparisonType)
+        {
+            if (text == null)
+            {
+                return null;
+            }
+
+            if (String.IsNullOrEmpty(oldValue))
+            {
+                return text;
+            }
+
+            var length = oldValue.Length;
+            var patternIndex = -1;
+            var lastIndex = 0;
+            var result = new StringBuilder();
+
+            while (true)
+            {
+                patternIndex = text.IndexOf(oldValue, patternIndex + 1, comparisonType);
+
+                if (patternIndex < 0)
+                {
+                    result.Append(text, lastIndex, text.Length - lastIndex);
+
+                    break;
+                }
+
+                result.Append(text, lastIndex, patternIndex - lastIndex);
+                result.Append(newValue);
+
+                lastIndex = patternIndex + length;
+            }
+
+            return result.ToString();
         }
     }
 }
