@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Configuration;
 using Antix.Data.Static;
 
 using Xunit;
@@ -12,27 +12,13 @@ namespace Antix.Tests.Data.Static
         //public void load_defaults()
         //{
         //    var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-
-        //    var section = (PhoneConfigurationSection) config.GetSection(PhoneConfigurationSection.CONFIG_PATH);
+        //    var section = (PhoneConfigurationSection)config.GetSection(PhoneConfigurationSection.CONFIG_PATH);
 
         //    if (section == null)
         //        section = new PhoneConfigurationSection();
 
         //    section.SectionInformation.ForceSave = true;
-
-        //    //section.Prefixes.Clear();
-        //    //section.Prefixes.Add(new PhonePrefixSetting
-        //    //    {
-        //    //        CountryCode = "uk",
-        //    //        CountryDialing = "44",
-        //    //        InternationalDirectDialing = "00",
-        //    //        NationalDirectDialing = "0"
-        //    //    });
-
         //    config.Save(ConfigurationSaveMode.Full);
-
-        //    //var result = PhoneSettings.Default;
-        //    //Assert.NotNull(result);
         //}
 
         [Fact]

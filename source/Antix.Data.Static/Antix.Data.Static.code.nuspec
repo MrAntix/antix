@@ -19,5 +19,6 @@
     <file src="PhoneConfigurationSection.cs" target="content\Antix\Data\Static" />
     <file src="PhoneCountryConfiguration.cs" target="content\Antix\Data\Static" />
     <file src="PhoneCountryConfigurations.cs" target="content\Antix\Data\Static" />
+    <file src="config-example.txt" target="content\Antix\Data\Static" />
   </files>
 </package>

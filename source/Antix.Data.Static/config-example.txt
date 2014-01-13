@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <configSections>
+    <sectionGroup name="staticData">
+      <section name="phoneSettings" 
+		type="Antix.Data.Static.PhoneConfigurationSection, [TODO: Your assembly name]" 
+		requirePermission="false" allowLocation="true" allowDefinition="Everywhere" />
+    </sectionGroup>
+  </configSections>
+
+  <staticData>
+    <phoneSettings>
+      <countries>
+        <clear />
+        <add country="GB" idd="00" ndd="0" cd="44" />
+      </countries>
+    </phoneSettings>
+  </staticData>
+</configuration>
