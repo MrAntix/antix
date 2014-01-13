@@ -59,6 +59,7 @@
     <Compile Include="Data\Keywords\KeywordIndexerTests.cs" />
     <Compile Include="Data\Keywords\KeywordsBuilderTest.cs" />
     <Compile Include="Data\Keywords\WordSplitKeywordProcessorTest.cs" />
+    <Compile Include="Data\Static\PhoneTests.cs" />
     <Compile Include="Drawing\FitTest.cs" />
     <Compile Include="Html\HtmlDataTryConsumeToTest.cs" />
     <Compile Include="Html\HtmlExtensionsAttrGetTest.cs" />
@@ -81,12 +82,17 @@
     <Compile Include="Web\PersistentOutputCacheTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Antix.Data.Keywords\Antix.Data.Keywords.csproj">
       <Project>{1DED5C8F-85D6-4B11-8E51-FB5D8F984550}</Project>
       <Name>Antix.Data.Keywords</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Antix.Data.Static\Antix.Data.Static.csproj">
+      <Project>{1C61737B-E20F-47B0-ABD5-F36805E9EF85}</Project>
+      <Name>Antix.Data.Static</Name>
     </ProjectReference>
     <ProjectReference Include="..\Antix.Drawing\Antix.Drawing.csproj">
       <Project>{7106F36D-65FB-473A-A4E7-80F5FFDCC016}</Project>
