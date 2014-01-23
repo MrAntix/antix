@@ -75,6 +75,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logging\Log.cs" />
+    <Compile Include="Logging\Log.Delegates.cs" />
+    <Compile Include="Logging\Log.Extensions.cs" />
     <Compile Include="StringSearch.cs" />
     <Compile Include="IO\IOExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -95,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <Compile Include="Logging\Log.Event.cs" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
