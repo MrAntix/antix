@@ -156,7 +156,7 @@
     <Compile Include="App_Start\Data\UserData.cs" />
     <Compile Include="App_Start\Data\UserSessionData.cs" />
     <Compile Include="App_Start\KeywordsConfig.cs" />
-    <Compile Include="App_Start\Logging\ElmahLogAdapter.cs" />
+    <Compile Include="App_Start\Logging\ElmahLog.cs" />
     <Compile Include="App_Start\Services\SessionDataService.cs" />
     <Compile Include="App_Start\Stemming\LocalEnglishStemmer.cs" />
     <Compile Include="Bootstrapper.cs" />

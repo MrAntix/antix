@@ -72,7 +72,7 @@
     <Compile Include="Html\Services\QueueHtmlReader.cs" />
     <Compile Include="Html\Services\StringHtmlReader.cs" />
     <Compile Include="Html\TextTest.cs" />
-    <Compile Include="Logging\ilogger_tests.cs" />
+    <Compile Include="Logging\log_tests.cs" />
     <Compile Include="Security\Sessions\SessionServiceLoginTest.cs" />
     <Compile Include="Security\Sessions\SessionServiceLogoutTest.cs" />
     <Compile Include="StringSearchTests.cs" />
