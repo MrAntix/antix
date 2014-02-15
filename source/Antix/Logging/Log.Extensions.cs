@@ -5,7 +5,7 @@ namespace Antix.Logging
     public static partial class Log
     {
         public static void Debug(
-            this Delegate log, Level level, Action<Message> getMessage)
+            this Delegate log, Action<Message> getMessage)
         {
             Write(log, Level.Debug, getMessage);
         }
