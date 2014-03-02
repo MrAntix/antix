@@ -12,7 +12,7 @@ namespace Antix.Logging
                 {
                     var m = string.Format(f, a);
                     Console.WriteLine(
-                        CONSOLE_MESSAGE_FORMAT, DateTime.UtcNow.Millisecond, l, m);
+                        CONSOLE_MESSAGE_FORMAT, DateTime.UtcNow, l, m);
                     if (ex != null)
                     {
                         Console.WriteLine(ex);
