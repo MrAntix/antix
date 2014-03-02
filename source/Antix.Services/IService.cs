@@ -1,21 +1,24 @@
-﻿namespace Antix.Services
+﻿using System;
+using System.Threading.Tasks;
+
+namespace Antix.Services
 {
-    public interface IService
+    public interface IService : IDisposable
     {
     }
 
     public interface IServiceIn<in TIn> : IService
     {
-        void Execute(TIn model);
+        Task ExecuteAsync(TIn model);
     }
 
-    public interface IServiceInOut<in TIn, out TOut> : IService
+    public interface IServiceInOut<in TIn, TOut> : IService
     {
-        TOut Execute(TIn model);
+        Task<TOut> ExecuteAsync(TIn model);
     }
 
-    public interface IServiceOut<out TOut> : IService
+    public interface IServiceOut<TOut> : IService
     {
-        TOut Execute();
+        Task<TOut> ExecuteAsync();
     }
 }

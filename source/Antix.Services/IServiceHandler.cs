@@ -1,9 +1,11 @@
-﻿namespace Antix.Services
+﻿using System.Threading.Tasks;
+
+namespace Antix.Services
 {
     public interface IServiceHandler
     {
-        void Handle<TIn>(TIn model);
-        TOut Handle<TIn, TOut>(TIn model);
-        TOut Handle<TOut>();
+        Task HandleAsync<TIn>(TIn model);
+        Task<TOut> HandleAsync<TIn, TOut>(TIn model);
+        Task<TOut> HandleAsync<TOut>();
     }
 }

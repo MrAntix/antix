@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Antix.Services
 {
@@ -15,12 +16,12 @@ namespace Antix.Services
             _release = release;
         }
 
-        public void Handle<TIn>(TIn model)
+        public async Task HandleAsync<TIn>(TIn model)
         {
             var service = Resolve<IServiceIn<TIn>>();
             try
             {
-                service.Execute(model);
+                await service.ExecuteAsync(model);
             }
             finally
             {
@@ -28,12 +29,12 @@ namespace Antix.Services
             }
         }
 
-        public TOut Handle<TIn, TOut>(TIn model)
+        public async Task<TOut> HandleAsync<TIn, TOut>(TIn model)
         {
             var service = Resolve<IServiceInOut<TIn, TOut>>();
             try
             {
-                return service.Execute(model);
+                return await service.ExecuteAsync(model);
             }
             finally
             {
@@ -41,12 +42,12 @@ namespace Antix.Services
             }
         }
 
-        public TOut Handle<TOut>()
+        public async Task<TOut> HandleAsync<TOut>()
         {
             var service = Resolve<IServiceOut<TOut>>();
             try
             {
-                return service.Execute();
+                return await service.ExecuteAsync();
             }
             finally
             {
