@@ -83,6 +83,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Antix.Security\Antix.Security.csproj">
+      <Project>{098AC085-ED76-4EF7-BA88-99AEC66E4E35}</Project>
+      <Name>Antix.Security</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Antix\Antix.csproj">
       <Project>{2CBCF1F8-DA37-4E27-B785-819633D50E21}</Project>
       <Name>Antix</Name>

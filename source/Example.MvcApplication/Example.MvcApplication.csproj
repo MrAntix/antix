@@ -258,6 +258,10 @@
       <Project>{4F3C8CC9-B7EA-4506-8DF8-A1EEA81556DF}</Project>
       <Name>Antix.Html</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Antix.Security\Antix.Security.csproj">
+      <Project>{098AC085-ED76-4EF7-BA88-99AEC66E4E35}</Project>
+      <Name>Antix.Security</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Antix\Antix.csproj">
       <Project>{2cbcf1f8-da37-4e27-b785-819633d50e21}</Project>
       <Name>Antix</Name>

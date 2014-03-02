@@ -20,6 +20,8 @@ nuget pack "$sourcePath\Antix.Data.Keywords.EF\Antix.Data.Keywords.EF.code.nuspe
 nuget pack "$sourcePath\Antix.Data.Static\Antix.Data.Static.code.nuspec" -Properties version=$version -OutputDirectory "$destinationPath"
 nuget pack "$sourcePath\Antix.Drawing\Antix.Drawing.code.nuspec" -Properties version=$version -OutputDirectory "$destinationPath"
 nuget pack "$sourcePath\Antix.Html\Antix.Html.code.nuspec" -Properties version=$version -OutputDirectory "$destinationPath"
+nuget pack "$sourcePath\Antix.Services\Antix.Services.code.nuspec" -Properties version=$version -OutputDirectory "$destinationPath"
+nuget pack "$sourcePath\Antix.Security\Antix.Security.code.nuspec" -Properties version=$version -OutputDirectory "$destinationPath"
 nuget pack "$sourcePath\Antix.Web\Antix.Web.code.nuspec" -Properties version=$version -OutputDirectory "$destinationPath"
 
 if ($apiKey -ne $null) {
@@ -33,6 +35,8 @@ if ($apiKey -ne $null) {
     nuget push $destinationPath\Antix.Data.Static.code.$version.nupkg
     nuget push $destinationPath\Antix.Drawing.code.$version.nupkg
     nuget push $destinationPath\Antix.Html.code.$version.nupkg
+    nuget push $destinationPath\Antix.Services.code.$version.nupkg
+    nuget push $destinationPath\Antix.Security.code.$version.nupkg
     nuget push $destinationPath\Antix.Web.code.$version.nupkg
 }
 

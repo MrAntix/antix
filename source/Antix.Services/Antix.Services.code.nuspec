@@ -1,22 +1,20 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Antix.Data.Keywords.EF.code</id>
+    <id>Antix.Services.code</id>
     <version>$version$</version>
-    <title>Antix Data Keywords EF Code</title>
+    <title>Antix Services Code</title>
     <authors>Anthony Johnston</authors>
     <owners>Antix Software Limited</owners>
     <licenseUrl>https://raw.github.com/MrAntix/antix/master/LICENCE.md</licenseUrl>
     <projectUrl>https://github.com/MrAntix/antix/</projectUrl>
     <iconUrl>https://raw.github.com/MrAntix/antix/master/graphics/antix_32x32.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A keyword indexing framework for Entity Frameword</description>
+    <description>Antix Common Services Code</description>
     <copyright>Copyright Antix Software Limited 2013</copyright>
-    <tags>Keyword indexing, EntityFramework</tags>
+    <tags>Common Code, Services</tags>
     <dependencies>
       <dependency id="Antix.code" version="$version$"/>
-      <dependency id="Antix.Data.Keywords.code" version="$version$"/>
-      <dependency id="EntityFramework" version="5.0.0"/>
     </dependencies>
   </metadata>
   <files>

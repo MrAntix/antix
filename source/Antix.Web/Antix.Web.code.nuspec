@@ -14,10 +14,10 @@
     <copyright>Copyright Antix Software Limited 2013</copyright>
     <tags>Common Code, Web</tags>
     <dependencies>
-      <dependency id="Antix.code"/>
+      <dependency id="Antix.code" version="$version$"/>
     </dependencies>
   </metadata>
   <files>
-    <file src="Caching\*.cs" target="content\Antix\Web\Caching" />
+    <file src="**" target="content\Antix" exclude="bin\**\*;obj\**\*;**\assemblyinfo.cs;**\*.designer.cs;**\*.csproj;**\*.user;**\*.config" />
   </files>
 </package>

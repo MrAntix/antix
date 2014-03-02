@@ -1,7 +1,6 @@
 using System;
 using System.Security.Cryptography;
 using System.Text;
-using Antix.Properties;
 
 namespace Antix.Security
 {
@@ -27,7 +26,7 @@ namespace Antix.Security
         {
             var bytes = _service.ComputeHash(
                 Encoding.Default.GetBytes(
-                    string.Concat(value, Settings.Default.SecurityHashSalt)));
+                    string.Concat(value, SecuritySettings.Default.SecurityHashSalt)));
 
             return base64Encode
                        ? Convert.ToBase64String(bytes)

@@ -12,13 +12,9 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Antix Common Code</description>
     <copyright>Copyright Antix Software Limited 2013</copyright>
-    <tags>Common Code, Strings</tags>
+    <tags>Common Code, IO, Logging, Strings</tags>
   </metadata>
   <files>
-    <!--<file src="**\*.cs" target="content\Antix" exclude="bin\*.cs;obj\*.cs;**\AssemblyInfo.cs" />-->
-    <!--<file src="**" target="content\Antix" exclude="bin\;obj\;**\*.designer.cs;**\*.csproj" />-->
-    <file src="StringExtensions.cs" target="content\Antix" />
-    <file src="IO\*.cs" target="content\Antix\IO" />
-    <file src="Logging\*.cs" target="content\Antix\Logging" />
+    <file src="**" target="content\Antix" exclude="bin\**\*;obj\**\*;**\assemblyinfo.cs;**\*.designer.cs;**\*.csproj;**\*.user;**\*.config" />
   </files>
 </package>

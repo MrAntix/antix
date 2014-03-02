@@ -15,9 +15,6 @@
     <tags>Common Code, Drawing, Resize Images, Cropping Images</tags>
   </metadata>
   <files>
-    <file src="DrawingExtensions.cs" target="content\Antix\Drawing" />
-    <file src="ImageTransformOptions.cs" target="content\Antix\Drawing" />
-    <file src="JpegImageTranformOptions.cs" target="content\Antix\Drawing" />
-    <file src="PngImageTranformOptions.cs" target="content\Antix\Drawing" />
+    <file src="**" target="content\Antix" exclude="bin\**\*;obj\**\*;**\assemblyinfo.cs;**\*.designer.cs;**\*.csproj;**\*.user;**\*.config" />
   </files>
 </package>
