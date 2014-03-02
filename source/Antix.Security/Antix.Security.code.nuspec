@@ -18,7 +18,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="**" target="content\Antix" exclude="bin\**\*;obj\**\*;**\assemblyinfo.cs;**\*.designer.cs;**\*.csproj;**\*.user;**\*.config" />
+    <file src="**" target="content\Security" exclude="bin\**\*;obj\**\*;**\assemblyinfo.cs;**\*.designer.cs;**\*.csproj;**\*.user;**\*.config" />
     <file src="..\..\nuget\Install.ps1" target="tools" />
   </files>
 </package>

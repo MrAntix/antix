@@ -18,6 +18,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="**" target="content\Antix" exclude="bin\**\*;obj\**\*;**\assemblyinfo.cs;**\*.designer.cs;**\*.csproj;**\*.user;**\*.config" />
+    <file src="**" target="content\Keywords" exclude="bin\**\*;obj\**\*;**\assemblyinfo.cs;**\*.designer.cs;**\*.csproj;**\*.user;**\*.config" />
   </files>
 </package>

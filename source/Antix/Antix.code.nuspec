@@ -15,6 +15,6 @@
     <tags>Common Code, IO, Logging, Strings</tags>
   </metadata>
   <files>
-    <file src="**" target="content\Antix" exclude="bin\**\*;obj\**\*;**\assemblyinfo.cs;**\*.designer.cs;**\*.csproj;**\*.user;**\*.config" />
+    <file src="**" target="content" exclude="bin\**\*;obj\**\*;**\assemblyinfo.cs;**\*.designer.cs;**\*.csproj;**\*.user;**\*.config" />
   </files>
 </package>
