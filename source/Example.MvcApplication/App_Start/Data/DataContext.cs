@@ -44,7 +44,7 @@ namespace Example.MvcApplication.App_Start.Data
 
         public override int SaveChanges()
         {
-            _keywordsManager.UpdateKeywords(this);
+            _keywordsManager.UpdateKeywordsAsync(this).Wait();
 
             return base.SaveChanges();
         }

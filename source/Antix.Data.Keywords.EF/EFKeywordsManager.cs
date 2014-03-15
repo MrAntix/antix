@@ -1,6 +1,8 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Threading.Tasks;
+
 using Antix.Data.Keywords.EF.Entities;
 using Antix.Data.Keywords.Processing;
 
@@ -14,7 +16,7 @@ namespace Antix.Data.Keywords.EF
         {
         }
 
-        public void UpdateKeywords(DbContext context)
+        public async Task UpdateKeywordsAsync(DbContext context)
         {
             var objectContext = ((IObjectContextAdapter) context).ObjectContext;
 
@@ -27,20 +29,34 @@ namespace Antix.Data.Keywords.EF
             if (!entities.Any()) return;
 
             var keywordsSet = context.Set<Keyword>();
+            var localKeywords =
+                keywordsSet.Local.Select(k => k.Value);
+
             foreach (var entityState in entities)
             {
                 UpdateEntityKeywords((IndexedEntity) entityState.Entity, keywordsSet);
             }
 
-            objectContext.DetectChanges();
-            objectContext.SaveChanges();
-
-            foreach (var keyword in keywordsSet.Local)
-            {
-                keyword.Frequency = context
+            var keywords =
+                await
+                context
                     .Set<IndexedEntityKeyword>()
-                    .Where(ek => ek.Keyword.Id == keyword.Id)
-                    .Sum(ek => ek.Frequency);
+                    .Where(ek => localKeywords.Any(value => ek.Keyword.Value == value))
+                    .Select(ek => new
+                        {
+                            ek.Keyword.Value,
+                            ek.Frequency
+                        })
+                    .ToArrayAsync();
+
+            if (keywords.Length > 0)
+            {
+                foreach (var keyword in keywordsSet.Local)
+                {
+                    keyword.Frequency = keywords
+                        .Where(ek => ek.Value == keyword.Value)
+                        .Sum(ek => ek.Frequency);
+                }
             }
 
             objectContext.DetectChanges();
@@ -87,7 +103,7 @@ namespace Antix.Data.Keywords.EF
                 }
             }
 
-            foreach (var entityKeyword in 
+            foreach (var entityKeyword in
                 entity.Keywords.Where(ek => ek.Frequency == 0))
                 entity.Keywords.Remove(entityKeyword);
         }
