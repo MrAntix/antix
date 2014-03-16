@@ -19,7 +19,7 @@ namespace Antix.Data.Keywords.EF
 
         public async Task UpdateKeywordsAsync(DbContext context)
         {
-            var objectContext = ((IObjectContextAdapter) context).ObjectContext;
+            var objectContext = ((IObjectContextAdapter)context).ObjectContext;
 
             var entities =
                 objectContext.ObjectStateManager.GetObjectStateEntries(
@@ -31,21 +31,21 @@ namespace Antix.Data.Keywords.EF
             if (!entities.Any()) return;
 
             // get all the entities and their new keywords
-            var entityNewKeywordValues = (from entity in entities
-                                          select new
-                                              {
-                                                  entity,
-                                                  keywordValues = GetKeywords(entity)
-                                              })
+            var entityKeywordValues = (from entity in entities
+                                       select new
+                                       {
+                                           entity,
+                                           keywordValues = GetKeywords(entity)
+                                       })
                 .ToArray();
 
             var keywordsSet = context.Set<Keyword>();
-            var existingKeywords = GetExistingKeywords(
+            var existingKeywords = await GetExistingKeywordsAsync(
                 keywordsSet,
-                entityNewKeywordValues.SelectMany(e => e.keywordValues)
-                );
+                entityKeywordValues.SelectMany(e => e.keywordValues)
+                                             );
 
-            foreach (var entityNewKeyword in entityNewKeywordValues)
+            foreach (var entityNewKeyword in entityKeywordValues)
             {
                 UpdateEntityKeyword
                     (entityNewKeyword.entity,
@@ -57,7 +57,7 @@ namespace Antix.Data.Keywords.EF
             objectContext.DetectChanges();
         }
 
-        static Keyword[] GetExistingKeywords(
+        static async Task<Keyword[]> GetExistingKeywordsAsync(
             IDbSet<Keyword> keywordsSet,
             IEnumerable<string> keywordValues)
         {
@@ -66,8 +66,12 @@ namespace Antix.Data.Keywords.EF
             var keywordValuesToLoad = keywordValues
                 .Except(localKeywords.Select(k => k.Value));
 
+            var loadedKeywords = await keywordsSet
+                .Where(k => keywordValuesToLoad.Contains(k.Value))
+                .ToArrayAsync();
+
             return localKeywords
-                .Concat(keywordsSet.Where(k => keywordValuesToLoad.Contains(k.Value)))
+                .Concat(loadedKeywords)
                 .ToArray();
         }
 
@@ -95,9 +99,9 @@ namespace Antix.Data.Keywords.EF
                     if (keyword == null)
                     {
                         keyword = new Keyword
-                            {
-                                Value = keywordValue
-                            };
+                        {
+                            Value = keywordValue
+                        };
                         keywordsSet.Add(keyword);
                     }
                     entityKeyword.Keyword = keyword;
