@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,67 +24,73 @@ namespace Antix.Data.Keywords.EF
             var entities =
                 objectContext.ObjectStateManager.GetObjectStateEntries(
                     EntityState.Added | EntityState.Modified)
-                             .Where(es => es.Entity is IndexedEntity)
+                             .Select(es => es.Entity)
+                             .OfType<IndexedEntity>()
                              .ToArray();
 
             if (!entities.Any()) return;
 
+            // get all the entities and their new keywords
+            var entityNewKeywordValues = (from entity in entities
+                                          select new
+                                              {
+                                                  entity,
+                                                  keywordValues = GetKeywords(entity)
+                                              })
+                .ToArray();
+
             var keywordsSet = context.Set<Keyword>();
-            var localKeywords =
-                keywordsSet.Local.Select(k => k.Value);
+            var existingKeywords = GetExistingKeywords(
+                keywordsSet,
+                entityNewKeywordValues.SelectMany(e => e.keywordValues)
+                );
 
-            foreach (var entityState in entities)
+            foreach (var entityNewKeyword in entityNewKeywordValues)
             {
-                UpdateEntityKeywords((IndexedEntity) entityState.Entity, keywordsSet);
-            }
-
-            var keywords =
-                await
-                context
-                    .Set<IndexedEntityKeyword>()
-                    .Where(ek => localKeywords.Any(value => ek.Keyword.Value == value))
-                    .Select(ek => new
-                        {
-                            ek.Keyword.Value,
-                            ek.Frequency
-                        })
-                    .ToArrayAsync();
-
-            if (keywords.Length > 0)
-            {
-                foreach (var keyword in keywordsSet.Local)
-                {
-                    keyword.Frequency = keywords
-                        .Where(ek => ek.Value == keyword.Value)
-                        .Sum(ek => ek.Frequency);
-                }
+                UpdateEntityKeyword
+                    (entityNewKeyword.entity,
+                     entityNewKeyword.keywordValues,
+                     existingKeywords,
+                     keywordsSet);
             }
 
             objectContext.DetectChanges();
         }
 
-        void UpdateEntityKeywords(
-            IndexedEntity entity, IDbSet<Keyword> keywordsSet)
+        static Keyword[] GetExistingKeywords(
+            IDbSet<Keyword> keywordsSet,
+            IEnumerable<string> keywordValues)
         {
-            var existing = entity.Keywords
-                                 .Select(ek =>
-                                     {
-                                         ek.Frequency = 0;
-                                         return ek;
-                                     }).ToArray();
+            var localKeywords = keywordsSet.Local.ToArray();
 
-            foreach (var keywordValue in GetKeywords(entity))
+            var keywordValuesToLoad = keywordValues
+                .Except(localKeywords.Select(k => k.Value));
+
+            return localKeywords
+                .Concat(keywordsSet.Where(k => keywordValuesToLoad.Contains(k.Value)))
+                .ToArray();
+        }
+
+        static void UpdateEntityKeyword(
+            IndexedEntity entity, IEnumerable<string> keywordValues,
+            Keyword[] existingKeywords,
+            IDbSet<Keyword> keywordsSet)
+        {
+            var toRemove = entity.Keywords.ToList();
+
+            foreach (var keywordValue in keywordValues)
             {
                 var entityKeyword
-                    = entity.Keywords.SingleOrDefault(k => k.Keyword.Value == keywordValue)
-                      ?? existing.SingleOrDefault(k => k.Keyword.Value == keywordValue);
+                    = entity.Keywords.SingleOrDefault(ek => ek.Keyword.Value == keywordValue);
 
-                if (entityKeyword == null)
+                if (entityKeyword != null)
+                {
+                    toRemove.Remove(entityKeyword);
+                }
+                else
                 {
                     entityKeyword = new IndexedEntityKeyword();
-                    var keyword =
-                        keywordsSet.Local.SingleOrDefault(k => k.Value == keywordValue)
-                        ?? keywordsSet.SingleOrDefault(k => k.Value == keywordValue);
+                    var keyword = existingKeywords.SingleOrDefault(k => k.Value == keywordValue);
 
                     if (keyword == null)
                     {
@@ -94,6 +101,7 @@ namespace Antix.Data.Keywords.EF
                         keywordsSet.Add(keyword);
                     }
                     entityKeyword.Keyword = keyword;
+                    keyword.Frequency++;
                 }
 
                 entityKeyword.Frequency++;
@@ -103,9 +111,16 @@ namespace Antix.Data.Keywords.EF
                 }
             }
 
-            foreach (var entityKeyword in
-                entity.Keywords.Where(ek => ek.Frequency == 0))
+            foreach (var entityKeyword in toRemove)
+            {
                 entity.Keywords.Remove(entityKeyword);
+                entityKeyword.Keyword.Frequency -= entityKeyword.Frequency;
+
+                if (entityKeyword.Keyword.Frequency == 0)
+                {
+                    keywordsSet.Remove(entityKeyword.Keyword);
+                }
+            }
         }
     }
 }
