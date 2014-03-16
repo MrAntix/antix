@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EFEntityState.cs" />
     <Compile Include="EFKeywordsManager.cs" />
     <Compile Include="Entities\IndexedEntityKeyword.cs" />
     <Compile Include="Entities\IndexedEntity.cs" />

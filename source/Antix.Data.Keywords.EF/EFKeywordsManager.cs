@@ -19,27 +19,41 @@ namespace Antix.Data.Keywords.EF
 
         public async Task UpdateKeywordsAsync(DbContext context)
         {
-            var objectContext = ((IObjectContextAdapter)context).ObjectContext;
-
+            var objectContext = ((IObjectContextAdapter) context).ObjectContext;
             var entities =
                 objectContext.ObjectStateManager.GetObjectStateEntries(
                     EntityState.Added | EntityState.Modified)
-                             .Select(es => es.Entity)
-                             .OfType<IndexedEntity>()
+                             .Where(es => es.Entity is IndexedEntity)
+                             .Select(es =>
+                                     new EFEntityState
+                                         {
+                                             Entity = (IndexedEntity) es.Entity,
+                                             IsDeleted = es.State == EntityState.Deleted
+                                         })
                              .ToArray();
 
-            if (!entities.Any()) return;
+            await UpdateKeywordsAsync(entities, context.Set<Keyword>());
+
+            objectContext.DetectChanges();
+        }
+
+        public async Task UpdateKeywordsAsync(
+            EFEntityState[] entityStates,
+            IDbSet<Keyword> keywordsSet)
+        {
+            if (!entityStates.Any()) return;
 
             // get all the entities and their new keywords
-            var entityKeywordValues = (from entity in entities
+            var entityKeywordValues = (from entityState in entityStates
                                        select new
-                                       {
-                                           entity,
-                                           keywordValues = GetKeywords(entity)
-                                       })
+                                           {
+                                               entity = entityState.Entity,
+                                               keywordValues = entityState.IsDeleted
+                                                                   ? new string[] {}
+                                                                   : GetKeywords(entityState.Entity)
+                                           })
                 .ToArray();
 
-            var keywordsSet = context.Set<Keyword>();
             var existingKeywords = await GetExistingKeywordsAsync(
                 keywordsSet,
                 entityKeywordValues.SelectMany(e => e.keywordValues)
@@ -53,8 +67,6 @@ namespace Antix.Data.Keywords.EF
                      existingKeywords,
                      keywordsSet);
             }
-
-            objectContext.DetectChanges();
         }
 
         static async Task<Keyword[]> GetExistingKeywordsAsync(
@@ -67,8 +79,8 @@ namespace Antix.Data.Keywords.EF
                 .Except(localKeywords.Select(k => k.Value));
 
             var loadedKeywords = await keywordsSet
-                .Where(k => keywordValuesToLoad.Contains(k.Value))
-                .ToArrayAsync();
+                                           .Where(k => keywordValuesToLoad.Contains(k.Value))
+                                           .ToArrayAsync();
 
             return localKeywords
                 .Concat(loadedKeywords)
@@ -80,7 +92,8 @@ namespace Antix.Data.Keywords.EF
             Keyword[] existingKeywords,
             IDbSet<Keyword> keywordsSet)
         {
-            var toRemove = entity.Keywords.ToList();
+            var toRemove = entity.Keywords
+                                 .ToDictionary(ek => ek, ek => ek.Frequency);
 
             foreach (var keywordValue in keywordValues)
             {
@@ -89,7 +102,10 @@ namespace Antix.Data.Keywords.EF
 
                 if (entityKeyword != null)
                 {
-                    toRemove.Remove(entityKeyword);
+                    if (toRemove.ContainsKey(entityKeyword))
+                    {
+                        toRemove[entityKeyword]--;
+                    }
                 }
                 else
                 {
@@ -99,30 +115,35 @@ namespace Antix.Data.Keywords.EF
                     if (keyword == null)
                     {
                         keyword = new Keyword
-                        {
-                            Value = keywordValue
-                        };
+                            {
+                                Value = keywordValue
+                            };
                         keywordsSet.Add(keyword);
                     }
                     entityKeyword.Keyword = keyword;
-                    keyword.Frequency++;
                 }
 
                 entityKeyword.Frequency++;
+                entityKeyword.Keyword.Frequency++;
                 if (!entity.Keywords.Contains(entityKeyword))
                 {
                     entity.Keywords.Add(entityKeyword);
                 }
             }
 
-            foreach (var entityKeyword in toRemove)
+            foreach (var kv in toRemove)
             {
-                entity.Keywords.Remove(entityKeyword);
-                entityKeyword.Keyword.Frequency -= entityKeyword.Frequency;
+                kv.Key.Frequency -= kv.Value;
+                kv.Key.Keyword.Frequency -= kv.Value;
 
-                if (entityKeyword.Keyword.Frequency == 0)
+                if (kv.Key.Frequency == 0)
                 {
-                    keywordsSet.Remove(entityKeyword.Keyword);
+                    entity.Keywords.Remove(kv.Key);
+                }
+
+                if (kv.Key.Keyword.Frequency == 0)
+                {
+                    keywordsSet.Remove(kv.Key.Keyword);
                 }
             }
         }

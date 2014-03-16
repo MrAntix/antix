@@ -35,10 +35,18 @@
     <Reference Include="Antix.Testing">
       <HintPath>..\packages\antix-testing.4.0.0-b01\lib\net40\Antix.Testing.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.0.0-alpha3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.0-alpha3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -56,6 +64,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Keywords\EF\EFKeywordsManagerTests.cs" />
+    <Compile Include="Data\Keywords\EF\Extensions.cs" />
     <Compile Include="Data\Keywords\KeywordIndexerTests.cs" />
     <Compile Include="Data\Keywords\KeywordsBuilderTest.cs" />
     <Compile Include="Data\Keywords\WordSplitKeywordProcessorTest.cs" />
@@ -86,6 +96,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Antix.Data.Keywords.EF\Antix.Data.Keywords.EF.csproj">
+      <Project>{814DC821-B84A-4B43-A2DF-F8003DE122D5}</Project>
+      <Name>Antix.Data.Keywords.EF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Antix.Data.Keywords\Antix.Data.Keywords.csproj">
       <Project>{1DED5C8F-85D6-4B11-8E51-FB5D8F984550}</Project>
       <Name>Antix.Data.Keywords</Name>
