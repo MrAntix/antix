@@ -34,7 +34,7 @@ namespace Antix.Tests.Data.Keywords.EF
         }
 
         [Fact]
-        public async Task keywords_added()
+        public async Task entity_added()
         {
             var keywords = new List<Keyword>();
             var keywordsSet = keywords.AsDbSet();
@@ -62,7 +62,7 @@ namespace Antix.Tests.Data.Keywords.EF
         }
 
         [Fact]
-        public async Task keywords_updated()
+        public async Task entity_updated()
         {
             var keyword = new Keyword
                 {
@@ -95,18 +95,18 @@ namespace Antix.Tests.Data.Keywords.EF
                     },
                 keywordsSet);
 
-            Assert.Equal(1, keywords.ElementAt(0).Frequency);
+            Assert.Equal(1, keyword.Frequency);
         }
 
         [Fact]
-        public async Task keywords_deleted()
+        public async Task entity_deleted()
         {
             var keyword = new Keyword
-            {
-                Value = "one",
-                Frequency = 1
-            };
-            var keywords = new List<Keyword> { keyword };
+                {
+                    Value = "one",
+                    Frequency = 1
+                };
+            var keywords = new List<Keyword> {keyword};
             var keywordsSet = keywords.AsDbSet();
 
             var service = GetService();
@@ -116,9 +116,10 @@ namespace Antix.Tests.Data.Keywords.EF
                     {
                         new EFEntityState
                             {
+                                IsDeleted = true,
                                 Entity = new TestEntity
                                     {
-                                        Name = "two two",
+                                        Name = "one",
                                         Keywords = new List<IndexedEntityKeyword>
                                             {
                                                 new IndexedEntityKeyword
@@ -135,9 +136,13 @@ namespace Antix.Tests.Data.Keywords.EF
             Assert.False(keywords.Contains(keyword));
         }
 
+        // ReSharper disable MemberCanBePrivate.Global
+        // ef needs this to be public
         public class TestEntity : IndexedEntity
         {
             public string Name { get; set; }
         }
+
+        // ReSharper restore MemberCanBePrivate.Global
     }
 }
