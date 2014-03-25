@@ -1,9 +1,9 @@
 ﻿using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Antix.Security.Sessions;
 using Example.MvcApplication.Api.Filters;
 using Example.MvcApplication.Api.Models;
+using Example.MvcApplication.Sessions;
 
 namespace Example.MvcApplication.Api.Controllers
 {

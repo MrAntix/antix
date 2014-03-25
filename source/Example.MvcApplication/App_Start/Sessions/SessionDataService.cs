@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
-using Antix.Security.Sessions;
-using Example.MvcApplication.App_Start.Data;
+using Example.MvcApplication.Data;
 
-namespace Example.MvcApplication.App_Start.Services
+namespace Example.MvcApplication.Sessions
 {
     public class SessionDataService :
         ISessionDataService

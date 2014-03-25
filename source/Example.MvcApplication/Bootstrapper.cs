@@ -3,8 +3,6 @@ using System.Web.Mvc;
 using Antix.Data.Keywords;
 using Antix.Data.Keywords.EF;
 using Antix.Data.Keywords.Processing;
-using Example.MvcApplication.App_Start;
-using Example.MvcApplication.App_Start.Stemming;
 using Microsoft.Practices.Unity;
 using Unity.Mvc4;
 

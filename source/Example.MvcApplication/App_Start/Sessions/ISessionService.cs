@@ -1,4 +1,4 @@
-﻿namespace Antix.Security.Sessions
+﻿namespace Example.MvcApplication.Sessions
 {
     public interface ISessionService
     {

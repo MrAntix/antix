@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Example.MvcApplication.App_Start
+namespace Example.MvcApplication
 {
     public class RouteConfig
     {

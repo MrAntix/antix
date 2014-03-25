@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Antix.Security.Sessions
+namespace Example.MvcApplication.Sessions
 {
     public class Session
     {

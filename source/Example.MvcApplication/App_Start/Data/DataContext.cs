@@ -3,7 +3,7 @@ using System.Web.Http;
 using Antix.Data.Keywords.EF;
 using Microsoft.Practices.Unity;
 
-namespace Example.MvcApplication.App_Start.Data
+namespace Example.MvcApplication.Data
 {
     public class DataContext : DbContext
     {

@@ -76,6 +76,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sessions\SessionServiceLoginTest.cs" />
+    <Compile Include="Sessions\SessionServiceLogoutTest.cs" />
     <Compile Include="using_the_session_controller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

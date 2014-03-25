@@ -5,7 +5,7 @@ using System.Threading;
 using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
-using Antix.Security.Sessions;
+using Example.MvcApplication.Sessions;
 
 namespace Example.MvcApplication.Api.Filters
 {

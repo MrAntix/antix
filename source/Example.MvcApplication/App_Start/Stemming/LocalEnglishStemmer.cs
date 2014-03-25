@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Antix.Data.Keywords.Stemming;
 
-namespace Example.MvcApplication.App_Start.Stemming
+namespace Example.MvcApplication.Stemming
 {
     public class LocalEnglishStemmer : IStemmer
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Example.MvcApplication.App_Start.Data
+namespace Example.MvcApplication.Data
 {
     public class UserSessionData
     {

@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Antix.Data.Keywords.EF;
 using Antix.Data.Keywords.Processing;
-using Example.MvcApplication.App_Start.Data;
+using Example.MvcApplication.Data;
 using Example.MvcApplication.Services.Models;
 
 namespace Example.MvcApplication.Services

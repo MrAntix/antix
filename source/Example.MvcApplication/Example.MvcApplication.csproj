@@ -157,7 +157,13 @@
     <Compile Include="App_Start\Data\UserSessionData.cs" />
     <Compile Include="App_Start\KeywordsConfig.cs" />
     <Compile Include="App_Start\Logging\ElmahLog.cs" />
-    <Compile Include="App_Start\Services\SessionDataService.cs" />
+    <Compile Include="App_Start\Sessions\SessionDataService.cs" />
+    <Compile Include="App_Start\Sessions\ISessionDataService.cs" />
+    <Compile Include="App_Start\Sessions\ISessionService.cs" />
+    <Compile Include="App_Start\Sessions\Session.cs" />
+    <Compile Include="App_Start\Sessions\SessionService.cs" />
+    <Compile Include="App_Start\Sessions\SessionServiceSettings.cs" />
+    <Compile Include="App_Start\Sessions\SessionUser.cs" />
     <Compile Include="App_Start\Stemming\LocalEnglishStemmer.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Api\Controllers\BlogController.cs" />

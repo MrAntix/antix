@@ -1,8 +1,8 @@
 ﻿using Antix.Data.Keywords;
 using Antix.Html;
-using Example.MvcApplication.App_Start.Data;
+using Example.MvcApplication.Data;
 
-namespace Example.MvcApplication.App_Start
+namespace Example.MvcApplication
 {
     public class KeywordsConfig
     {

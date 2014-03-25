@@ -2,7 +2,7 @@ using System;
 using System.Data.Entity.Migrations;
 using System.Net;
 using System.Web;
-using Example.MvcApplication.App_Start.Data;
+using Example.MvcApplication.Data;
 
 namespace Example.MvcApplication.Migrations
 {

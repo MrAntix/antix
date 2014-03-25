@@ -1,8 +1,8 @@
-﻿using Antix.Security.Sessions;
+﻿using Example.MvcApplication.Sessions;
 using Moq;
 using Xunit;
 
-namespace Antix.Tests.Security.Sessions
+namespace Example.MvcApplication.Tests.Sessions
 {
     public class SessionServiceLoginTest
     {

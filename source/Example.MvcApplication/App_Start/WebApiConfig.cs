@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
 
-namespace Example.MvcApplication.App_Start
+namespace Example.MvcApplication
 {
     public static class WebApiConfig
     {
