@@ -16,6 +16,9 @@
     <dependencies>
         <dependency id="Antix.code" version="$version$"/>
         <dependency id="Antix.Services.code" version="$version$"/>
+        <dependency id="Microsoft.AspNet.WebApi.Client" version="5.1.2"/>
+        <dependency id="Microsoft.AspNet.WebApi.Core" version="5.1.2" />
+        <dependency id="Newtonsoft.Json" version="4.5.11" />
     </dependencies>
   </metadata>
   <files>
