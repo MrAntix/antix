@@ -20,15 +20,26 @@ namespace Antix.Http.Filters.Logging
         {
             _log = log;
         }
-        
-        public Task<HttpResponseMessage> ExecuteActionFilterAsync(
-            HttpActionContext actionContext, 
+
+        public async Task<HttpResponseMessage> ExecuteActionFilterAsync(
+            HttpActionContext actionContext,
             CancellationToken cancellationToken,
             Func<Task<HttpResponseMessage>> continuation)
         {
-            _log.Debug(m => m("Action {0}", actionContext.ActionDescriptor.ActionName));
+            _log.Debug(m => m("Action {0}.{1}",
+                actionContext.ActionDescriptor.ControllerDescriptor.ControllerName,
+                actionContext.ActionDescriptor.ActionName
+                ));
 
-            return continuation();
+            try
+            {
+                return await continuation();
+            }
+            catch (Exception ex)
+            {
+                _log.Error(m => m(ex, "Action Error"));
+                throw;
+            }
         }
     }
 }

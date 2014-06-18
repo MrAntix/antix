@@ -10,23 +10,27 @@ namespace Antix.Security
 
         #region IHashService Members
 
-        public string Hash(string value)
+        public string Hash(
+            string value,
+            string salt)
         {
-            return Hash(value, false);
+            return Hash(value, salt, false);
         }
 
-        public string Hash64(string value)
+        public string Hash64(
+            string value,
+            string salt)
         {
-            return Hash(value, true);
+            return Hash(value, salt, true);
         }
 
         #endregion
 
-        string Hash(string value, bool base64Encode)
+        string Hash(string value, string salt, bool base64Encode)
         {
             var bytes = _service.ComputeHash(
                 Encoding.Default.GetBytes(
-                    string.Concat(value, SecuritySettings.Default.SecurityHashSalt)));
+                    string.Concat(value, salt)));
 
             return base64Encode
                        ? Convert.ToBase64String(bytes)
