@@ -39,7 +39,10 @@ namespace Antix.Http.Filters.Logging
                 var result = await continuation();
                 _log.Debug(m => m("{0} => {1}",
                     result.StatusCode,
-                    result.Content.ReadAsStringAsync().Result));
+                    result.Content == null
+                        ? "[NULL]"
+                        : result.Content.ReadAsStringAsync().Result)
+                    );
 
                 return result;
             }
