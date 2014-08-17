@@ -54,7 +54,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Antix.Services\Antix.Services.csproj">
+    <ProjectReference Include="..\Antix.Services\Antix.Services.csproj">
       <Project>{DBCDF4E5-B883-4B11-869E-B7D9D36D899B}</Project>
       <Name>Antix.Services</Name>
     </ProjectReference>
