@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Antix.Services.ActionCache.code</id>
+    <version>$version$</version>
+    <title>Antix Action Cache Code</title>
+    <authors>Anthony Johnston</authors>
+    <owners>Antix Software Limited</owners>
+    <licenseUrl>https://raw.github.com/MrAntix/antix/master/LICENCE.md</licenseUrl>
+    <projectUrl>https://github.com/MrAntix/antix/</projectUrl>
+    <iconUrl>https://raw.github.com/MrAntix/antix/master/graphics/antix_32x32.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Antix Common Services Code - Action Cache</description>
+    <copyright>Copyright Antix Software Limited 2013</copyright>
+    <tags>Common Code, Services, Action Cache</tags>
+    <dependencies>
+      <dependency id="Antix.code" version="$version$"/>
+      <dependency id="Antix.Services.code" version="$version$"/>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="**" target="content\Services\ActionCache" exclude="bin\**\*;obj\**\*;**\assemblyinfo.cs;**\*.designer.cs;**\*.csproj;**\*.user;**\*.config" />
+  </files>
+</package>
