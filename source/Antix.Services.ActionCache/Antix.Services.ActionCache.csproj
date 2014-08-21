@@ -50,8 +50,9 @@
     </Compile>
     <Compile Include="IActionCacheAction.cs" />
     <Compile Include="IActionCacheExecutor.cs" />
-    <Compile Include="IActionCacheStore.cs" />
+    <Compile Include="IActionCacheStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="InMemoryActionCacheStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Antix.Services\Antix.Services.csproj">

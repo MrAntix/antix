@@ -13,22 +13,22 @@ namespace Antix.Tests.Services.ActionCache
         [Fact]
         public void execute_action()
         {
-            var store = new TestActionCacheStore();
-            var identifier = store.Add(new TestActionData(), TimeSpan.FromDays(1));
+            var storage = new InMemoryActionCacheStorage();
+            var code = storage.Store(new TestActionData(), TimeSpan.FromDays(1));
 
-            var sut = GetServiceUnderTest(store, new TestAction());
+            var sut = GetServiceUnderTest(storage, new TestAction());
 
-            var result = sut.ExecuteAsync(identifier).Result;
+            var result = sut.ExecuteAsync(code).Result;
 
             Assert.Equal(true, result);
         }
 
         ActionCacheExecutor GetServiceUnderTest(
-            TestActionCacheStore store,
+            IActionCacheStorage storage,
             params IActionCacheAction[] actions)
         {
             return new ActionCacheExecutor(
-                store,
+                storage,
                 actions);
         }
 
@@ -36,46 +36,60 @@ namespace Antix.Tests.Services.ActionCache
         public void execute_action_stored_data_removed()
         {
             var data = new Dictionary<string, object>();
-            var store = new TestActionCacheStore(data);
-            var identifier = store.Add(new TestActionData(), TimeSpan.FromDays(1));
+            var storage = new InMemoryActionCacheStorage(data);
+            var code = storage.Store(new TestActionData(), TimeSpan.FromDays(1));
 
-            var sut = GetServiceUnderTest(store, new TestAction());
+            var sut = GetServiceUnderTest(storage, new TestAction());
 
-            var _ = sut.ExecuteAsync(identifier).Result;
+            var _ = sut.ExecuteAsync(code).Result;
 
-            Assert.DoesNotContain(identifier, data.Keys);
+            Assert.DoesNotContain(code, data.Keys);
         }
 
         [Fact]
-        public void execute_action_identifier_does_not_exist()
+        public void replace_existing_action_data()
         {
-            var store = new TestActionCacheStore();
-            const string identifier = "NON-EXISTING";
+            var storage= new InMemoryActionCacheStorage();
+            var idenifier = Guid.NewGuid().ToString("N");
 
-            var sut = GetServiceUnderTest(store, new TestAction());
+            var code = storage.Store(new Object(), TimeSpan.FromDays(1), idenifier);
+            storage.Store(new TestActionData(), TimeSpan.FromDays(1), idenifier);
+
+            var retrieved = storage.TryRetrieve(code) as TestActionData;
+
+            Assert.NotNull(retrieved);
+        }
+
+        [Fact]
+        public void execute_action_code_does_not_exist()
+        {
+            var storage = new InMemoryActionCacheStorage();
+            const string code = "NON-EXISTING";
+
+            var sut = GetServiceUnderTest(storage, new TestAction());
 
             var ex = Assert.Throws<AggregateException>(
-                () => sut.ExecuteAsync(identifier).Result
+                () => sut.ExecuteAsync(code).Result
                 ).InnerException;
 
-            Assert.Contains(identifier, ex.Message);
+            Assert.Contains(code, ex.Message);
         }
 
         [Fact]
-        public void execute_action_identifier_expired()
+        public void execute_action_code_expired()
         {
-            var store = new TestActionCacheStore();
-            var identifier = store.Add(new TestActionData(), TimeSpan.Zero);
+            var storage = new InMemoryActionCacheStorage();
+            var code = storage.Store(new TestActionData(), TimeSpan.Zero);
 
             Thread.Sleep(1);
 
-            var sut = GetServiceUnderTest(store, new TestAction());
+            var sut = GetServiceUnderTest(storage, new TestAction());
 
             var ex = Assert.Throws<AggregateException>(
-                () => sut.ExecuteAsync(identifier).Result
+                () => sut.ExecuteAsync(code).Result
                 ).InnerException;
 
-            Assert.Contains(identifier, ex.Message);
+            Assert.Contains(code, ex.Message);
         }
 
         [Fact]
@@ -86,7 +100,7 @@ namespace Antix.Tests.Services.ActionCache
             Assert.Throws<ActionCacheActionTypeException>(
                 () =>
                     GetServiceUnderTest(
-                        new TestActionCacheStore(),
+                        new InMemoryActionCacheStorage(),
                         invalidTestAction)
                 );
         }
@@ -100,41 +114,6 @@ namespace Antix.Tests.Services.ActionCache
             public override async Task<bool> ExecuteAsync(TestActionData model)
             {
                 return true;
-            }
-        }
-
-        public class TestActionCacheStore :
-            IActionCacheStore
-        {
-            readonly Dictionary<string, object> _data;
-
-            public TestActionCacheStore(
-                Dictionary<string, object> data = null)
-            {
-                _data = data ?? new Dictionary<string, object>();
-            }
-
-            public string Add(object data, TimeSpan expiresIn)
-            {
-                var identifier = Guid.NewGuid().ToString("N");
-                _data.Add(identifier, data);
-
-                new Timer(
-                    o => Remove((string) o), identifier,
-                    expiresIn, TimeSpan.FromMilliseconds(-1));
-
-                return identifier;
-            }
-
-
-            public object TryGet(string identifier)
-            {
-                return _data.ContainsKey(identifier) ? _data[identifier] : null;
-            }
-
-            public void Remove(string identifier)
-            {
-                _data.Remove(identifier);
             }
         }
     }

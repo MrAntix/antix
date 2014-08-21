@@ -7,16 +7,16 @@ namespace Antix.Services.ActionCache
 {
     public class ActionCacheExecutor : IActionCacheExecutor
     {
-        readonly IActionCacheStore _store;
+        readonly IActionCacheStorage _storage;
         readonly IDictionary<Type, IActionCacheAction> _actions;
 
         static readonly Type GenericActionType = typeof (IActionCacheAction<,>);
 
         public ActionCacheExecutor(
-            IActionCacheStore store,
+            IActionCacheStorage storage,
             IEnumerable<IActionCacheAction> actions)
         {
-            _store = store;
+            _storage = storage;
             _actions = new Dictionary<Type, IActionCacheAction>();
             foreach (var action in actions)
             {
@@ -37,7 +37,7 @@ namespace Antix.Services.ActionCache
 
         public async Task<object> ExecuteAsync(string identifier)
         {
-            var data = _store.TryGet(identifier);
+            var data = _storage.TryRetrieve(identifier);
 
             if (data == null)
                 throw new ActionCacheDataNotFoundException(identifier);
@@ -46,7 +46,7 @@ namespace Antix.Services.ActionCache
 
             var result = await _actions[dataType].ExecuteAsync(data);
 
-            _store.Remove(identifier);
+            _storage.Remove(identifier);
 
             return result;
         }

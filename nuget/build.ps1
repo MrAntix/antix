@@ -1,12 +1,14 @@
-Param($version,$apiKey)
+Param($path,$version,$apiKey)
 
 if ($version -Eq $null) {
     $version = Read-Host "Enter Version Number"
 }
 
-$nugetPath = Split-Path -parent $PSCommandPath
-$sourcePath = "$nugetPath\..\source"
-$destinationPath = "$nugetPath\Packages\$version"
+if ($path -Eq $null) {
+    $nugetPath = Split-Path -parent $PSCommandPath
+}
+$sourcePath = "$path\source"
+$destinationPath = "$path\nuget\Packages\$version"
 
 # Create Package Structure
 New-Item -Path "$destinationPath" -Type directory -ErrorAction Stop
