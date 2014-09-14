@@ -28,9 +28,10 @@ namespace Antix.Http.Filters.Logging
             CancellationToken cancellationToken,
             Func<Task<HttpResponseMessage>> continuation)
         {
-            _log.Debug(m => m("Action {0}.{1} ({2})",
+            _log.Debug(m => m("Action {0}.{1} [{2}] ({3})",
                 actionContext.ActionDescriptor.ControllerDescriptor.ControllerName,
                 actionContext.ActionDescriptor.ActionName,
+                actionContext.Request.Method,
                 JsonConvert.SerializeObject(actionContext.ActionArguments)
                 ));
 

@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Antix.Http.Filters.Logging
 {
+    [AttributeUsage(
+        AttributeTargets.Class | AttributeTargets.Method,
+        AllowMultiple = false, Inherited = true)]
     public class LogActionAttribute :
-     Attribute, IFilterServiceAttribute
+        Attribute, IFilterServiceAttribute
     {
         public Type ServiceType
         {
-            get { return typeof(LogActionFilter); }
+            get { return typeof (LogActionFilter); }
         }
     }
 }
