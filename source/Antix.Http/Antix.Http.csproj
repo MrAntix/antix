@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Filters\Logging\ActionLogEntry.cs" />
     <Compile Include="HttpRequestMessageExtensions.cs" />
     <Compile Include="Dispatcher\ServiceHttpControllerActivator.cs" />
     <Compile Include="Filters\FilterServiceBase.cs" />
