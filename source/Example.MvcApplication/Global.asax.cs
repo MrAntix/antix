@@ -15,7 +15,7 @@ namespace Example.MvcApplication
         {
             AreaRegistration.RegisterAllAreas();
 
-            Bootstrapper.Initialise(GlobalConfiguration.Configuration);
+            Bootstrapper.Initialise();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

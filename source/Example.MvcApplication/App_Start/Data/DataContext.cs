@@ -1,20 +1,18 @@
 ﻿using System.Data.Entity;
-using System.Web.Http;
+using System.Web.Mvc;
 using Antix.Data.Keywords.EF;
-using Microsoft.Practices.Unity;
 
 namespace Example.MvcApplication.Data
 {
     public class DataContext : DbContext
     {
-        readonly EFKeywordsManager _keywordsManager;
+        private readonly EFKeywordsManager _keywordsManager;
 
         public DataContext(EFKeywordsManager keywordsManager)
         {
             _keywordsManager = keywordsManager
-                               ?? Bootstrapper
-                                      .Initialise(GlobalConfiguration.Configuration)
-                                      .Resolve<EFKeywordsManager>();
+                               ?? DependencyResolver.Current
+                                   .GetService<EFKeywordsManager>();
         }
 
         // Required by migrations
@@ -52,26 +50,26 @@ namespace Example.MvcApplication.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BlogEntryData>()
-                        .HasMany(e => e.Tags)
-                        .WithMany();
+                .HasMany(e => e.Tags)
+                .WithMany();
 
             modelBuilder.Entity<BlogEntryData>()
-                        .HasMany(e => e.Redirects)
-                        .WithRequired();
+                .HasMany(e => e.Redirects)
+                .WithRequired();
 
             modelBuilder.Entity<BlogEntryRedirectData>()
-                        .HasKey(e => new
-                            {
-                                e.Identifier,
-                                e.BlogEntryId
-                            });
+                .HasKey(e => new
+                {
+                    e.Identifier,
+                    e.BlogEntryId
+                });
 
             modelBuilder.Entity<UserData>()
-                        .HasKey(e => e.Email);
+                .HasKey(e => e.Email);
 
             modelBuilder.Entity<UserSessionData>()
-                        .HasRequired(e => e.User)
-                        .WithMany();
+                .HasRequired(e => e.User)
+                .WithMany();
         }
     }
 }
