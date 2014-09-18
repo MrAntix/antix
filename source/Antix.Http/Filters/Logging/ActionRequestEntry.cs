@@ -1,20 +1,21 @@
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http.Controllers;
 
 namespace Antix.Http.Filters.Logging
 {
-    public class ActionLogEntry
+    public class ActionRequestEntry
     {
-        private readonly string _action;
-        private readonly IDictionary<string, object> _arguments;
-        private readonly string _clientIP;
-        private readonly string _controller;
-        private readonly HttpMethod _requestMethod;
-        private readonly Uri _requestUri;
+        readonly string _action;
+        readonly IDictionary<string, object> _arguments;
+        readonly string _clientIP;
+        readonly string _controller;
+        readonly HttpRequestHeaders _requestHeaders;
+        readonly string _requestMethod;
+        readonly Uri _requestUri;
 
-        public ActionLogEntry(
+        public ActionRequestEntry(
             HttpActionContext actionContext)
         {
             _controller = actionContext.ControllerContext.ControllerDescriptor.ControllerName;
@@ -22,7 +23,8 @@ namespace Antix.Http.Filters.Logging
             _arguments = actionContext.ActionArguments;
 
             _requestUri = actionContext.Request.RequestUri;
-            _requestMethod = actionContext.Request.Method;
+            _requestMethod = actionContext.Request.Method.Method;
+            _requestHeaders = actionContext.Request.Headers;
 
             _clientIP = actionContext.Request.GetClientIpAddress();
         }
@@ -47,7 +49,7 @@ namespace Antix.Http.Filters.Logging
             get { return _requestUri; }
         }
 
-        public HttpMethod RequestMethod
+        public string RequestMethod
         {
             get { return _requestMethod; }
         }
@@ -55,6 +57,11 @@ namespace Antix.Http.Filters.Logging
         public string ClientIP
         {
             get { return _clientIP; }
+        }
+
+        public HttpRequestHeaders RequestHeaders
+        {
+            get { return _requestHeaders; }
         }
     }
 }

@@ -14,8 +14,8 @@ namespace Antix.Http.Filters.Logging
         FilterServiceBase<LogActionAttribute>,
         IActionFilter, IService
     {
-        private readonly JsonSerializerSettings _jsonSerializerSettings;
-        private readonly Log.Delegate _log;
+        readonly JsonSerializerSettings _jsonSerializerSettings;
+        readonly Log.Delegate _log;
 
         public LogActionFilter(Log.Delegate log)
         {
@@ -32,22 +32,17 @@ namespace Antix.Http.Filters.Logging
             CancellationToken cancellationToken,
             Func<Task<HttpResponseMessage>> continuation)
         {
-            var entry = new ActionLogEntry(actionContext);
+            var requestEntry = new ActionRequestEntry(actionContext);
 
-
-            _log.Debug(m => m("Action {0}",
-                JsonConvert.SerializeObject(entry, _jsonSerializerSettings)
+            _log.Debug(m => m("Action Request: {0}",
+                JsonConvert.SerializeObject(requestEntry, _jsonSerializerSettings)
                 ));
 
             try
             {
-                HttpResponseMessage result = await continuation();
-                _log.Debug(m => m("{0} => {1}",
-                    result.StatusCode,
-                    result.Content == null
-                        ? "[NULL]"
-                        : result.Content.ReadAsStringAsync().Result)
-                    );
+                var result = await continuation();
+                var responseEntry = new ActionResponseEntry(result);
+                _log.Debug(m => m("Action Response: {0}", responseEntry));
 
                 return result;
             }
