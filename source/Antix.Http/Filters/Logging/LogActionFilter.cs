@@ -42,7 +42,9 @@ namespace Antix.Http.Filters.Logging
             {
                 var result = await continuation();
                 var responseEntry = new ActionResponseEntry(result);
-                _log.Debug(m => m("Action Response: {0}", responseEntry));
+                _log.Debug(m => m("Action Response: {0}",
+                    JsonConvert.SerializeObject(responseEntry, _jsonSerializerSettings)
+                    ));
 
                 return result;
             }
