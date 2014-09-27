@@ -47,6 +47,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.Http", "Antix.Http\An
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.Services.ActionCache", "Antix.Services.ActionCache\Antix.Services.ActionCache.csproj", "{211F08F9-A271-4ED5-9A65-A17AD0EF9AD4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".deploy", ".deploy", "{F754FB46-224E-412A-B889-EE4559BBB31A}"
+	ProjectSection(SolutionItems) = preProject
+		.deploy\execute.ps1 = .deploy\execute.ps1
+		.deploy\Octo.exe = .deploy\Octo.exe
+		.deploy\Octo.exe.config = .deploy\Octo.exe.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
