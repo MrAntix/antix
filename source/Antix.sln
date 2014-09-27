@@ -21,8 +21,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E65F37
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.Html", "Antix.Html\Antix.Html.csproj", "{4F3C8CC9-B7EA-4506-8DF8-A1EEA81556DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.MvcApplication", "Example.MvcApplication\Example.MvcApplication.csproj", "{38211863-E209-457D-A52E-3E93BDD6A1D1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.Drawing", "Antix.Drawing\Antix.Drawing.csproj", "{7106F36D-65FB-473A-A4E7-80F5FFDCC016}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.Data.Keywords", "Antix.Data.Keywords\Antix.Data.Keywords.csproj", "{1DED5C8F-85D6-4B11-8E51-FB5D8F984550}"
@@ -30,8 +28,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.Data.Keywords.EF", "Antix.Data.Keywords.EF\Antix.Data.Keywords.EF.csproj", "{814DC821-B84A-4B43-A2DF-F8003DE122D5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.Data", "Antix.Data\Antix.Data.csproj", "{94F9F413-9951-4E21-9F17-96C5C7E8972C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.MvcApplication.Tests", "Example.MvcApplication.Tests\Example.MvcApplication.Tests.csproj", "{9F983EC4-9DDF-438E-90CC-4BF3E42E9B2F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.WebApi.Upload", "Antix.WebApi.Upload\Antix.WebApi.Upload.csproj", "{F5C43848-0A31-4675-9A61-DB165C95E7CD}"
 EndProject
@@ -76,10 +72,6 @@ Global
 		{4F3C8CC9-B7EA-4506-8DF8-A1EEA81556DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F3C8CC9-B7EA-4506-8DF8-A1EEA81556DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F3C8CC9-B7EA-4506-8DF8-A1EEA81556DF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{38211863-E209-457D-A52E-3E93BDD6A1D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{38211863-E209-457D-A52E-3E93BDD6A1D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{38211863-E209-457D-A52E-3E93BDD6A1D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{38211863-E209-457D-A52E-3E93BDD6A1D1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7106F36D-65FB-473A-A4E7-80F5FFDCC016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7106F36D-65FB-473A-A4E7-80F5FFDCC016}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7106F36D-65FB-473A-A4E7-80F5FFDCC016}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -96,10 +88,6 @@ Global
 		{94F9F413-9951-4E21-9F17-96C5C7E8972C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94F9F413-9951-4E21-9F17-96C5C7E8972C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94F9F413-9951-4E21-9F17-96C5C7E8972C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9F983EC4-9DDF-438E-90CC-4BF3E42E9B2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9F983EC4-9DDF-438E-90CC-4BF3E42E9B2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9F983EC4-9DDF-438E-90CC-4BF3E42E9B2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9F983EC4-9DDF-438E-90CC-4BF3E42E9B2F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F5C43848-0A31-4675-9A61-DB165C95E7CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F5C43848-0A31-4675-9A61-DB165C95E7CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5C43848-0A31-4675-9A61-DB165C95E7CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
