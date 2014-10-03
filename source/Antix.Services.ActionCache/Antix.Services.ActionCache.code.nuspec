@@ -20,5 +20,6 @@
   </metadata>
   <files>
     <file src="**" target="content\Services\ActionCache" exclude="bin\**\*;obj\**\*;**\assemblyinfo.cs;**\*.designer.cs;**\*.csproj;**\*.user;**\*.config" />
+    <file src="..\..\nuget\Install.ps1" target="tools" />
   </files>
 </package>
