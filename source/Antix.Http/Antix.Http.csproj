@@ -64,7 +64,6 @@
     <Compile Include="Filters\Logging\LogActionAttribute.cs" />
     <Compile Include="Filters\Logging\LogActionFilter.cs" />
     <Compile Include="Filters\ServiceFilterProvider.cs" />
-    <Compile Include="Models\Response.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
