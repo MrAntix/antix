@@ -32,7 +32,8 @@ namespace Antix.Http.Filters
             var actionProxiedFilters
                 = GetFilterInfos(actionDescriptor.GetCustomAttributes<IFilterServiceAttribute>(), FilterScope.Action);
 
-            var allFilters = controllerFilters
+            var allFilters = configuration.Filters
+                .Concat(controllerFilters)
                 .Concat(controllerProxiedFilters)
                 .Concat(actionFilters)
                 .Concat(actionProxiedFilters);
