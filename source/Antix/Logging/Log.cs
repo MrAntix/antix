@@ -1,10 +1,15 @@
 ﻿using System;
-using System.ComponentModel;
 
 namespace Antix.Logging
 {
     public static partial class Log
     {
+#if DEBUG
+        public const bool DEBUG = true;
+#else
+        public const bool DEBUG = false;
+#endif
+
         public enum Level
         {
             Debug,
