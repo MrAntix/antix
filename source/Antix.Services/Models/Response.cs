@@ -23,17 +23,17 @@ namespace Antix.Services.Models
             return new Response();
         }
 
-        public static Response<T> Create<T>(T data)
+        public static Response<T> Create<T> (T data)
         {
             return new Response<T>(data);
         }
 
-        public static Response Create(IEnumerable<ResponseError> errors)
+        public static Response CreateWithErrors(IEnumerable<ResponseError> errors)
         {
             return new Response(errors);
         }
 
-        public static Response<T> Create<T>(T data, IEnumerable<ResponseError> errors)
+        public static Response<T> CreateWithErrors<T> (T data, IEnumerable<ResponseError> errors)
         {
             return new Response<T>(data, errors);
         }
