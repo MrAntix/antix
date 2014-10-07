@@ -18,7 +18,22 @@ namespace Antix.Services.Models
             get { return _errors; }
         }
 
-        public static Response<T> Create<T> (T data = default(T), IEnumerable<ResponseError> errors = null)
+        public static Response Empty ()
+        {
+            return new Response();
+        }
+
+        public static Response Empty (IEnumerable<ResponseError> errors)
+        {
+            return new Response(errors);
+        }
+
+        public static Response<T> Data<T> (T data)
+        {
+            return new Response<T>(data);
+        }
+
+        public static Response<T> Data<T> (T data, IEnumerable<ResponseError> errors)
         {
             return new Response<T>(data, errors);
         }
