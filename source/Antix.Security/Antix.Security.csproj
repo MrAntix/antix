@@ -55,6 +55,7 @@
     <None Include="SecuritySettings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>SecuritySettings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Antix.Security</CustomToolNamespace>
     </None>
   </ItemGroup>
   <ItemGroup>
