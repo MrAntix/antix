@@ -1,7 +1,8 @@
 Param($path,$version)
 
 $apikey = "API-NLITTOD95WSOKIT7FLWVSKTGIW"
-$octopath = "http://deploy.antix.local"
+#$packagesSource = "http://localhost:50358/packages"
+$packagesSource = "http://deploy.antix.local/nuget/packages"
 
 if ($version -Eq $null) {
     $version = Read-Host "Enter Version Number"
@@ -13,13 +14,12 @@ if($path -Eq $null){
 
     set-alias msbuild "C:\Program Files (x86)\MSBuild\12.0\Bin\amd64\MSBuild.exe"
 
-    msbuild "$path\source\antix.sln" /t:Build /p:Configuration=Release /p:RunOctoPack=true /p:OctoPackPackageVersion=$version /p:OctoPackEnforceAddingFiles=true
+    msbuild "$path\source\antix.sln" /t:Build /p:Configuration=Release
 }
 
 Write-Output "begin deploy version $version from $path"
 
 set-alias nuget $path\source\.nuget\NuGet.exe
-set-alias octo $path\source\.deploy\Octo.exe
 
 function deploy{
 	param($project)
@@ -31,7 +31,7 @@ function deploy{
 	
 	write-Output "pushing $package"
 
-	nuget push "$package" -ApiKey $apikey -Source $octopath/nuget/packages
+	nuget push "$package" -ApiKey $apikey -Source $packagesSource
 }
 
 deploy "Antix"
