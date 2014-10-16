@@ -16,8 +16,8 @@ namespace Antix.Data.Static
             var key = string.Format("{0}{1}", setting.CountryCode, setting.CountryDialing);
 
             return string.IsNullOrEmpty(setting.NationalDirectDialing)
-                       ? key
-                       : string.Format("{0}-{1}", key, setting.NationalDirectDialing);
+                ? key
+                : string.Format("{0}-{1}", key, setting.NationalDirectDialing);
         }
 
         internal void Add(PhoneCountryConfiguration phoneCountryConfiguration)

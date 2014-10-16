@@ -10,6 +10,7 @@ namespace Antix.Tests
         {
             Assert.Equal("Left", "LeftEnd".TrimEnd("End"));
         }
+
         [Fact]
         public void TrimsMultiEnd()
         {

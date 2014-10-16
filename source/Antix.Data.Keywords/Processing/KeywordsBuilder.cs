@@ -27,15 +27,15 @@ namespace Antix.Data.Keywords.Processing
             where TProp : class
         {
             _items.Add(e =>
-                {
-                    var v = func(e);
-                    if (v == null) return null;
+            {
+                var v = func(e);
+                if (v == null) return null;
 
-                    var b = new KeywordsBuilder<TProp>(_processor);
-                    action(b);
+                var b = new KeywordsBuilder<TProp>(_processor);
+                action(b);
 
-                    return b.Build(v);
-                });
+                return b.Build(v);
+            });
 
             return this;
         }
@@ -45,15 +45,15 @@ namespace Antix.Data.Keywords.Processing
             where TProp : class
         {
             _items.Add(e =>
-                {
-                    var vs = func(e);
-                    if (vs == null) return null;
+            {
+                var vs = func(e);
+                if (vs == null) return null;
 
-                    var b = new KeywordsBuilder<TProp>(_processor);
-                    action(b);
+                var b = new KeywordsBuilder<TProp>(_processor);
+                action(b);
 
-                    return (vs).SelectMany(b.Build);
-                });
+                return (vs).SelectMany(b.Build);
+            });
 
             return this;
         }

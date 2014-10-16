@@ -10,7 +10,7 @@ namespace Antix.Drawing
         public override ImageCodecInfo GetEncoder()
         {
             return ImageCodecInfo.GetImageEncoders()
-                                 .Single(e => e.FormatID == ImageFormat.Jpeg.Guid);
+                .Single(e => e.FormatID == ImageFormat.Jpeg.Guid);
         }
 
         public override EncoderParameters GetEncoderParams()

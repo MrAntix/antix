@@ -28,38 +28,38 @@ namespace Antix.Drawing
             this Image image, Size size, ImageTransformOptions options)
         {
             var crop = options.Crop.Equals(Rectangle.Empty)
-                           ? new Rectangle(0, 0, image.Size.Width, image.Size.Height)
-                           : options.Crop;
+                ? new Rectangle(0, 0, image.Size.Width, image.Size.Height)
+                : options.Crop;
 
             var newSize = size.Equals(Size.Empty)
-                              ? crop.Size
-                              : crop.Size.Constrain(size);
+                ? crop.Size
+                : crop.Size.Constrain(size);
 
             return await Task.Run(() =>
+            {
+                using (var newImage = (Image) new Bitmap(newSize.Width, newSize.Height))
+                using (var gfx = Graphics.FromImage(newImage))
                 {
-                    using (var newImage = (Image) new Bitmap(newSize.Width, newSize.Height))
-                    using (var gfx = Graphics.FromImage(newImage))
+                    gfx.SmoothingMode = SmoothingMode.HighQuality;
+                    gfx.CompositingQuality = CompositingQuality.HighQuality;
+                    gfx.CompositingMode = CompositingMode.SourceCopy;
+                    gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+                    gfx.Clear(Color.Transparent);
+
+                    gfx.DrawImage(image,
+                        new Rectangle(0, 0, newSize.Width, newSize.Height),
+                        crop,
+                        GraphicsUnit.Pixel);
+
+                    using (var memStream = new MemoryStream())
                     {
-                        gfx.SmoothingMode = SmoothingMode.HighQuality;
-                        gfx.CompositingQuality = CompositingQuality.HighQuality;
-                        gfx.CompositingMode = CompositingMode.SourceCopy;
-                        gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        newImage.Save(memStream, options.GetEncoder(), options.GetEncoderParams());
 
-                        gfx.Clear(Color.Transparent);
-
-                        gfx.DrawImage(image,
-                                      new Rectangle(0, 0, newSize.Width, newSize.Height),
-                                      crop,
-                                      GraphicsUnit.Pixel);
-
-                        using (var memStream = new MemoryStream())
-                        {
-                            newImage.Save(memStream, options.GetEncoder(), options.GetEncoderParams());
-
-                            return memStream.ToArray();
-                        }
+                        return memStream.ToArray();
                     }
-                });
+                }
+            });
         }
 
         /// <summary>

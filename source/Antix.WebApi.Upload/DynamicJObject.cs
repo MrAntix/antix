@@ -16,8 +16,9 @@ namespace Antix.WebApi.Upload
             var token = _root.SelectToken(path ?? string.Empty);
             if (token == null) return null;
 
-            return type == typeof(object)
-                ? ToObject(token) : token.ToObject(type);
+            return type == typeof (object)
+                ? ToObject(token)
+                : token.ToObject(type);
         }
 
         public void Set(string path, object value)
@@ -37,7 +38,6 @@ namespace Antix.WebApi.Upload
                 var pathItems = path.Split('.');
                 foreach (var pathItem in pathItems)
                 {
-
                     if (pathItem.Contains("["))
                     {
                         var split = pathItem.Split('[');
@@ -54,7 +54,6 @@ namespace Antix.WebApi.Upload
 
                         if (pathItem == pathItems.Last())
                         {
-
                             arrayToken[index] = valueToken;
                         }
                         else
@@ -71,7 +70,6 @@ namespace Antix.WebApi.Upload
                     }
                     else
                     {
-
                         if (pathItem == pathItems.Last())
                             pathToken[pathItem] = valueToken;
 
@@ -134,5 +132,4 @@ namespace Antix.WebApi.Upload
                 string.Format("Unknown token type '{0}'", token.GetType()), "token");
         }
     }
-
 }

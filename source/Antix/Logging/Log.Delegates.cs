@@ -9,15 +9,15 @@ namespace Antix.Logging
 
         public static readonly Delegate ToConsole
             = l => (ex, f, a) =>
+            {
+                var m = string.Format(f, a);
+                Console.WriteLine(
+                    CONSOLE_MESSAGE_FORMAT, DateTime.UtcNow, l, m);
+                if (ex != null)
                 {
-                    var m = string.Format(f, a);
-                    Console.WriteLine(
-                        CONSOLE_MESSAGE_FORMAT, DateTime.UtcNow, l, m);
-                    if (ex != null)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                };
+                    Console.WriteLine(ex);
+                }
+            };
 
         public static Delegate ToList(List<Event> list)
         {

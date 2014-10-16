@@ -63,7 +63,7 @@ namespace Antix.Html
 
             var i = 0;
             while (i < target.Length
-                && _html[_index + i] == target[i])
+                   && _html[_index + i] == target[i])
                 i++;
 
             if (i == target.Length)
@@ -92,8 +92,8 @@ namespace Antix.Html
                 if (targetIndex > 0)
                 {
                     _index = consumeTarget
-                                 ? targetIndex + target.Length
-                                 : targetIndex;
+                        ? targetIndex + target.Length
+                        : targetIndex;
 
                     return true;
                 }

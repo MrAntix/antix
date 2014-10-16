@@ -15,8 +15,8 @@ namespace Antix.IO
             if (invalid.Contains(invalidCharReplacement)) throw new ArgumentException("invalidCharReplacement");
 
             return new string(value
-                                  .Select(c => invalid.Contains(c) ? invalidCharReplacement : c)
-                                  .ToArray());
+                .Select(c => invalid.Contains(c) ? invalidCharReplacement : c)
+                .ToArray());
         }
 
         public static string ToSafeFileName(

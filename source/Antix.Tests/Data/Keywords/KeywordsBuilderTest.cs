@@ -29,9 +29,9 @@ namespace Antix.Tests.Data.Keywords
         public void GetsKeywordsFromTextProperties()
         {
             var entity = new Entity
-                {
-                    Text = "aa"
-                };
+            {
+                Text = "aa"
+            };
 
             var builder = GetService()
                 .Index(e => e.Text);
@@ -45,13 +45,13 @@ namespace Antix.Tests.Data.Keywords
         public void GetsKeywordsFromSubEntityTextProperties()
         {
             var entity = new Entity
+            {
+                Text = "aa",
+                Sub = new Entity
                 {
-                    Text = "aa",
-                    Sub = new Entity
-                        {
-                            Text = "bb"
-                        }
-                };
+                    Text = "bb"
+                }
+            };
 
             var builder = GetService()
                 .Index(e => e.Text)
@@ -66,14 +66,14 @@ namespace Antix.Tests.Data.Keywords
         public void GetsAllKeywords()
         {
             var entity = new Entity
+            {
+                Text = "aa bb",
+                SubCollection = new[]
                 {
-                    Text = "aa bb",
-                    SubCollection = new[]
-                        {
-                            new SubEntity {Text = "cc dd ee"},
-                            new SubEntity {Text = "ff"}
-                        }
-                };
+                    new SubEntity {Text = "cc dd ee"},
+                    new SubEntity {Text = "ff"}
+                }
+            };
 
             var builder = GetService()
                 .Index(e => e.Text)

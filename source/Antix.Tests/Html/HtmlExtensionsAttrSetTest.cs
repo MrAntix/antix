@@ -51,7 +51,7 @@ namespace Antix.Tests.Html
             var sut = HtmlParser.Create();
 
             var html = sut.Parse(htmlString).ToArray();
-            html.Attr(name,value);
+            html.Attr(name, value);
 
             Assert.Equal(expected, html.ToHtml());
         }

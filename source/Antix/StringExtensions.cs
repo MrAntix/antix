@@ -18,8 +18,8 @@ namespace Antix
                 lastIndex = index;
 
             return lastIndex != value.Length
-                       ? value.Substring(0, lastIndex)
-                       : value;
+                ? value.Substring(0, lastIndex)
+                : value;
         }
 
         /// <summary>

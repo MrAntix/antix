@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Configuration;
 using Antix.Data.Static;
-
 using Xunit;
 
 namespace Antix.Tests.Data.Static

@@ -3,7 +3,6 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Antix.Data.Keywords.EF.Entities;
 using Antix.Data.Keywords.Processing;
 
@@ -23,14 +22,14 @@ namespace Antix.Data.Keywords.EF
             var entities =
                 objectContext.ObjectStateManager.GetObjectStateEntries(
                     EntityState.Added | EntityState.Modified)
-                             .Where(es => es.Entity is IndexedEntity)
-                             .Select(es =>
-                                     new EFEntityState
-                                         {
-                                             Entity = (IndexedEntity) es.Entity,
-                                             IsDeleted = es.State == EntityState.Deleted
-                                         })
-                             .ToArray();
+                    .Where(es => es.Entity is IndexedEntity)
+                    .Select(es =>
+                        new EFEntityState
+                        {
+                            Entity = (IndexedEntity) es.Entity,
+                            IsDeleted = es.State == EntityState.Deleted
+                        })
+                    .ToArray();
 
             await UpdateKeywordsAsync(entities, context.Set<Keyword>());
 
@@ -45,27 +44,27 @@ namespace Antix.Data.Keywords.EF
 
             // get all the entities and their new keywords
             var entityKeywordValues = (from entityState in entityStates
-                                       select new
-                                           {
-                                               entity = entityState.Entity,
-                                               keywordValues = entityState.IsDeleted
-                                                                   ? new string[] {}
-                                                                   : GetKeywords(entityState.Entity)
-                                           })
+                select new
+                {
+                    entity = entityState.Entity,
+                    keywordValues = entityState.IsDeleted
+                        ? new string[] {}
+                        : GetKeywords(entityState.Entity)
+                })
                 .ToArray();
 
             var existingKeywords = await GetExistingKeywordsAsync(
                 keywordsSet,
                 entityKeywordValues.SelectMany(e => e.keywordValues)
-                                             );
+                );
 
             foreach (var entityNewKeyword in entityKeywordValues)
             {
                 UpdateEntityKeyword
                     (entityNewKeyword.entity,
-                     entityNewKeyword.keywordValues,
-                     existingKeywords,
-                     keywordsSet);
+                        entityNewKeyword.keywordValues,
+                        existingKeywords,
+                        keywordsSet);
             }
         }
 
@@ -79,8 +78,8 @@ namespace Antix.Data.Keywords.EF
                 .Except(localKeywords.Select(k => k.Value));
 
             var loadedKeywords = await keywordsSet
-                                           .Where(k => keywordValuesToLoad.Contains(k.Value))
-                                           .ToArrayAsync();
+                .Where(k => keywordValuesToLoad.Contains(k.Value))
+                .ToArrayAsync();
 
             return localKeywords
                 .Concat(loadedKeywords)
@@ -93,7 +92,7 @@ namespace Antix.Data.Keywords.EF
             IDbSet<Keyword> keywordsSet)
         {
             var toRemove = entity.Keywords
-                                 .ToDictionary(ek => ek, ek => ek.Frequency);
+                .ToDictionary(ek => ek, ek => ek.Frequency);
 
             foreach (var keywordValue in keywordValues)
             {
@@ -115,9 +114,9 @@ namespace Antix.Data.Keywords.EF
                     if (keyword == null)
                     {
                         keyword = new Keyword
-                            {
-                                Value = keywordValue
-                            };
+                        {
+                            Value = keywordValue
+                        };
                         keywordsSet.Add(keyword);
                     }
                     entityKeyword.Keyword = keyword;

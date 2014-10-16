@@ -22,8 +22,8 @@ namespace Antix.Tests.Html.Services
         public char Peek()
         {
             return _data.Any()
-                       ? _data.Peek()
-                       : (char) 0;
+                ? _data.Peek()
+                : (char) 0;
         }
 
         public string Peek(int count)
@@ -40,7 +40,7 @@ namespace Antix.Tests.Html.Services
         {
             return ToString(
                 Enumerable.Range(1, count)
-                          .Select(i => _data.Dequeue())
+                    .Select(i => _data.Dequeue())
                 );
         }
 
@@ -89,8 +89,8 @@ namespace Antix.Tests.Html.Services
         }
 
         bool TryConsume(string target,
-                        bool seek,
-                        out string consumed)
+            bool seek,
+            out string consumed)
         {
             if (target.Length < _data.Count)
             {
@@ -121,8 +121,8 @@ namespace Antix.Tests.Html.Services
         {
             return
                 ToString(_data
-                             .Skip(dataIndex)
-                             .Take(target.Length))
+                    .Skip(dataIndex)
+                    .Take(target.Length))
                 == target;
         }
 

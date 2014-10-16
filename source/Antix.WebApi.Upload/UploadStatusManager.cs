@@ -33,7 +33,7 @@ namespace Antix.WebApi.Upload
                 if (_id != null)
                 {
                     MemoryCache.Default
-                               .Set(_id, status, DateTimeOffset.UtcNow.AddHours(1));
+                        .Set(_id, status, DateTimeOffset.UtcNow.AddHours(1));
                 }
             }
         }

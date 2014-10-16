@@ -21,14 +21,14 @@ namespace Antix.Tests.Data.Keywords
         public void GetsAllKeywords()
         {
             var entity = new Entity
+            {
+                Text = "aa bb",
+                SubCollection = new[]
                 {
-                    Text = "aa bb",
-                    SubCollection = new[]
-                        {
-                            new SubEntity {Text = "cc dd ee"},
-                            new SubEntity {Text = "ff"}
-                        }
-                };
+                    new SubEntity {Text = "cc dd ee"},
+                    new SubEntity {Text = "ff"}
+                }
+            };
 
             var manager = GetService();
 
@@ -46,10 +46,10 @@ namespace Antix.Tests.Data.Keywords
         public void GetsAllKeywordsWhenSubCollectionIsNull()
         {
             var entity = new Entity
-                {
-                    Text = "aa bb",
-                    SubCollection = null
-                };
+            {
+                Text = "aa bb",
+                SubCollection = null
+            };
 
             var manager = GetService();
 

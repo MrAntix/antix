@@ -44,9 +44,9 @@ namespace Antix.WebApi.Upload.Azure
             if (!container.CreateIfNotExists())
             {
                 container.SetPermissions(new BlobContainerPermissions
-                    {
-                        PublicAccess = BlobContainerPublicAccessType.Blob
-                    });
+                {
+                    PublicAccess = BlobContainerPublicAccessType.Blob
+                });
             }
 
             return container;

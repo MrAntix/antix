@@ -43,7 +43,7 @@ namespace Antix.WebApi.Upload
             var filePartStreamProvider = _getFilePartStreamProvider(type, content);
 
             var streamProvider = new UploadMultipartStreamProvider(
-                filePartStreamProvider, 
+                filePartStreamProvider,
                 statusManager,
                 type);
 
@@ -57,8 +57,8 @@ namespace Antix.WebApi.Upload
             IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers)
         {
             return headers.Where(h => h.Key == UploadMessageHandler.StatusIdHeaderName)
-                          .Select(h => h.Value.FirstOrDefault())
-                          .FirstOrDefault();
+                .Select(h => h.Value.FirstOrDefault())
+                .FirstOrDefault();
         }
 
         public static void Init<T>(

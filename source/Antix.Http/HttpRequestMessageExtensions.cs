@@ -4,8 +4,8 @@ namespace Antix.Http
 {
     public static class HttpRequestMessageExtensions
     {
-        private const string HttpContext = "MS_HttpContext";
-        private const string RemoteEndpointMessage = "System.ServiceModel.Channels.RemoteEndpointMessageProperty";
+        const string HttpContext = "MS_HttpContext";
+        const string RemoteEndpointMessage = "System.ServiceModel.Channels.RemoteEndpointMessageProperty";
 
         public static string GetClientIpAddress(
             this HttpRequestMessage request)

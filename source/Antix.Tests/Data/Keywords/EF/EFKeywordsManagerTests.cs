@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Antix.Data.Keywords.EF;
 using Antix.Data.Keywords.EF.Entities;
 using Antix.Data.Keywords.Processing;
-
 using Moq;
-
 using Xunit;
 
 namespace Antix.Tests.Data.Keywords.EF
@@ -24,7 +21,7 @@ namespace Antix.Tests.Data.Keywords.EF
 
             var mockBuilderProvider = new Mock<IKeywordsBuilderProvider>();
             mockBuilderProvider.Setup(o => o.Create<TestEntity>())
-                               .Returns(mockBuilder.Object);
+                .Returns(mockBuilder.Object);
 
             var manager = new EFKeywordsManager(mockBuilderProvider.Object);
 
@@ -43,15 +40,15 @@ namespace Antix.Tests.Data.Keywords.EF
 
             await service.UpdateKeywordsAsync(
                 new[]
+                {
+                    new EFEntityState
                     {
-                        new EFEntityState
-                            {
-                                Entity = new TestEntity
-                                    {
-                                        Name = "one two two"
-                                    }
-                            }
-                    },
+                        Entity = new TestEntity
+                        {
+                            Name = "one two two"
+                        }
+                    }
+                },
                 keywordsSet);
 
             Assert.Equal(2, keywords.Count);
@@ -65,10 +62,10 @@ namespace Antix.Tests.Data.Keywords.EF
         public async Task entity_updated()
         {
             var keyword = new Keyword
-                {
-                    Value = "one",
-                    Frequency = 2
-                };
+            {
+                Value = "one",
+                Frequency = 2
+            };
             var keywords = new List<Keyword> {keyword};
             var keywordsSet = keywords.AsDbSet();
 
@@ -76,23 +73,23 @@ namespace Antix.Tests.Data.Keywords.EF
 
             await service.UpdateKeywordsAsync(
                 new[]
+                {
+                    new EFEntityState
                     {
-                        new EFEntityState
+                        Entity = new TestEntity
+                        {
+                            Name = "two two",
+                            Keywords = new List<IndexedEntityKeyword>
                             {
-                                Entity = new TestEntity
-                                    {
-                                        Name = "two two",
-                                        Keywords = new List<IndexedEntityKeyword>
-                                            {
-                                                new IndexedEntityKeyword
-                                                    {
-                                                        Keyword = keyword,
-                                                        Frequency = 1
-                                                    }
-                                            }
-                                    }
+                                new IndexedEntityKeyword
+                                {
+                                    Keyword = keyword,
+                                    Frequency = 1
+                                }
                             }
-                    },
+                        }
+                    }
+                },
                 keywordsSet);
 
             Assert.Equal(1, keyword.Frequency);
@@ -102,10 +99,10 @@ namespace Antix.Tests.Data.Keywords.EF
         public async Task entity_deleted()
         {
             var keyword = new Keyword
-                {
-                    Value = "one",
-                    Frequency = 1
-                };
+            {
+                Value = "one",
+                Frequency = 1
+            };
             var keywords = new List<Keyword> {keyword};
             var keywordsSet = keywords.AsDbSet();
 
@@ -113,24 +110,24 @@ namespace Antix.Tests.Data.Keywords.EF
 
             await service.UpdateKeywordsAsync(
                 new[]
+                {
+                    new EFEntityState
                     {
-                        new EFEntityState
+                        IsDeleted = true,
+                        Entity = new TestEntity
+                        {
+                            Name = "one",
+                            Keywords = new List<IndexedEntityKeyword>
                             {
-                                IsDeleted = true,
-                                Entity = new TestEntity
-                                    {
-                                        Name = "one",
-                                        Keywords = new List<IndexedEntityKeyword>
-                                            {
-                                                new IndexedEntityKeyword
-                                                    {
-                                                        Keyword = keyword,
-                                                        Frequency = 1
-                                                    }
-                                            }
-                                    }
+                                new IndexedEntityKeyword
+                                {
+                                    Keyword = keyword,
+                                    Frequency = 1
+                                }
                             }
-                    },
+                        }
+                    }
+                },
                 keywordsSet);
 
             Assert.False(keywords.Contains(keyword));

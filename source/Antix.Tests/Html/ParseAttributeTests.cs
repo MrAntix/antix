@@ -60,7 +60,7 @@ namespace Antix.Tests.Html
         }
 
         static void Exec(string html,
-                         string expectedName = "anAttribute", string expectedValue = "aValue")
+            string expectedName = "anAttribute", string expectedValue = "aValue")
         {
             var result = HtmlParser.ParseAttribute(new HtmlReader(html));
 

@@ -1,39 +1,40 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Antix.Services.Models
 {
     public class Response
     {
-        readonly IReadOnlyCollection<ResponseError> _errors;
+        readonly IReadOnlyCollection<Enum> _errors;
 
         protected Response(
-            IEnumerable<ResponseError> errors = null)
+            IEnumerable<Enum> errors = null)
         {
-            _errors = errors == null ? new ResponseError[] {} : errors.ToArray();
+            _errors = errors == null ? new Enum[] {} : errors.ToArray();
         }
 
-        public IReadOnlyCollection<ResponseError> Errors
+        public IEnumerable<Enum> Errors
         {
             get { return _errors; }
         }
 
-        public static Response Empty ()
+        public static Response Empty()
         {
             return new Response();
         }
 
-        public static Response Empty (IEnumerable<ResponseError> errors)
+        public static Response Empty(IEnumerable<Enum> errors)
         {
             return new Response(errors);
         }
 
-        public static Response<T> Data<T> (T data)
+        public static Response<T> Data<T>(T data)
         {
             return new Response<T>(data);
         }
 
-        public static Response<T> Data<T> (T data, IEnumerable<ResponseError> errors)
+        public static Response<T> Data<T>(T data, IEnumerable<Enum> errors)
         {
             return new Response<T>(data, errors);
         }
@@ -45,7 +46,7 @@ namespace Antix.Services.Models
 
         internal Response(
             T data,
-            IEnumerable<ResponseError> errors = null) :
+            IEnumerable<Enum> errors = null) :
                 base(errors)
         {
             _data = data;

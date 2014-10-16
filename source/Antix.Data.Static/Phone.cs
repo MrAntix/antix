@@ -123,15 +123,15 @@ namespace Antix.Data.Static
         {
             Phone result;
             return TryParse(value, out result)
-                       ? result
-                       : null;
+                ? result
+                : null;
         }
 
         static string Clean(string value)
         {
             return string.IsNullOrWhiteSpace(value)
-                       ? null
-                       : new string(value.Where(char.IsDigit).ToArray());
+                ? null
+                : new string(value.Where(char.IsDigit).ToArray());
         }
 
         public static IEnumerable<PhoneCountryConfiguration> CountryConfigurations

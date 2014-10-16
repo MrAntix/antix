@@ -17,8 +17,8 @@ namespace Antix.Html
 
             var found = new List<string>();
             nodes.Search(n => from attr in n.Attributes
-                              where attr.Name.Equals(name, StringComparison.OrdinalIgnoreCase)
-                              select attr.Value, found);
+                where attr.Name.Equals(name, StringComparison.OrdinalIgnoreCase)
+                select attr.Value, found);
 
             return found;
         }
@@ -37,39 +37,39 @@ namespace Antix.Html
             var found = new List<HtmlAttribute>();
             nodesArray.Search(
                 n =>
+                {
+                    var attributes =
+                        n.Attributes
+                            .Where(attr => attr.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+                            .ToArray();
+
+                    if (!attributes.Any())
                     {
-                        var attributes =
-                            n.Attributes
-                             .Where(attr => attr.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
-                             .ToArray();
-
-                        if (!attributes.Any())
+                        var newAttribute = new HtmlAttribute
                         {
-                            var newAttribute = new HtmlAttribute
-                                {
-                                    Name = name,
-                                    Value = value
-                                };
-                            n.Attributes.Add(newAttribute);
-                            attributes = new[] {newAttribute};
-                        }
-                        else
+                            Name = name,
+                            Value = value
+                        };
+                        n.Attributes.Add(newAttribute);
+                        attributes = new[] {newAttribute};
+                    }
+                    else
+                    {
+                        var first = true;
+                        foreach (var attribute in attributes)
                         {
-                            var first = true;
-                            foreach (var attribute in attributes)
+                            if (first)
                             {
-                                if (first)
-                                {
-                                    attribute.Value = value;
-                                    first = false;
-                                }
-                                else
-                                    n.Attributes.Remove(attribute);
+                                attribute.Value = value;
+                                first = false;
                             }
+                            else
+                                n.Attributes.Remove(attribute);
                         }
+                    }
 
-                        return attributes;
-                    },
+                    return attributes;
+                },
                 found);
 
             return nodesArray;
@@ -86,11 +86,11 @@ namespace Antix.Html
 
             var found = new List<IHtmlNode>();
             nodes.Search(n => from attr in n.Attributes
-                              where attr.Name.Equals("class", StringComparison.OrdinalIgnoreCase)
-                                    && !string.IsNullOrWhiteSpace(attr.Value)
-                              let classes = attr.Value.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries)
-                              where classes.Any(c => c.Equals(value, StringComparison.OrdinalIgnoreCase))
-                              select n, found);
+                where attr.Name.Equals("class", StringComparison.OrdinalIgnoreCase)
+                      && !string.IsNullOrWhiteSpace(attr.Value)
+                let classes = attr.Value.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries)
+                where classes.Any(c => c.Equals(value, StringComparison.OrdinalIgnoreCase))
+                select n, found);
 
             return found;
         }

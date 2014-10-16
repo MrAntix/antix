@@ -13,10 +13,10 @@ namespace Antix.Tests.Html
         {
             Exec(
                 "<div attr='value'/>",
-                n=>n.Name.Equals("div"),
+                n => n.Name.Equals("div"),
                 "<div attr=\"value\"/>");
         }
-        
+
         [Fact]
         public void nested_element()
         {

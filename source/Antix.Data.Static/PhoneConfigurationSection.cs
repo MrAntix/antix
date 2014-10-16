@@ -9,7 +9,7 @@ namespace Antix.Data.Static
         [ConfigurationProperty("countries")]
         public PhoneCountryConfigurations Countries
         {
-            get { return (PhoneCountryConfigurations)this["countries"]; }
+            get { return (PhoneCountryConfigurations) this["countries"]; }
         }
 
         public static readonly PhoneConfigurationSection Default

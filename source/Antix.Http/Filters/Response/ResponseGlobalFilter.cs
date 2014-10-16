@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Http.Controllers;
+using System.Web.Http.Filters;
 
 namespace Antix.Http.Filters.Response
 {
-    using System;
-    using System.Linq;
-    using System.Net;
-    using System.Net.Http;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using System.Web.Http.Controllers;
-    using System.Web.Http.Filters;
-
     namespace Antix.Http.Filters.Response
     {
         public class ResponseGlobalFilter :
@@ -25,13 +19,13 @@ namespace Antix.Http.Filters.Response
                 get { return false; }
             }
 
-            public async Task<HttpResponseMessage> ExecuteActionFilterAsync (
+            public async Task<HttpResponseMessage> ExecuteActionFilterAsync(
                 HttpActionContext actionContext,
                 CancellationToken cancellationToken,
                 Func<Task<HttpResponseMessage>> continuation)
             {
                 var result = await continuation();
-                if (!typeof(Services.Models.Response)
+                if (!typeof (Services.Models.Response)
                     .IsAssignableFrom(
                         actionContext.ActionDescriptor.ReturnType)) return result;
 

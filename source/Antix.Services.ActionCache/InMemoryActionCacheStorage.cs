@@ -39,7 +39,7 @@ namespace Antix.Services.ActionCache
                 code = Guid.NewGuid().ToString("N");
                 _data.Add(code, data);
 
-                if(!string.IsNullOrWhiteSpace(identifier))
+                if (!string.IsNullOrWhiteSpace(identifier))
                     _index.Add(identifier, code);
             }
 
@@ -72,7 +72,7 @@ namespace Antix.Services.ActionCache
 
             var timer =
                 new Timer(
-                    o => Remove((string)o), code,
+                    o => Remove((string) o), code,
                     expiresIn, TimeSpan.FromMilliseconds(-1));
             _timers.Add(code, timer);
         }

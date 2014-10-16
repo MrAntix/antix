@@ -33,8 +33,8 @@ namespace Antix.Security
                     string.Concat(value, salt)));
 
             return base64Encode
-                       ? Convert.ToBase64String(bytes)
-                       : Encoding.Default.GetString(bytes);
+                ? Convert.ToBase64String(bytes)
+                : Encoding.Default.GetString(bytes);
         }
 
         #region IDisposable

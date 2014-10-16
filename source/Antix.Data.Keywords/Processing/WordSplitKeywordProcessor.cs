@@ -24,11 +24,11 @@ namespace Antix.Data.Keywords.Processing
         public IEnumerable<string> Process(string value)
         {
             return value == null
-                       ? null
-                       : _splitter.Split(value.Replace("'", "").ToLower())
-                                  .Where(w => !string.IsNullOrWhiteSpace(w))
-                                  .Select(word => _stemmer.Stem(word))
-                                  .Except(_stopWords);
+                ? null
+                : _splitter.Split(value.Replace("'", "").ToLower())
+                    .Where(w => !string.IsNullOrWhiteSpace(w))
+                    .Select(word => _stemmer.Stem(word))
+                    .Except(_stopWords);
         }
 
         /// <summary>
@@ -46,13 +46,13 @@ namespace Antix.Data.Keywords.Processing
                 stopWords ?? EnglishStopWords);
         }
 
-        public static readonly string[] EnglishStopWords = new[]
-            {
-                "a", "an", "and", "are", "as", "at", "be", "but", "by",
-                "for", "if", "in", "into", "is", "it",
-                "no", "not", "of", "on", "or", "such",
-                "that", "the", "their", "then", "there", "these",
-                "they", "this", "to", "was", "will", "with"
-            };
+        public static readonly string[] EnglishStopWords =
+        {
+            "a", "an", "and", "are", "as", "at", "be", "but", "by",
+            "for", "if", "in", "into", "is", "it",
+            "no", "not", "of", "on", "or", "such",
+            "that", "the", "their", "then", "there", "these",
+            "they", "this", "to", "was", "will", "with"
+        };
     }
 }

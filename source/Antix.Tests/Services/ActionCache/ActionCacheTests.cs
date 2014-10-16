@@ -49,7 +49,7 @@ namespace Antix.Tests.Services.ActionCache
         [Fact]
         public void replace_existing_action_data()
         {
-            var storage= new InMemoryActionCacheStorage();
+            var storage = new InMemoryActionCacheStorage();
             var idenifier = Guid.NewGuid().ToString("N");
 
             var code = storage.Store(new Object(), TimeSpan.FromDays(1), idenifier);

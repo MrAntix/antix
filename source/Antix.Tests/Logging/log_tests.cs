@@ -1,7 +1,5 @@
 ﻿using System;
-
 using Antix.Logging;
-
 using Xunit;
 
 namespace Antix.Tests.Logging
@@ -38,7 +36,7 @@ namespace Antix.Tests.Logging
         const Log.Level EXPECTED_LEVEL = Log.Level.Error;
         const string EXPECTED_FORMAT = "{0}";
         static readonly Exception ExpectedException = new Exception();
-        static readonly object[] ExpectedArgs = new object[] { 1 };
+        static readonly object[] ExpectedArgs = {1};
 
         class Actual
         {
@@ -58,6 +56,5 @@ namespace Antix.Tests.Logging
                 actual.Args = a;
             };
         }
-
     }
 }

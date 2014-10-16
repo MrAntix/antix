@@ -49,16 +49,16 @@ namespace Antix.WebApi.Upload
                     var azureStream = stream as UploadMultipartStream;
                     if (azureStream != null)
                         value = new UploadFile
-                            {
-                                ContentType = azureStream.ContentType,
-                                Size = azureStream.Size,
-                                Uri = azureStream.Uri
-                            };
+                        {
+                            ContentType = azureStream.ContentType,
+                            Size = azureStream.Size,
+                            Uri = azureStream.Uri
+                        };
 
                     else
                         value = Encoding.UTF8
-                                        .GetString(((MemoryStream) stream)
-                                                       .ToArray());
+                            .GetString(((MemoryStream) stream)
+                                .ToArray());
                 }
 
                 yield return new KeyValuePair<string, object>(name, value);
@@ -75,8 +75,8 @@ namespace Antix.WebApi.Upload
             {
                 contentType = headers.ContentType.MediaType;
                 streamType = contentType == null
-                                 ? null
-                                 : contentType.Split('/')[0];
+                    ? null
+                    : contentType.Split('/')[0];
             }
 
             Stream stream;
@@ -90,12 +90,12 @@ namespace Antix.WebApi.Upload
                 case "audio":
                 case "image":
 
-                    var uploadStream = 
+                    var uploadStream =
                         new UploadMultipartStream(_writerProvider.GetStream(contentType))
-                            {
-                                Status = _status,
-                                GetModel = () => GetModel(_modelType)
-                            };
+                        {
+                            Status = _status,
+                            GetModel = () => GetModel(_modelType)
+                        };
 
                     stream = uploadStream;
 

@@ -11,17 +11,17 @@ namespace Antix.Tests.Html
         [Fact]
         public void consecutive_elements()
         {
-            Exec("<div>Hello</div><div>Hello</div>", expectedCount: 2);
+            Exec("<div>Hello</div><div>Hello</div>", 2);
         }
 
         [Fact]
         public void consecutive_elements_with_whitespace()
         {
-            var result = Exec("<span>Hello </span><span>Hello</span>", expectedCount: 2);
+            var result = Exec("<span>Hello </span><span>Hello</span>", 2);
 
             var firstTextNode =
                 result.OfType<HtmlElement>().First()
-                      .Children.OfType<HtmlTextElement>().First();
+                    .Children.OfType<HtmlTextElement>().First();
 
             Assert.Equal("Hello ", firstTextNode.Value);
         }
@@ -29,7 +29,7 @@ namespace Antix.Tests.Html
         [Fact]
         public void basic_document()
         {
-            Exec("<!doctype html><html><head></head><body></body></html>", expectedCount: 2);
+            Exec("<!doctype html><html><head></head><body></body></html>", 2);
         }
 
         static IEnumerable<IHtmlNode> Exec(

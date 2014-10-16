@@ -42,7 +42,7 @@ namespace Antix.Data.Keywords.EF
                         from ek in e.Keywords
                         where keywords.Any(k => k == ek.Keyword.Value)
                         select ek.Frequency/(decimal) ek.Keyword.Frequency
-                    ).Sum()
+                        ).Sum()
                 where rank > 0
                 orderby rank descending
                 select e;

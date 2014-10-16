@@ -29,10 +29,10 @@ namespace Antix.Html
             if (string.IsNullOrWhiteSpace(name)) return null;
 
             return new HtmlAttribute
-                {
-                    Name = name,
-                    Value = ParseAttributeValue(html)
-                };
+            {
+                Name = name,
+                Value = ParseAttributeValue(html)
+            };
         }
 
         static string ParseAttributeName(IHtmlReader html)
@@ -267,8 +267,8 @@ namespace Antix.Html
         public static string DeclarationCloser(string name)
         {
             return (from d in Declarations
-                    where d.Length > 1 && d[0] == name
-                    select d[1]).SingleOrDefault();
+                where d.Length > 1 && d[0] == name
+                select d[1]).SingleOrDefault();
         }
 
         public static bool IsNonContainer(string name)
