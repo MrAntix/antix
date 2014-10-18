@@ -81,7 +81,7 @@ namespace Antix.Tests.Services.ActionCache
             var storage = new InMemoryActionCacheStorage();
             var code = storage.Store(new TestActionData(), TimeSpan.Zero);
 
-            Thread.Sleep(1);
+            Thread.Sleep(500);
 
             var sut = GetServiceUnderTest(storage, new TestAction());
 

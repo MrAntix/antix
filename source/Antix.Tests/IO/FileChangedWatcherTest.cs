@@ -73,7 +73,7 @@ namespace Antix.Tests.IO
                 watcher.RaiseRenamed(filePath, newFilePath);
                 watcher.RaiseChanged(newFilePath);
 
-                Thread.Sleep(200);
+                Thread.Sleep(2000);
             }
 
             Assert.Equal(2, events.Count);
