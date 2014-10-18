@@ -13,7 +13,7 @@
                 default:
                     return string.Format("{0} {1}", Path, Type);
                 case FileSystemChangedEventType.Renamed:
-                    return string.Format("{0} {1} {2}", NewPath, Type, Path);
+                    return string.Format("{0} {1} {2}", Path, Type, NewPath);
             }
         }
     }
