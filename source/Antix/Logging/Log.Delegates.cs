@@ -5,17 +5,29 @@ namespace Antix.Logging
 {
     public static partial class Log
     {
-        const string CONSOLE_MESSAGE_FORMAT = "{0:mm:ss:ffff} [{1}]: {2}";
+        const string MESSAGE_FORMAT = "{0:hh:mm:ss:ffff} [{1}]: {2}";
 
         public static readonly Delegate ToConsole
             = l => (ex, f, a) =>
             {
                 var m = string.Format(f, a);
                 Console.WriteLine(
-                    CONSOLE_MESSAGE_FORMAT, DateTime.UtcNow, l, m);
+                    MESSAGE_FORMAT, DateTime.UtcNow, l, m);
                 if (ex != null)
                 {
                     Console.WriteLine(ex);
+                }
+            };
+
+        public static readonly Delegate ToDebug
+            = l => (ex, f, a) =>
+            {
+                var m = string.Format(f, a);
+                System.Diagnostics.Debug.WriteLine(
+                    MESSAGE_FORMAT, DateTime.UtcNow, l, m);
+                if (ex != null)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex);
                 }
             };
 
