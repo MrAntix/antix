@@ -33,7 +33,7 @@ namespace Antix.IO
 
             _watcher = new FileSystemWatcher(options.Directory, options.Pattern)
             {
-                IncludeSubdirectories = options.IncludeSubdirectories,
+                IncludeSubdirectories = options.IncludeSubdirectories
             };
 
             _watcher.Changed += (s, e) => RaiseChanged(e.FullPath);
@@ -56,10 +56,12 @@ namespace Antix.IO
                 new Timer(
                     o =>
                     {
-                        while (_events.Keys.First() != path)
+                        while (!_events.Keys.First().Equals(path))
                             Thread.Sleep(1);
 
                         Dequeue(path);
+
+                        _action(e);
                     }, null, _delay, 0);
 
             _events.Add(
