@@ -28,15 +28,9 @@ namespace Antix.Http.Dispatcher
             Type controllerType)
         {
             var controller = _create(controllerType);
-            _log.Debug(m => m("created {0}", controllerType.Name));
 
             request.RegisterForDispose(
-                new Disposable(
-                    () =>
-                    {
-                        _release(controller);
-                        _log.Debug(m => m("released {0}", controllerType.Name));
-                    }));
+                new Disposable(() => _release(controller)));
 
             return controller;
         }
