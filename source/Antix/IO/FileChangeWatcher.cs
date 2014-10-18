@@ -58,7 +58,7 @@ namespace Antix.IO
                     o =>
                     {
                         while (_events.Keys.First() != path)
-                            Thread.Sleep(0);
+                            Thread.Sleep(1);
 
                         Debug.WriteLine("fire " + path);
                         _action(e);
