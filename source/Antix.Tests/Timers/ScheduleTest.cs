@@ -16,7 +16,6 @@ namespace Antix.Tests.Timers
         public void run_action_in()
         {
             var log = Log.ToConsole;
-            // Func<Log.Delegate> log = null; // can pass a null log
 
             var start = DateTime.UtcNow;
             var stop = DateTime.MinValue;
@@ -26,9 +25,9 @@ namespace Antix.Tests.Timers
             log.Debug(m => m("create shedule"));
 
             Schedule.Create(log)
-                    .At(200, () => stop = DateTime.UtcNow, "set stop time")
-                    .At(300, () => { throw new Exception("Boo!"); }, "throw exception")
-                    .ThenAt(100, () => reset.Set(), "stop waiting");
+                    .At(500, () => stop = DateTime.UtcNow, "set stop time")
+                    .At(1000, () => { throw new Exception("Boo!"); }, "throw exception")
+                    .ThenAt(500, () => reset.Set(), "stop waiting");
 
             log.Debug(m => m("waiting"));
             reset.WaitOne();
