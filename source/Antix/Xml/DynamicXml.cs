@@ -19,9 +19,9 @@ namespace Antix.Xml
             return new DynamicXml(XDocument.Load(stream).Root);
         }
 
-        public static dynamic Load(string xml)
+        public static dynamic Parse(string xml)
         {
-            return new DynamicXml(XDocument.Load(xml).Root);
+            return new DynamicXml(XDocument.Parse(xml).Root);
         }
 
         public override bool TryGetMember(GetMemberBinder binder, out object result)
