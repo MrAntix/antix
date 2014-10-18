@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -60,9 +59,6 @@ namespace Antix.IO
                         while (_events.Keys.First() != path)
                             Thread.Sleep(1);
 
-                        Debug.WriteLine("fire " + path);
-                        _action(e);
-
                         Dequeue(path);
                     }, null, _delay, 0);
 
@@ -70,14 +66,10 @@ namespace Antix.IO
                 path,
                 timer
                 );
-
-            Debug.WriteLine("queue " + path);
         }
 
         void Dequeue(string path)
         {
-            Debug.WriteLine("dequeue " + path);
-
             _events[path].Dispose();
             _events.Remove(path);
         }
