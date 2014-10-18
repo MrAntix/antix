@@ -19,6 +19,11 @@ namespace Antix.Xml
             return new DynamicXml(XDocument.Load(stream).Root);
         }
 
+        public static dynamic Load(string xml)
+        {
+            return new DynamicXml(XDocument.Load(xml).Root);
+        }
+
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
             result = null;
