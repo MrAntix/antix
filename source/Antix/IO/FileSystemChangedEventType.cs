@@ -2,7 +2,7 @@ namespace Antix.IO
 {
     public enum FileSystemChangedEventType
     {
-        Changed,
+        AddedOrUpdated,
         Deleted,
         Renamed
     }

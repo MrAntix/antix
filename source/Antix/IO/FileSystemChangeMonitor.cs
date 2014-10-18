@@ -18,7 +18,7 @@ namespace Antix.IO
 
         int _delay;
 
-        public IFileSystemChangeMonitor OnChange(
+        public IFileSystemChangeMonitor OnChanged(
             Action<FileSystemChangedEvent> action,
             FileSystemChangeMonitorOptions options)
         {
@@ -62,7 +62,7 @@ namespace Antix.IO
             return this;
         }
 
-        public void Change(FileSystemChangedEvent e)
+        public void Changed(FileSystemChangedEvent e)
         {
             if (_events.ContainsKey(e.Path))
             {

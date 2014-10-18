@@ -10,10 +10,10 @@ namespace Antix.IO
                 new FileSystemChangedEvent
                 {
                     Path = path,
-                    Type = FileSystemChangedEventType.Changed
+                    Type = FileSystemChangedEventType.AddedOrUpdated
                 };
 
-            monitor.Change(e);
+            monitor.Changed(e);
         }
 
         public static void RaiseDeleted(
@@ -27,7 +27,7 @@ namespace Antix.IO
                     Type = FileSystemChangedEventType.Deleted
                 };
 
-            monitor.Change(e);
+            monitor.Changed(e);
         }
 
         public static void RaiseRenamed(
@@ -42,7 +42,7 @@ namespace Antix.IO
                     Type = FileSystemChangedEventType.Renamed
                 };
 
-            monitor.Change(e);
+            monitor.Changed(e);
         }
     }
 }

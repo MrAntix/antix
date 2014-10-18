@@ -5,10 +5,10 @@ namespace Antix.IO
     public interface IFileSystemChangeMonitor :
         IDisposable
     {
-        IFileSystemChangeMonitor OnChange(
+        IFileSystemChangeMonitor OnChanged(
             Action<FileSystemChangedEvent> action,
             FileSystemChangeMonitorOptions options);
 
-        void Change(FileSystemChangedEvent e);
+        void Changed(FileSystemChangedEvent e);
     }
 }

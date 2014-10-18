@@ -19,7 +19,7 @@ namespace Antix.Tests.IO
                 = new List<FileSystemChangedEvent>();
 
             using (var watcher = new FileSystemChangeMonitor()
-                    .OnChange(
+                    .OnChanged(
                         ce =>
                         {
                             Debug.WriteLine(ce);
@@ -57,7 +57,7 @@ namespace Antix.Tests.IO
 
             using (var watcher = (FileSystemChangeMonitor)
                 new FileSystemChangeMonitor()
-                    .OnChange(
+                    .OnChanged(
                         ce =>
                         {
                             Debug.WriteLine(ce);
@@ -77,7 +77,7 @@ namespace Antix.Tests.IO
 
             Assert.Equal(2, events.Count);
             Assert.Equal(FileSystemChangedEventType.Renamed, events.ElementAt(0).Type);
-            Assert.Equal(FileSystemChangedEventType.Changed, events.ElementAt(1).Type);
+            Assert.Equal(FileSystemChangedEventType.AddedOrUpdated, events.ElementAt(1).Type);
         }
     }
 }
