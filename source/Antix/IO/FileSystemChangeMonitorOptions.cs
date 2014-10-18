@@ -1,8 +1,8 @@
 ﻿namespace Antix.IO
 {
-    public class FileChangeWatcherOptions
+    public class FileSystemChangeMonitorOptions
     {
-        public FileChangeWatcherOptions()
+        public FileSystemChangeMonitorOptions()
         {
             Directory = null;
             Pattern = "*.*";

@@ -1,6 +1,6 @@
 namespace Antix.IO
 {
-    public enum FileChangedEventType
+    public enum FileSystemChangedEventType
     {
         Changed,
         Deleted,

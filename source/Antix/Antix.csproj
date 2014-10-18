@@ -74,11 +74,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IO\IFileChangeWatcher.cs" />
-    <Compile Include="IO\FileChangeWatcher.cs" />
-    <Compile Include="IO\FileChangedEvent.cs" />
-    <Compile Include="IO\FileChangedEventType.cs" />
-    <Compile Include="IO\FileChangeWatcherOptions.cs" />
+    <Compile Include="IO\IFileSystemChangeMonitor.cs" />
+    <Compile Include="IO\FileSystemChangeMonitor.cs" />
+    <Compile Include="IO\FileSystemChangedEvent.cs" />
+    <Compile Include="IO\FileSystemChangedEventType.cs" />
+    <Compile Include="IO\FileSystemChangeMonitorOptions.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Logging\Log.Delegates.cs" />
     <Compile Include="Logging\Log.Extensions.cs" />

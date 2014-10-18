@@ -1,9 +1,9 @@
 ﻿namespace Antix.IO
 {
-    public class FileChangedEvent
+    public class FileSystemChangedEvent
     {
         public string Path { get; set; }
-        public FileChangedEventType Type { get; set; }
+        public FileSystemChangedEventType Type { get; set; }
         public string OldPath { get; set; }
 
         public override string ToString()
@@ -12,7 +12,7 @@
             {
                 default:
                     return string.Format("{0} {1}", Path, Type);
-                case FileChangedEventType.Renamed:
+                case FileSystemChangedEventType.Renamed:
                     return string.Format("{0} {1} {2}", OldPath, Type, Path);
             }
         }

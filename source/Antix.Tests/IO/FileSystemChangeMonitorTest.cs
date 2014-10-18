@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Antix.Tests.IO
 {
-    public class FileChangedWatcherTest
+    public class FileSystemChangeMonitorTest
     {
         [Fact]
         public void raises_single_events()
@@ -16,17 +16,17 @@ namespace Antix.Tests.IO
             const string newFilePath = "NEW.FILE";
 
             var events
-                = new List<FileChangedEvent>();
+                = new List<FileSystemChangedEvent>();
 
-            using (var watcher = (FileChangeWatcher)
-                new FileChangeWatcher()
+            using (var watcher = (FileSystemChangeMonitor)
+                new FileSystemChangeMonitor()
                     .OnChange(
                         ce =>
                         {
                             Debug.WriteLine(ce);
                             events.Add(ce);
                         },
-                        new FileChangeWatcherOptions
+                        new FileSystemChangeMonitorOptions
                         {
                             Directory = null, // won't actually watch
                             Delay = 100
@@ -54,17 +54,17 @@ namespace Antix.Tests.IO
             const string newFilePath = "NEW.FILE";
 
             var events
-                = new List<FileChangedEvent>();
+                = new List<FileSystemChangedEvent>();
 
-            using (var watcher = (FileChangeWatcher)
-                new FileChangeWatcher()
+            using (var watcher = (FileSystemChangeMonitor)
+                new FileSystemChangeMonitor()
                     .OnChange(
                         ce =>
                         {
                             Debug.WriteLine(ce);
                             events.Add(ce);
                         },
-                        new FileChangeWatcherOptions
+                        new FileSystemChangeMonitorOptions
                         {
                             Directory = null, // won't actually watch
                             Delay = 100
@@ -77,8 +77,8 @@ namespace Antix.Tests.IO
             }
 
             Assert.Equal(2, events.Count);
-            Assert.Equal(FileChangedEventType.Renamed, events.ElementAt(0).Type);
-            Assert.Equal(FileChangedEventType.Changed, events.ElementAt(1).Type);
+            Assert.Equal(FileSystemChangedEventType.Renamed, events.ElementAt(0).Type);
+            Assert.Equal(FileSystemChangedEventType.Changed, events.ElementAt(1).Type);
         }
     }
 }
