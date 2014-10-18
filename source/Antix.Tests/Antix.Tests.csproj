@@ -85,9 +85,11 @@
     <Compile Include="Html\Services\QueueHtmlReader.cs" />
     <Compile Include="Html\Services\StringHtmlReader.cs" />
     <Compile Include="Html\TextTest.cs" />
+    <Compile Include="IO\FileChangedWatcherTest.cs" />
     <Compile Include="Logging\log_tests.cs" />
     <Compile Include="Services\ActionCache\ActionCacheTests.cs" />
     <Compile Include="StringSearchTests.cs" />
+    <Compile Include="Timers\ScheduleTest.cs" />
     <Compile Include="ToSafeFileNameTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrimEndTests.cs" />
