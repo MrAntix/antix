@@ -75,7 +75,7 @@ namespace Antix.IO
                     o =>
                     {
                         while (!path
-                            .Equals(_events.Keys.FirstOrDefault()))
+                            .Equals(_events.Keys.ToArray().FirstOrDefault()))
                             Thread.Sleep(1);
 
                         Dequeue(path);
