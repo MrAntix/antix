@@ -8,5 +8,7 @@ namespace Antix.IO
         IFileSystemChangeMonitor OnChange(
             Action<FileSystemChangedEvent> action,
             FileSystemChangeMonitorOptions options);
+
+        void Change(FileSystemChangedEvent e);
     }
 }

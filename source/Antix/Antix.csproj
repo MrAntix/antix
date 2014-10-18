@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IO\FileSystemChangeMonitorExtensions.cs" />
     <Compile Include="IO\IFileSystemChangeMonitor.cs" />
     <Compile Include="IO\FileSystemChangeMonitor.cs" />
     <Compile Include="IO\FileSystemChangedEvent.cs" />

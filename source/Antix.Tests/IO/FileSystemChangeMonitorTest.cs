@@ -18,8 +18,7 @@ namespace Antix.Tests.IO
             var events
                 = new List<FileSystemChangedEvent>();
 
-            using (var watcher = (FileSystemChangeMonitor)
-                new FileSystemChangeMonitor()
+            using (var watcher = new FileSystemChangeMonitor()
                     .OnChange(
                         ce =>
                         {
@@ -33,8 +32,8 @@ namespace Antix.Tests.IO
                         }))
             {
                 watcher.RaiseDeleted(filePath);
-                watcher.RaiseChanged(filePath);
-                watcher.RaiseChanged(filePath);
+                watcher.RaiseAddedOrUpdated(filePath);
+                watcher.RaiseAddedOrUpdated(filePath);
                 watcher.RaiseRenamed(filePath, newFilePath);
 
                 Thread.Sleep(200);
@@ -43,8 +42,8 @@ namespace Antix.Tests.IO
             Assert.Equal(1, events.Count);
 
             var e = events.Single();
-            Assert.Equal(filePath, e.OldPath);
-            Assert.Equal(newFilePath, e.Path);
+            Assert.Equal(filePath, e.Path);
+            Assert.Equal(newFilePath, e.NewPath);
         }
 
         [Fact]
@@ -71,7 +70,7 @@ namespace Antix.Tests.IO
                         }))
             {
                 watcher.RaiseRenamed(filePath, newFilePath);
-                watcher.RaiseChanged(newFilePath);
+                watcher.RaiseAddedOrUpdated(newFilePath);
 
                 Thread.Sleep(2000);
             }

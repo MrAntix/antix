@@ -42,9 +42,9 @@ namespace Antix.IO
                 NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite
             };
 
-            _fileWatcher.Changed += (s, e) => RaiseChanged(e.FullPath);
-            _fileWatcher.Deleted += (s, e) => RaiseDeleted(e.FullPath);
-            _fileWatcher.Renamed += (s, e) => RaiseRenamed(e.OldFullPath, e.FullPath);
+            _fileWatcher.Changed += (s, e) => this.RaiseAddedOrUpdated(e.FullPath);
+            _fileWatcher.Deleted += (s, e) => this.RaiseDeleted(e.FullPath);
+            _fileWatcher.Renamed += (s, e) => this.RaiseRenamed(e.OldFullPath, e.FullPath);
 
             _fileWatcher.EnableRaisingEvents = true;
 
@@ -54,78 +54,41 @@ namespace Antix.IO
                 NotifyFilter = NotifyFilters.DirectoryName
             };
 
-            _directoryWatcher.Deleted += (s, e) => RaiseDeleted(e.FullPath);
-            _directoryWatcher.Renamed += (s, e) => RaiseRenamed(e.OldFullPath, e.FullPath);
+            _directoryWatcher.Deleted += (s, e) => this.RaiseDeleted(e.FullPath);
+            _directoryWatcher.Renamed += (s, e) => this.RaiseRenamed(e.OldFullPath, e.FullPath);
 
             _directoryWatcher.EnableRaisingEvents = true;
 
             return this;
         }
 
-        void Enqueue(string path, FileSystemChangedEvent e)
+        public void Change(FileSystemChangedEvent e)
         {
-            if (_events.ContainsKey(path))
+            if (_events.ContainsKey(e.Path))
             {
-                Dequeue(path);
+                ClearTimer(e.Path);
             }
 
             _events.Add(
-                path,
+                e.Path,
                 new Timer(
                     o =>
                     {
-                        while (!path
+                        while (!e.Path
                             .Equals(_events.Keys.ToArray().FirstOrDefault()))
                             Thread.Sleep(1);
 
-                        Dequeue(path);
+                        ClearTimer(e.Path);
 
                         _action(e);
                     }, null, _delay, 0)
                 );
         }
 
-        void Dequeue(string path)
+        void ClearTimer(string path)
         {
             _events[path].Dispose();
             _events.Remove(path);
-        }
-
-        public void RaiseChanged(string path)
-        {
-            var e =
-                new FileSystemChangedEvent
-                {
-                    Path = path,
-                    Type = FileSystemChangedEventType.Changed
-                };
-
-            Enqueue(path, e);
-        }
-
-        public void RaiseDeleted(string path)
-        {
-            var e =
-                new FileSystemChangedEvent
-                {
-                    Path = path,
-                    Type = FileSystemChangedEventType.Deleted
-                };
-
-            Enqueue(path, e);
-        }
-
-        public void RaiseRenamed(string oldPath, string path)
-        {
-            var e =
-                new FileSystemChangedEvent
-                {
-                    Path = path,
-                    OldPath = oldPath,
-                    Type = FileSystemChangedEventType.Renamed
-                };
-
-            Enqueue(oldPath, e);
         }
 
         #region IDisposable
