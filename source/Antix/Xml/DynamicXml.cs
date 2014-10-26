@@ -39,15 +39,34 @@ namespace Antix.Xml
             }
 
             var node = nodes.SingleOrDefault();
-            if (node == null) return true;
-
-            if (node.HasElements)
+            if (node != null)
             {
-                result = new DynamicXml(node);
+                if (node.HasElements)
+                {
+                    result = new DynamicXml(node);
+                }
+                else
+                {
+                    result = node.Value;
+                }
             }
             else
             {
-                result = node.Value;
+                var attributes = _root.Attributes()
+                    .Where(e => e.Name.LocalName == binder.Name)
+                    .ToArray();
+
+                if (attributes.Count() > 1)
+                {
+                    result = attributes.Select(a => a.Value).ToList();
+                    return true;
+                }
+
+                var attribute = attributes.SingleOrDefault();
+                if (attribute != null)
+                {
+                    result = attribute.Value;
+                }
             }
 
             return true;
