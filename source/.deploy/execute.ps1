@@ -1,8 +1,7 @@
-Param($path,$version)
+Param($path,$version,$apikey)
 
-$apikey = "API-NLITTOD95WSOKIT7FLWVSKTGIW"
-#$packagesSource = "http://localhost:50358/packages"
-$packagesSource = "http://nuget.antix.co.uk/packages"
+$packagesSource = "http://localhost:50358/packages"
+#$packagesSource = "http://nuget.antix.co.uk/packages"
 
 if ($version -Eq $null) {
     $version = Read-Host "Enter Version Number"
