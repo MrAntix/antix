@@ -24,7 +24,7 @@ namespace Antix.Services.Models
             return new Response();
         }
 
-        public static Response Empty(IEnumerable<Enum> errors)
+        public static Response Empty(params Enum[] errors)
         {
             return new Response(errors);
         }
@@ -34,7 +34,7 @@ namespace Antix.Services.Models
             return new Response<T>(data);
         }
 
-        public static Response<T> Data<T>(T data, IEnumerable<Enum> errors)
+        public static Response<T> Data<T>(T data, params Enum[] errors)
         {
             return new Response<T>(data, errors);
         }
