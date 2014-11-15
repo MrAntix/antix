@@ -6,6 +6,11 @@ namespace Antix.Services
     {
     }
 
+    public interface IServiceNInOut : IService
+    {
+        Task ExecuteAsync();
+    }
+
     public interface IServiceIn<in TIn> : IService
     {
         Task ExecuteAsync(TIn model);
