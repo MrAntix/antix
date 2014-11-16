@@ -6,6 +6,9 @@ $packagesSource = "http://nuget.antix.co.uk/packages"
 if ($version -Eq $null) {
     $version = Read-Host "Enter Version Number"
 }
+if ($apikey -Eq $null) {
+    $apikey = "00000000-0000-0000-0000-000000000000"
+}
 
 if($path -Eq $null){
     $path = Split-Path -parent $PSCommandPath 
