@@ -7,7 +7,7 @@
     <authors>Anthony Johnston</authors>
     <owners>Antix Software Limited</owners>
     <licenseUrl>https://raw.github.com/MrAntix/antix/master/LICENCE.md</licenseUrl>
-    <projectUrl>https://github.com/MrAntix/antix/</projectUrl>
+    <projectUrl>https://github.com/MrAntix/antix/tree/master/source/Antix.Http</projectUrl>
     <iconUrl>https://raw.github.com/MrAntix/antix/master/graphics/antix_32x32.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Antix Common Http Code</description>
