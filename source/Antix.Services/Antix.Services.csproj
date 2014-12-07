@@ -41,8 +41,11 @@
   <ItemGroup>
     <Compile Include="IService.cs" />
     <Compile Include="IServiceHandler.cs" />
-    <Compile Include="Models\Response.cs" />
-    <Compile Include="Models\ResponseErrorCollection.cs" />
+    <Compile Include="Models\IServiceResponse.cs" />
+    <Compile Include="Models\IServiceResponseWithData.cs" />
+    <Compile Include="Models\ServiceResponse.cs" />
+    <Compile Include="Models\ServiceErrorCollection.cs" />
+    <Compile Include="Models\ServiceResponseWithData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceHandler.cs" />
     <Compile Include="ServiceSyncExtensions.cs" />
