@@ -18,8 +18,6 @@ namespace Antix.Services.Models
             get { return _errors; }
         }
 
-        public static readonly ServiceResponse Empty = new ServiceResponse();
-
         public ServiceResponse WithErrors(
             IEnumerable<string> errors)
         {
@@ -30,6 +28,14 @@ namespace Antix.Services.Models
             T data)
         {
             return new ServiceResponse<T>(data, _errors);
+        }
+
+        public static readonly ServiceResponse Empty = new ServiceResponse();
+
+        public static IServiceResponse<T> Data<T>(
+            T data)
+        {
+            return new ServiceResponse<T>(data);
         }
     }
 
