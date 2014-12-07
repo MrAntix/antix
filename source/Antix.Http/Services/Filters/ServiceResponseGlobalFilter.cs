@@ -31,14 +31,23 @@ namespace Antix.Http.Services.Filters
             Process(
                 objectContent.Value,
                 status => result.StatusCode = status,
-                value => objectContent.Value = value
+                value => result.Content = GetObjectContent(value, objectContent.Formatter)
                 );
 
             return result;
         }
 
+        private HttpContent GetObjectContent(
+            object value, System.Net.Http.Formatting.MediaTypeFormatter mediaTypeFormatter)
+        {
+            return new ObjectContent(
+                value == null ? typeof(object) : value.GetType(),
+                value,
+                mediaTypeFormatter);
+        }
+
         public static void Process(
-            object responseValue, 
+            object responseValue,
             Action<HttpStatusCode> setStatusCode,
             Action<object> setValue)
         {
