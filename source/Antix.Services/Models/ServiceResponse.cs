@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Antix.Services.Models
 {
-    public class ServiceResponse:IServiceResponse
+    public class ServiceResponse : IServiceResponse
     {
         readonly IReadOnlyCollection<string> _errors;
 
@@ -26,10 +26,47 @@ namespace Antix.Services.Models
             return new ServiceResponse(errors);
         }
 
-        public ServiceResponseWithData<T> WithData<T>(
+        public IServiceResponse<T> WithData<T>(
             T data)
         {
-            return new ServiceResponseWithData<T>(data, _errors);
+            return new ServiceResponse<T>(data, _errors);
+        }
+    }
+
+    public class ServiceResponse<T> :
+        IServiceResponse<T>
+    {
+        readonly IReadOnlyCollection<string> _errors;
+        readonly T _data;
+
+        public ServiceResponse(
+            T data,
+            IEnumerable<string> errors = null)
+        {
+            _data = data;
+            _errors = errors == null ? new string[] {} : errors.ToArray();
+        }
+
+
+        public IEnumerable<string> Errors
+        {
+            get { return _errors; }
+        }
+
+        public T Data
+        {
+            get { return _data; }
+        }
+
+        object IServiceResponseWithData.Data
+        {
+            get { return _data; }
+        }
+
+        public ServiceResponse<T> WithErrors(
+            IEnumerable<string> errors)
+        {
+            return new ServiceResponse<T>(_data, errors);
         }
     }
 }
