@@ -37,6 +37,11 @@ namespace Antix.Services.Models
         {
             return new ServiceResponse<T>(data);
         }
+
+        public static IServiceResponse<T> Data<T>()
+        {
+            return Data(default(T));
+        }
     }
 
     public class ServiceResponse<T> :
