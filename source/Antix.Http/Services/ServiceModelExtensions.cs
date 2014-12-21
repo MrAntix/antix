@@ -6,9 +6,12 @@ namespace Antix.Http.Services
 {
     public static class ServiceModelExtensions
     {
-        public static ObjectContent<T> AsJsonContent<T>(ServiceResponse<T> response)
+        public static ObjectContent<T> AsJsonContent<T>(
+            IServiceResponse<T> response)
         {
-            return new ObjectContent<T>(response.Data, new JsonMediaTypeFormatter());
+            return new ObjectContent<T>(
+                response.Data,
+                new JsonMediaTypeFormatter());
         }
     }
 }

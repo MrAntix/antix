@@ -3,7 +3,8 @@ using System.Linq;
 
 namespace Antix.Services.Models
 {
-    public class ServiceResponse : IServiceResponse
+    public class ServiceResponse :
+        IServiceResponse
     {
         readonly IReadOnlyCollection<string> _errors;
 
@@ -13,58 +14,41 @@ namespace Antix.Services.Models
             _errors = errors == null ? new string[] {} : errors.ToArray();
         }
 
-        public IEnumerable<string> Errors
+        IEnumerable<string> IServiceResponse.Errors
         {
             get { return _errors; }
         }
 
-        public ServiceResponse WithErrors(
+        IServiceResponse IServiceResponse.Create(
             IEnumerable<string> errors)
         {
             return new ServiceResponse(errors);
         }
 
-        public IServiceResponse<T> WithData<T>(
-            T data)
+        IServiceResponse<TData> IServiceResponse.Create<TData>(
+            TData data,
+            IEnumerable<string> errors)
         {
-            return new ServiceResponse<T>(data, _errors);
+            return new ServiceResponse<TData>(data, errors);
         }
 
-        public static readonly ServiceResponse Empty = new ServiceResponse();
-
-        public static IServiceResponse<T> Data<T>(
-            T data)
-        {
-            return new ServiceResponse<T>(data);
-        }
-
-        public static IServiceResponse<T> Data<T>()
-        {
-            return Data(default(T));
-        }
+        public static readonly IServiceResponse Empty = new ServiceResponse();
     }
 
-    public class ServiceResponse<T> :
-        IServiceResponse<T>
+    public class ServiceResponse<TData> :
+        ServiceResponse, IServiceResponse<TData>
     {
-        readonly IReadOnlyCollection<string> _errors;
-        readonly T _data;
+        readonly TData _data;
 
         public ServiceResponse(
-            T data,
-            IEnumerable<string> errors = null)
+            TData data,
+            IEnumerable<string> errors) :
+                base(errors)
         {
             _data = data;
-            _errors = errors == null ? new string[] {} : errors.ToArray();
         }
 
-
-        public IEnumerable<string> Errors
-        {
-            get { return _errors; }
-        }
-
-        public T Data
+        TData IServiceResponse<TData>.Data
         {
             get { return _data; }
         }
@@ -74,10 +58,10 @@ namespace Antix.Services.Models
             get { return _data; }
         }
 
-        public ServiceResponse<T> WithErrors(
+        IServiceResponse IServiceResponse.Create(
             IEnumerable<string> errors)
         {
-            return new ServiceResponse<T>(_data, errors);
+            return new ServiceResponse<TData>(_data, errors);
         }
     }
 }

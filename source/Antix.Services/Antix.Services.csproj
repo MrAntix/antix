@@ -42,6 +42,7 @@
     <Compile Include="IService.cs" />
     <Compile Include="IServiceHandler.cs" />
     <Compile Include="Models\IServiceResponse.cs" />
+    <Compile Include="Models\IServiceResponseExtensions.cs" />
     <Compile Include="Models\ServiceErrorCollection.cs" />
     <Compile Include="Models\ServiceResponse.cs">
       <SubType>Code</SubType>

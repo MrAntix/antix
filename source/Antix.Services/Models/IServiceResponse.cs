@@ -5,6 +5,13 @@ namespace Antix.Services.Models
     public interface IServiceResponse
     {
         IEnumerable<string> Errors { get; }
+
+        IServiceResponse Create(
+            IEnumerable<string> errors);
+
+        IServiceResponse<TData> Create<TData>(
+            TData data,
+            IEnumerable<string> errors);
     }
 
     public interface IServiceResponseWithData :
@@ -12,10 +19,10 @@ namespace Antix.Services.Models
     {
         object Data { get; }
     }
-    
-    public interface IServiceResponse<out T> :
+
+    public interface IServiceResponse<out TData> :
         IServiceResponseWithData
     {
-        new T Data { get; }
+        new TData Data { get; }
     }
 }

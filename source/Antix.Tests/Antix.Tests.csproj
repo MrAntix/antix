@@ -101,6 +101,7 @@
     <Compile Include="IO\FileSystemChangeMonitorTest.cs" />
     <Compile Include="Logging\log_tests.cs" />
     <Compile Include="Services\ActionCache\ActionCacheTests.cs" />
+    <Compile Include="Services\Models\ServiceResponseTest.cs" />
     <Compile Include="StringSearchTests.cs" />
     <Compile Include="Timers\ScheduleTest.cs" />
     <Compile Include="ToSafeFileNameTests.cs" />
