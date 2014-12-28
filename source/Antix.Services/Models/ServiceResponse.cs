@@ -9,9 +9,14 @@ namespace Antix.Services.Models
         readonly IReadOnlyCollection<string> _errors;
 
         public ServiceResponse(
-            IEnumerable<string> errors = null)
+            IEnumerable<string> errors)
         {
             _errors = errors == null ? new string[] {} : errors.ToArray();
+        }
+
+        public ServiceResponse() :
+            this(null)
+        {
         }
 
         IEnumerable<string> IServiceResponse.Errors
@@ -46,6 +51,18 @@ namespace Antix.Services.Models
                 base(errors)
         {
             _data = data;
+        }
+
+        public ServiceResponse(
+            IEnumerable<string> errors) :
+                this(default(TData), errors)
+        {
+        }
+
+        public ServiceResponse(
+            TData data) :
+                this(data, null)
+        {
         }
 
         TData IServiceResponse<TData>.Data
