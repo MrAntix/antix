@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Antix.Logging
 {
     public static partial class Log
     {
-        const string MESSAGE_FORMAT = "{0:hh:mm:ss:ffff} [{1}]: {2}";
+        const string MESSAGE_FORMAT = "{0:yyyy-MM-dd hh:mm:ss:ffff} [{1}]: {2}";
 
         public static readonly Delegate ToConsole
             = l => (ex, f, a) =>
@@ -29,6 +30,23 @@ namespace Antix.Logging
                 {
                     System.Diagnostics.Debug.WriteLine(ex);
                 }
+            };
+
+        public static readonly Delegate ToTrace
+            = l => (ex, f, a) =>
+            {
+                var m = string.Format(f, a);
+                Trace.WriteLine(
+                    string.Format(
+                        MESSAGE_FORMAT,
+                        DateTime.UtcNow, l, m));
+                if (ex != null)
+                {
+                    Trace.WriteLine(ex);
+                }
+
+                Trace.Flush();
+                Trace.Close();
             };
 
         public static Delegate ToList(List<Event> list)
