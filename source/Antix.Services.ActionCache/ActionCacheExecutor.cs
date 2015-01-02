@@ -50,5 +50,10 @@ namespace Antix.Services.ActionCache
 
             return result;
         }
+
+        public async Task<T> ExecuteAsync<T>(string identifier)
+        {
+            return (T)(await ExecuteAsync(identifier));
+        }
     }
 }
