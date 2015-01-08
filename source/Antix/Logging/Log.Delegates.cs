@@ -6,14 +6,19 @@ namespace Antix.Logging
 {
     public static partial class Log
     {
-        const string MESSAGE_FORMAT = "{0:yyyy-MM-dd hh:mm:ss:ffff} [{1}]: {2}";
+        const string MessageFormat = "{0:yyyy-MM-dd hh:mm:ss:ffff} [{1}] [{2}]: {3}";
+        const string MessageFormatWithId = "{0} {1:yyyy-MM-dd hh:mm:ss:ffff} [{2}] [{3}]: {4}";
 
         public static readonly Delegate ToConsole
-            = l => (ex, f, a) =>
+            = (l, id, tags) => (ex, f, a) =>
             {
                 var m = string.Format(f, a);
                 Console.WriteLine(
-                    MESSAGE_FORMAT, DateTime.UtcNow, l, m);
+                    MessageFormat,
+                    DateTime.UtcNow,
+                    l,
+                    string.Join(", ", tags),
+                    m);
                 if (ex != null)
                 {
                     Console.WriteLine(ex);
@@ -21,11 +26,15 @@ namespace Antix.Logging
             };
 
         public static readonly Delegate ToDebug
-            = l => (ex, f, a) =>
+            = (l, id, tags) => (ex, f, a) =>
             {
                 var m = string.Format(f, a);
                 System.Diagnostics.Debug.WriteLine(
-                    MESSAGE_FORMAT, DateTime.UtcNow, l, m);
+                    MessageFormat,
+                    DateTime.UtcNow,
+                    l,
+                    string.Join(", ", tags),
+                    m);
                 if (ex != null)
                 {
                     System.Diagnostics.Debug.WriteLine(ex);
@@ -33,13 +42,16 @@ namespace Antix.Logging
             };
 
         public static readonly Delegate ToTrace
-            = l => (ex, f, a) =>
+            = (l, id, tags) => (ex, f, a) =>
             {
                 var m = string.Format(f, a);
                 Trace.WriteLine(
                     string.Format(
-                        MESSAGE_FORMAT,
-                        DateTime.UtcNow, l, m));
+                        MessageFormatWithId,
+                        id,
+                        DateTime.UtcNow, l,
+                        string.Join(", ", tags),
+                        m));
                 if (ex != null)
                 {
                     Trace.WriteLine(ex);
@@ -51,8 +63,8 @@ namespace Antix.Logging
 
         public static Delegate ToList(List<Event> list)
         {
-            return
-                l => (ex, f, a) => list.Add(new Event(l, ex, f, a));
+            return (l, id, tags) => 
+                    (ex, f, a) => list.Add(new Event(id, l, ex, f, a, tags));
         }
     }
 }

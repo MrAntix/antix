@@ -48,7 +48,7 @@ namespace Antix.Tests.Logging
 
         static Log.Delegate GetDelegate(Actual actual)
         {
-            return l => (ex, f, a) =>
+            return  (l, id, tags) => (ex, f, a) =>
             {
                 actual.Level = l;
                 actual.Exception = ex;

@@ -19,21 +19,29 @@ namespace Antix.Logging
             Fatal
         }
 
-        static void Write(
-            Delegate log, Level level, Action<MessageException> getMessage)
+        static Guid Write(
+            Delegate log, Level level, Action<MessageException> getMessage,
+            string[] tags)
         {
-            if (log == null) return;
+            if (log == null) return default(Guid);
 
-            getMessage(log(level));
+            var identifier = Guid.NewGuid();
+            getMessage(log(level, identifier, tags));
+
+            return identifier;
         }
 
-        static void Write(
-            Delegate log, Level level, Action<Message> getMessage)
+        static Guid Write(
+            Delegate log, Level level, Action<Message> getMessage,
+            string[] tags)
         {
-            Write(log, level, (MessageException m) => getMessage((f, a) => m(null, f, a)));
+            return Write(
+                log, level,
+                (MessageException m) => getMessage((f, a) => m(null, f, a)),
+                tags);
         }
 
-        public delegate MessageException Delegate(Level level);
+        public delegate MessageException Delegate(Level level, Guid id, string[] tags);
 
         public delegate void Message(string format, params object[] args);
 

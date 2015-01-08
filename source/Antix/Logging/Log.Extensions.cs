@@ -4,52 +4,60 @@ namespace Antix.Logging
 {
     public static partial class Log
     {
-        public static void Debug(
-            this Delegate log, Action<Message> getMessage)
+        public static Guid Debug(
+          this Delegate log, Action<Message> getMessage,
+          params string[] tags)
         {
-            Write(log, Level.Debug, getMessage);
+            return Write(log, Level.Debug, getMessage, tags);
         }
 
-        public static void Information(
-            this Delegate log, Action<Message> getMessage)
+        public static Guid Information(
+            this Delegate log, Action<Message> getMessage,
+            params string[] tags)
         {
-            Write(log, Level.Information, getMessage);
+            return Write(log, Level.Information, getMessage, tags);
         }
 
-        public static void Warning(
-            this Delegate log, Action<Message> getMessage)
+        public static Guid Warning(
+            this Delegate log, Action<Message> getMessage,
+            params string[] tags)
         {
-            Write(log, Level.Warning, getMessage);
+            return Write(log, Level.Warning, getMessage, tags);
         }
 
-        public static void Warning(
-            this Delegate log, Action<MessageException> getMessage)
+        public static Guid Warning(
+            this Delegate log, Action<MessageException> getMessage,
+            params string[] tags)
         {
-            Write(log, Level.Warning, getMessage);
+            return Write(log, Level.Warning, getMessage, tags);
         }
 
-        public static void Error(
-            this Delegate log, Action<MessageException> getMessage)
+        public static Guid Error(
+            this Delegate log, Action<MessageException> getMessage,
+            params string[] tags)
         {
-            Write(log, Level.Error, getMessage);
+            return Write(log, Level.Error, getMessage, tags);
         }
 
-        public static void Error(
-            this Delegate log, Action<Message> getMessage)
+        public static Guid Error(
+            this Delegate log, Action<Message> getMessage,
+            params string[] tags)
         {
-            Write(log, Level.Error, getMessage);
+            return Write(log, Level.Error, getMessage, tags);
         }
 
-        public static void Fatal(
-            this Delegate log, Action<MessageException> getMessage)
+        public static Guid Fatal(
+            this Delegate log, Action<MessageException> getMessage,
+            params string[] tags)
         {
-            Write(log, Level.Fatal, getMessage);
+            return Write(log, Level.Fatal, getMessage, tags);
         }
 
-        public static void Fatal(
-            this Delegate log, Action<Message> getMessage)
+        public static Guid Fatal(
+            this Delegate log, Action<Message> getMessage,
+            params string[] tags)
         {
-            Write(log, Level.Fatal, getMessage);
+            return Write(log, Level.Fatal, getMessage, tags);
         }
     }
 }
