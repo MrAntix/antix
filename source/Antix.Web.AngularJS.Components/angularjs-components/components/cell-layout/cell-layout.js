@@ -14,7 +14,7 @@
 
                 cells.push({
                     title: HolderIpsum.words(random(2, 3), true),
-                    content: HolderIpsum.paragraphs(random(1, 5), true)
+                    content: HolderIpsum.paragraphs(random(1, 3), true)
                 });
             }
 
