@@ -9,7 +9,7 @@
   position: relative;
 }
 .cell-layout-cell {
-  overflow: auto;
   float: left;
+  overflow: auto;
 }
 /*# sourceMappingURL=cell-layout.css.map */
