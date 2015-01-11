@@ -53,9 +53,9 @@ function deployJS{
 	param($project, $name)
 
 	$version = "$version"
-	$packagePath = Resolve-Path "$path\src\$project\obj"
+	$packagePath = Resolve-Path "$path\source\$project\obj"
 	$package = "$packagePath\$name.$version.nupkg"
-	$nuspec = "$path\src\$project\$name.nuspec"
+	$nuspec = "$path\source\$project\$name.nuspec"
 
 	write-Output "packing $nuspec"
 
@@ -66,5 +66,5 @@ function deployJS{
     nuget push "$package" -ApiKey $apikey -Source $packagesSource -Verbosity detailed -NonInteractive
 }
 
-deployJS "Antix.Web.AngularJS.Components" "antix.cellLayout.angularjs"
+deployJS "Antix.Code.Web" "antix.cellLayout.angularjs"
 
