@@ -1,0 +1,21 @@
+﻿<div id="page-home" class="page-content container">
+
+    <ol class="breadcrumb row">
+        <li><a href="/#/">home</a></li>
+        <li><a href="/#/components/cell-layout/">cell-layout</a></li>
+    </ol>
+
+    <div class="cell-layout-demo"
+         ng-controller="cellLayoutDemo">
+        
+        <div cell-layout-container>
+            <div cell-layout-cell
+                 ng-repeat="cell in cells">
+                <div class="cell-layout-cell-content">
+                    <h3>{{cell.title}}</h3>
+                    <p ng-repeat="para in cell.content">{{para}}</p>
+                </div>
+            </div>
+        </div>
+    </div>   
+</div>
