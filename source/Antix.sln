@@ -54,7 +54,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.SignalR", "Antix.Sign
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6237A697-D36F-4EAB-8E46-9CD9CD84EAD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.Code.Web", "Antix.Web.AngularJS.Components\Antix.Code.Web.csproj", "{BAF18B38-1848-475E-8177-EAFEEE3A708A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.Code.Web", "Antix.Code.Web\Antix.Code.Web.csproj", "{BAF18B38-1848-475E-8177-EAFEEE3A708A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
