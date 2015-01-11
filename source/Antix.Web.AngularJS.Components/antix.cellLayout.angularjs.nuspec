@@ -1,0 +1,23 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>antix.cellLayout.angularjs</id>
+    <version>$version$</version>
+    <title>Cell Layout for AngularJS</title>
+    <authors>Anthony Johnston</authors>
+    <owners>Antix Software Limited</owners>
+    <licenseUrl>https://raw.github.com/MrAntix/antix/master/LICENCE.md</licenseUrl>
+    <projectUrl>https://github.com/MrAntix/antix/</projectUrl>
+    <iconUrl>https://raw.github.com/MrAntix/antix/master/graphics/antix_32x32.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A directive for Cell Layout, sort of like float in css but allows for cells of different heights ie float:up-left;</description>
+    <copyright>Copyright Antix Software Limited 2013</copyright>
+    <tags>AngularJS, cell-layout</tags>
+    <dependencies>
+      <dependency id="angularjs" version="1.3.0"/>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Scripts\antix\cell-layout\**" target="Content\Scripts\antix\cell-layout" />
+  </files>
+</package> 

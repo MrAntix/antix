@@ -49,3 +49,22 @@ deploy "Antix.Services.ActionCache"
 deploy "Antix.Security"
 deploy "Antix.Web"
 
+function deployJS{
+	param($project, $name)
+
+	$version = "$version"
+	$packagePath = Resolve-Path "$path\src\$project\obj"
+	$package = "$packagePath\$name.$version.nupkg"
+	$nuspec = "$path\src\$project\$name.nuspec"
+
+	write-Output "packing $nuspec"
+
+	nuget pack $nuspec -Properties version=$version -OutputDirectory "$packagePath" -Verbosity detailed -NonInteractive
+	
+	write-Output "pushing $package"
+	
+    nuget push "$package" -ApiKey $apikey -Source $packagesSource -Verbosity detailed -NonInteractive
+}
+
+deployJS "Antix.Id.Admin" "antix.cellLayout.angularjs"
+
