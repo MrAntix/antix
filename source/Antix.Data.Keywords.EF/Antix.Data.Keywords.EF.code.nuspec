@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/MrAntix/antix/tree/master/source/Antix.Data.Keywords.EF</projectUrl>
     <iconUrl>https://raw.github.com/MrAntix/antix/master/graphics/antix_32x32.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A keyword indexing framework for Entity Frameword</description>
+    <description>A keyword indexing framework for Entity Framework</description>
     <copyright>Copyright Antix Software Limited 2013</copyright>
     <tags>Keyword indexing, EntityFramework</tags>
     <dependencies>
