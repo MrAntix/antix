@@ -66,5 +66,5 @@ function deployJS{
     nuget push "$package" -ApiKey $apikey -Source $packagesSource -Verbosity detailed -NonInteractive
 }
 
-deployJS "Antix.Id.Admin" "antix.cellLayout.angularjs"
+deployJS "Antix.Web.AngularJS.Components" "antix.cellLayout.angularjs"
 
