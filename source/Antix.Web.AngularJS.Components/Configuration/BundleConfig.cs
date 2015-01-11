@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace Antix.Web.AngularJS.Components.Configuration
+namespace Antix.Code.Web.Configuration
 {
     public static class BundleConfig
     {

@@ -8,10 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Antix.Code.Web.angularjs_components {
-    using System;
-    
-    
+namespace Antix.Code.Web {
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>

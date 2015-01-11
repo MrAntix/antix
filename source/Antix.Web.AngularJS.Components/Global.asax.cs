@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Web;
 using System.Web.Optimization;
-using Antix.Web.AngularJS.Components.Configuration;
+using Antix.Code.Web.Configuration;
 
-namespace Antix.Web.AngularJS.Components
+namespace Antix.Code.Web
 {
     public class Global : HttpApplication
     {
