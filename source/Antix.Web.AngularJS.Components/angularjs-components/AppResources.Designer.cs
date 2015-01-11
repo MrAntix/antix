@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Antix.Web.AngularJS.Components.angularjs_components {
+namespace Antix.Code.Web.angularjs_components {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Antix.Web.AngularJS.Components.angularjs_components {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Antix.Web.AngularJS.Components.angularjs_components.AppResources", typeof(AppResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Antix.Code.Web.angularjs_components.AppResources", typeof(AppResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
