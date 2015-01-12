@@ -1,5 +1,5 @@
 ﻿.cell-layout-demo .cell-layout-cell {
-  width: 25%;
+  width: 33.3333%;
   padding: 0 15px 15px 0;
 }
 .cell-layout-demo .cell-layout-cell .cell-layout-cell-content {
@@ -8,12 +8,12 @@
 }
 @media (max-width: 1200px) {
   .cell-layout-demo .cell-layout-cell {
-    width: 33.3333%;
+    width: 50%;
   }
 }
 @media (max-width: 900px) {
   .cell-layout-demo .cell-layout-cell {
-    width: 50%;
+    width: 100%;
   }
 }
 .cell-layout-demo .cell-layout-cell:nth-child(4n) > div {
