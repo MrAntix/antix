@@ -101,18 +101,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="angularjs-components\app-controller.js" />
-    <Content Include="angularjs-components\components\cell-layout\cell-layout.css.map">
+    <Content Include="angularjs-components\cell-layout\cell-layout.css.map">
       <DependentUpon>cell-layout.css</DependentUpon>
     </Content>
-    <None Include="angularjs-components\components\cell-layout\cell-layout.less" />
-    <Content Include="angularjs-components\components\cell-layout\cell-layout.css">
+    <None Include="angularjs-components\cell-layout\cell-layout.less" />
+    <Content Include="angularjs-components\cell-layout\cell-layout.css">
       <DependentUpon>cell-layout.less</DependentUpon>
     </Content>
-    <Content Include="angularjs-components\components\cell-layout\cell-layout.js" />
-    <Content Include="angularjs-components\components\cell-layout\cell-layout.min.css">
+    <Content Include="angularjs-components\cell-layout\cell-layout.js" />
+    <Content Include="angularjs-components\cell-layout\cell-layout.min.css">
       <DependentUpon>cell-layout.css</DependentUpon>
     </Content>
-    <Content Include="angularjs-components\components\components.js" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\site\site.css">
       <DependentUpon>site.less</DependentUpon>
@@ -202,7 +201,7 @@
     <Content Include="Content\site\site.css.map">
       <DependentUpon>site.css</DependentUpon>
     </Content>
-    <Content Include="angularjs-components\components\cell-layout\cell-layout.cshtml" />
+    <Content Include="angularjs-components\cell-layout\cell-layout.cshtml" />
     <Content Include="Scripts\antix\cell-layout\cell-layout.css.map">
       <DependentUpon>cell-layout.css</DependentUpon>
     </Content>

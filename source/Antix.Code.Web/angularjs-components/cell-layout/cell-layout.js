@@ -1,4 +1,4 @@
-﻿angular.module('antix.angularjs.components.cell-layout', [
+﻿angular.module('antix.angularjs.cell-layout', [
         'antix.cellLayout'
     ])
     .controller('cellLayoutDemo', [

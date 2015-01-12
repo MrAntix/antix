@@ -8,7 +8,7 @@ var app = angular.module('antix.angularjs', [
     'ui.router',
     'ui.utils',
     'antix.angularjs.app-controller',
-    'antix.angularjs.components'
+    'antix.angularjs.cell-layout'
 ]);
 
 app
@@ -27,9 +27,9 @@ app
                     url: '/',
                     templateUrl: baseUrl + '/home/home.cshtml'
                 })
-                .state('components-cell-layout', {
-                    url: '/components/cell-layout/',
-                    templateUrl: baseUrl + '/components/cell-layout/cell-layout.cshtml'
+                .state('cell-layout', {
+                    url: '/cell-layout/',
+                    templateUrl: baseUrl + '/cell-layout/cell-layout.cshtml'
                 });
 
         }
