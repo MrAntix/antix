@@ -8,7 +8,7 @@
     <owners>Antix Software Limited</owners>
     <licenseUrl>https://raw.github.com/MrAntix/antix/master/LICENCE.md</licenseUrl>
     <projectUrl>https://github.com/MrAntix/antix/tree/master/source/Antix.Code.Web/Scripts/antix/cell-layout/</projectUrl>
-    <iconUrl>https://raw.github.com/MrAntix/antix/master/graphics/antix_32x32.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/MrAntix/antix/master/source/Antix.Code.Web/Scripts/antix/cell-layout/cell-layout-icon-32x32.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A directive for Cell Layout, sort of like float in css but allows for cells of different heights ie float:up-left;</description>
     <copyright>Copyright Antix Software Limited 2013</copyright>
