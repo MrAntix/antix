@@ -31,7 +31,9 @@
                     $log.debug('cellLayoutContainer.resize()');
 
                     columns = {};
-                    angular.forEach(cellElements, positionElement);
+                    $scope.$evalAsync(function() {
+                        angular.forEach(cellElements, positionElement);
+                    });
                 },
                 getSize = function () {
                     var size = $element[0].offsetWidth;
@@ -73,10 +75,8 @@
                     attributes,
                     cellsContainer) {
                     element.addClass('cell-layout-cell');
-
-
+                    
                     cellsContainer.addElement(element);
-
                 }
             };
         }
