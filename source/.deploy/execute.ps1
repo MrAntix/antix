@@ -37,6 +37,8 @@ function deploy{
 }
 
 deploy "Antix"
+deploy "Antix.Data"
+deploy "Antix.Data.EF"
 deploy "Antix.Data.Keywords"
 deploy "Antix.Data.Keywords.EF"
 deploy "Antix.Data.Static"

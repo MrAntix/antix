@@ -1,0 +1,125 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ output extension=".cs" #>
+<# Type[] types = new[] {
+	typeof(Decimal), typeof(Double), typeof(Single),
+    typeof(Int16), typeof(Int32), typeof(Int64),
+    typeof(UInt16), typeof(UInt32), typeof(UInt64)
+    };
+#>using System;
+
+namespace Antix.Services.Validation.Predicates
+{    
+	public interface INumberPredicates
+    {
+ <# foreach (var type in types) {
+ #>		IValidationPredicate<<#= type.Name #>> Range(<#= type.Name #> min, <#= type.Name #> max);
+        IValidationPredicate<<#= type.Name #>> Max(<#= type.Name #> max);
+		IValidationPredicate<<#= type.Name #>> Min(<#= type.Name #> min);
+ 
+ <# } #>	}
+
+	public partial class StandardValidationPredicates
+    {
+ <# foreach (var type in types) {
+ #>		readonly ValidationPredicateCache<<#= type.Name #>RangePredicate, Tuple<<#= type.Name #>, <#= type.Name #>>> _cache<#= type.Name #>Range
+            = ValidationPredicateCache.Create(
+                (Tuple<<#= type.Name #>, <#= type.Name #>> k) => new <#= type.Name #>RangePredicate(k.Item1, k.Item2));
+        readonly ValidationPredicateCache<<#= type.Name #>MinPredicate, Tuple<<#= type.Name #>>> _cache<#= type.Name #>Min
+            = ValidationPredicateCache.Create(
+                (Tuple<<#= type.Name #>> k) => new <#= type.Name #>MinPredicate(k.Item1));
+        readonly ValidationPredicateCache<<#= type.Name #>MaxPredicate, Tuple<<#= type.Name #>>> _cache<#= type.Name #>Max
+            = ValidationPredicateCache.Create(
+                (Tuple<<#= type.Name #>> k) => new <#= type.Name #>MaxPredicate(k.Item1));
+
+		public IValidationPredicate<<#= type.Name #>> Range(<#= type.Name #> min, <#= type.Name #> max)
+        {
+            return _cache<#= type.Name #>Range.GetOrCreate(Tuple.Create(min, max));
+        }
+
+        public IValidationPredicate<<#= type.Name #>> Min(<#= type.Name #> min)
+        {
+            return _cache<#= type.Name #>Min.GetOrCreate(Tuple.Create(min));
+        }
+
+        public IValidationPredicate<<#= type.Name #>> Max(<#= type.Name #> max)
+        {
+            return _cache<#= type.Name #>Max.GetOrCreate(Tuple.Create(max));
+        }
+ 
+ <# } #>
+	}
+
+    <# foreach (var type in types) { #>
+
+    public class <#= type.Name #>MaxPredicate :
+        ValidationPredicateBase<<#= type.Name #>>
+    {
+        readonly <#= type.Name #> _max;
+
+        public <#= type.Name #>MaxPredicate(<#= type.Name #> max) :
+			base("number-max")
+        {
+            _max = max;
+        }
+
+        public override bool Is(<#= type.Name #> model)
+        {
+            return model <= _max;
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("max", _max);
+        }
+    }
+
+    public class <#= type.Name #>MinPredicate :
+        ValidationPredicateBase<<#= type.Name #>>
+    {
+        readonly <#= type.Name #> _min;
+
+        public <#= type.Name #>MinPredicate(<#= type.Name #> min) :
+			base("number-min")
+        {
+            _min = min;
+        }
+
+        public override bool Is(<#= type.Name #> model)
+        {
+            return model >= _min;
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("min", _min);
+        }
+    }
+
+    public class <#= type.Name #>RangePredicate :
+        ValidationPredicateBase<<#= type.Name #>>
+    {
+        readonly <#= type.Name #> _min;
+        readonly <#= type.Name #> _max;
+
+        public <#= type.Name #>RangePredicate(<#= type.Name #> min, <#= type.Name #> max) :
+			base("number-range")
+        {
+            _min = min;
+            _max = max;
+        }
+
+        public override bool Is(<#= type.Name #> model)
+        {
+            return model <= _min
+					&& model >= _max;
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("min", _min, "max", _max);
+        }
+    }
+<#
+    } #>
+}
