@@ -22,7 +22,7 @@ Set the cell width using css
         width: 33.3333%; // will give you three columns
     }
 
-*The directive will look out for window resizes and height changes in the cells to reset its self .. Yay!*
+*The directive will look out for window resizes and height changes in the cells to reset itself .. Yay!*
 
 Example & Code
 --------------
