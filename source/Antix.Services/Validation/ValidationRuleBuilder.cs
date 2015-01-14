@@ -75,6 +75,15 @@ namespace Antix.Services.Validation
             return this;
         }
 
+        public IValidationRuleBuilder<TModel> Validate(
+            IValidator<TModel> validator)
+        {
+            Actions.Add(
+                validator.Validate);
+
+            return this;
+        }
+
         public IValidationAssertionBuilder<TModel> Assert(
             IValidationPredicate<TModel> predicate,
             params IValidationPredicate<TModel>[] predicates)
@@ -90,24 +99,23 @@ namespace Antix.Services.Validation
         }
 
         public IValidationAssertionBuilder<TModel> Assert(
-            string name,
+            string ruleName,
             Func<TModel, bool> function,
             params Func<TModel, bool>[] functions)
         {
             return GetAssertionBuilder(
                 true,
-                name,
+                ruleName,
                 function, functions);
         }
 
         public IValidationAssertionBuilder<TModel> When(
-            string name,
             Func<TModel, bool> function,
             params Func<TModel, bool>[] functions)
         {
             return GetAssertionBuilder(
                 false,
-                name,
+                string.Empty,
                 function, functions);
         }
 
@@ -144,16 +152,16 @@ namespace Antix.Services.Validation
 
         IValidationAssertionBuilder<TModel> GetAssertionBuilder(
             bool assert,
-            string name,
+            string ruleName,
             Func<TModel, bool> function,
             params Func<TModel, bool>[] functions)
         {
             return GetAssertionBuilder(
                 assert,
-                new FunctionPredicate<TModel>(name, function),
+                new FunctionPredicate<TModel>(ruleName, function),
                 functions.Select(f =>
                     (IValidationPredicate<TModel>)
-                        new FunctionPredicate<TModel>(name, f))
+                        new FunctionPredicate<TModel>(ruleName, f))
                     .ToArray()
                 );
         }

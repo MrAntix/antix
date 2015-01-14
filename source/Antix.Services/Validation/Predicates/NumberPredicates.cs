@@ -40,6 +40,14 @@ namespace Antix.Services.Validation.Predicates
         IValidationPredicate<UInt64> Max(UInt64 max);
 		IValidationPredicate<UInt64> Min(UInt64 min);
  
+ 		IValidationPredicate<DateTime> Range(DateTime min, DateTime max);
+        IValidationPredicate<DateTime> Max(DateTime max);
+		IValidationPredicate<DateTime> Min(DateTime min);
+ 
+ 		IValidationPredicate<DateTimeOffset> Range(DateTimeOffset min, DateTimeOffset max);
+        IValidationPredicate<DateTimeOffset> Max(DateTimeOffset max);
+		IValidationPredicate<DateTimeOffset> Min(DateTimeOffset min);
+ 
  	}
 
 	public partial class StandardValidationPredicates
@@ -267,6 +275,56 @@ namespace Antix.Services.Validation.Predicates
         public IValidationPredicate<UInt64> Max(UInt64 max)
         {
             return _cacheUInt64Max.GetOrCreate(Tuple.Create(max));
+        }
+ 
+ 		readonly ValidationPredicateCache<DateTimeRangePredicate, Tuple<DateTime, DateTime>> _cacheDateTimeRange
+            = ValidationPredicateCache.Create(
+                (Tuple<DateTime, DateTime> k) => new DateTimeRangePredicate(k.Item1, k.Item2));
+        readonly ValidationPredicateCache<DateTimeMinPredicate, Tuple<DateTime>> _cacheDateTimeMin
+            = ValidationPredicateCache.Create(
+                (Tuple<DateTime> k) => new DateTimeMinPredicate(k.Item1));
+        readonly ValidationPredicateCache<DateTimeMaxPredicate, Tuple<DateTime>> _cacheDateTimeMax
+            = ValidationPredicateCache.Create(
+                (Tuple<DateTime> k) => new DateTimeMaxPredicate(k.Item1));
+
+		public IValidationPredicate<DateTime> Range(DateTime min, DateTime max)
+        {
+            return _cacheDateTimeRange.GetOrCreate(Tuple.Create(min, max));
+        }
+
+        public IValidationPredicate<DateTime> Min(DateTime min)
+        {
+            return _cacheDateTimeMin.GetOrCreate(Tuple.Create(min));
+        }
+
+        public IValidationPredicate<DateTime> Max(DateTime max)
+        {
+            return _cacheDateTimeMax.GetOrCreate(Tuple.Create(max));
+        }
+ 
+ 		readonly ValidationPredicateCache<DateTimeOffsetRangePredicate, Tuple<DateTimeOffset, DateTimeOffset>> _cacheDateTimeOffsetRange
+            = ValidationPredicateCache.Create(
+                (Tuple<DateTimeOffset, DateTimeOffset> k) => new DateTimeOffsetRangePredicate(k.Item1, k.Item2));
+        readonly ValidationPredicateCache<DateTimeOffsetMinPredicate, Tuple<DateTimeOffset>> _cacheDateTimeOffsetMin
+            = ValidationPredicateCache.Create(
+                (Tuple<DateTimeOffset> k) => new DateTimeOffsetMinPredicate(k.Item1));
+        readonly ValidationPredicateCache<DateTimeOffsetMaxPredicate, Tuple<DateTimeOffset>> _cacheDateTimeOffsetMax
+            = ValidationPredicateCache.Create(
+                (Tuple<DateTimeOffset> k) => new DateTimeOffsetMaxPredicate(k.Item1));
+
+		public IValidationPredicate<DateTimeOffset> Range(DateTimeOffset min, DateTimeOffset max)
+        {
+            return _cacheDateTimeOffsetRange.GetOrCreate(Tuple.Create(min, max));
+        }
+
+        public IValidationPredicate<DateTimeOffset> Min(DateTimeOffset min)
+        {
+            return _cacheDateTimeOffsetMin.GetOrCreate(Tuple.Create(min));
+        }
+
+        public IValidationPredicate<DateTimeOffset> Max(DateTimeOffset max)
+        {
+            return _cacheDateTimeOffsetMax.GetOrCreate(Tuple.Create(max));
         }
  
  	}
@@ -882,6 +940,144 @@ namespace Antix.Services.Validation.Predicates
         }
 
         public override bool Is(UInt64 model)
+        {
+            return model <= _min
+					&& model >= _max;
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("min", _min, "max", _max);
+        }
+    }
+
+    public class DateTimeMaxPredicate :
+        ValidationPredicateBase<DateTime>
+    {
+        readonly DateTime _max;
+
+        public DateTimeMaxPredicate(DateTime max) :
+			base("number-max")
+        {
+            _max = max;
+        }
+
+        public override bool Is(DateTime model)
+        {
+            return model <= _max;
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("max", _max);
+        }
+    }
+
+    public class DateTimeMinPredicate :
+        ValidationPredicateBase<DateTime>
+    {
+        readonly DateTime _min;
+
+        public DateTimeMinPredicate(DateTime min) :
+			base("number-min")
+        {
+            _min = min;
+        }
+
+        public override bool Is(DateTime model)
+        {
+            return model >= _min;
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("min", _min);
+        }
+    }
+
+    public class DateTimeRangePredicate :
+        ValidationPredicateBase<DateTime>
+    {
+        readonly DateTime _min;
+        readonly DateTime _max;
+
+        public DateTimeRangePredicate(DateTime min, DateTime max) :
+			base("number-range")
+        {
+            _min = min;
+            _max = max;
+        }
+
+        public override bool Is(DateTime model)
+        {
+            return model <= _min
+					&& model >= _max;
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("min", _min, "max", _max);
+        }
+    }
+
+    public class DateTimeOffsetMaxPredicate :
+        ValidationPredicateBase<DateTimeOffset>
+    {
+        readonly DateTimeOffset _max;
+
+        public DateTimeOffsetMaxPredicate(DateTimeOffset max) :
+			base("number-max")
+        {
+            _max = max;
+        }
+
+        public override bool Is(DateTimeOffset model)
+        {
+            return model <= _max;
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("max", _max);
+        }
+    }
+
+    public class DateTimeOffsetMinPredicate :
+        ValidationPredicateBase<DateTimeOffset>
+    {
+        readonly DateTimeOffset _min;
+
+        public DateTimeOffsetMinPredicate(DateTimeOffset min) :
+			base("number-min")
+        {
+            _min = min;
+        }
+
+        public override bool Is(DateTimeOffset model)
+        {
+            return model >= _min;
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("min", _min);
+        }
+    }
+
+    public class DateTimeOffsetRangePredicate :
+        ValidationPredicateBase<DateTimeOffset>
+    {
+        readonly DateTimeOffset _min;
+        readonly DateTimeOffset _max;
+
+        public DateTimeOffsetRangePredicate(DateTimeOffset min, DateTimeOffset max) :
+			base("number-range")
+        {
+            _min = min;
+            _max = max;
+        }
+
+        public override bool Is(DateTimeOffset model)
         {
             return model <= _min
 					&& model >= _max;

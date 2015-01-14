@@ -20,7 +20,6 @@ namespace Antix.Services.Validation
             params IValidationPredicate<TModel>[] predicates);
 
         IValidationAssertionBuilder<TModel> When(
-            string name,
             Func<TModel, bool> function,
             params Func<TModel, bool>[] functions);
 
@@ -29,7 +28,7 @@ namespace Antix.Services.Validation
             params IValidationPredicate<TModel>[] predicates);
 
         IValidationAssertionBuilder<TModel> Assert(
-            string name,
+            string ruleName,
             Func<TModel, bool> function,
             params Func<TModel, bool>[] functions);
 
@@ -42,5 +41,8 @@ namespace Antix.Services.Validation
         IValidationRuleBuilder<TModel> ForEach<TProperty>(
             Expression<Func<TModel, IEnumerable<TProperty>>> propertyExpression,
             Action<IValidationRuleBuilder<TProperty>> action);
+
+        IValidationRuleBuilder<TModel> Validate(
+            IValidator<TModel> validator);
     }
 }

@@ -5,7 +5,7 @@ using Antix.Services.Validation.Predicates;
 
 namespace Antix.Services.Validation
 {
-    public class ValidationAssertionList<TModel>
+    public class ValidationAssertionList<TModel> 
     {
         readonly List<Func<TModel, string, IEnumerable<string>>> _actions
             = new List<Func<TModel, string, IEnumerable<string>>>();

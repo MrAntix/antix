@@ -71,6 +71,7 @@
     <Compile Include="Validation\Predicates\StringPredicates.cs" />
     <Compile Include="Validation\Predicates\ValidationPredicateBase.cs" />
     <Compile Include="Validation\Predicates\ValidationPredicateCache.cs" />
+    <Compile Include="Validation\Services\ValidatingServiceBase.cs" />
     <Compile Include="Validation\ValidationAssertionBuilder.cs" />
     <Compile Include="Validation\ValidationAssertionList.cs" />
     <Compile Include="Validation\ValidationConstants.cs" />

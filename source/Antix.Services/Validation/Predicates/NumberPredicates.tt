@@ -4,7 +4,8 @@
 <# Type[] types = new[] {
 	typeof(Decimal), typeof(Double), typeof(Single),
     typeof(Int16), typeof(Int32), typeof(Int64),
-    typeof(UInt16), typeof(UInt32), typeof(UInt64)
+    typeof(UInt16), typeof(UInt32), typeof(UInt64),
+	typeof(DateTime), typeof(DateTimeOffset)
     };
 #>using System;
 
