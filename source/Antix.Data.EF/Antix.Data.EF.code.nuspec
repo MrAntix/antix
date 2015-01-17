@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Antix.Data.code</id>
+    <version>$version$</version>
+    <title>Antix Data EF Code</title>
+    <authors>Anthony Johnston</authors>
+    <owners>Antix Software Limited</owners>
+    <licenseUrl>https://raw.github.com/MrAntix/antix/master/LICENCE.md</licenseUrl>
+    <projectUrl>https://github.com/MrAntix/antix/tree/master/source/Antix.Data</projectUrl>
+    <iconUrl>https://raw.github.com/MrAntix/antix/master/graphics/antix_32x32.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Antix data functions for Entity Framework</description>
+    <copyright>Copyright Antix Software Limited 2013</copyright>
+    <tags>Data</tags>
+    <dependencies>
+      <dependency id="Antix.code" version="$version$"/>
+      <dependency id="EntityFramework" version="5.0.0"/>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="**" target="content\Data" exclude="bin\**\*;obj\**\*;**\assemblyinfo.cs;**\*.designer.cs;**\*.csproj;**\*.user;**\*.config" />
+  </files>
+</package>
