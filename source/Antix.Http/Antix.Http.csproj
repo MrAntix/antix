@@ -55,6 +55,9 @@
   <ItemGroup>
     <Compile Include="Filters\Logging\ActionRequestEntry.cs" />
     <Compile Include="Filters\Logging\ActionResponseEntry.cs" />
+    <Compile Include="HttpResponse.cs" />
+    <Compile Include="HttpResponseExtenstions.cs" />
+    <Compile Include="ICreatedServiceResponse.cs" />
     <Compile Include="Services\Filters\ServiceResponseGlobalFilter.cs" />
     <Compile Include="HttpRequestMessageExtensions.cs" />
     <Compile Include="Dispatcher\ServiceHttpControllerActivator.cs" />

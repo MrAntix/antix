@@ -1,5 +1,5 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
+using System.Web.Http.Routing;
 using Antix.Http.Services.Filters;
 using Antix.Services.Models;
 using Xunit;
@@ -13,17 +13,12 @@ namespace Antix.Tests.Http.Filters.Responses
         {
             var serviceResponse = ServiceResponse.Empty;
 
-            var processedStatus = default(HttpStatusCode?);
-            var processedValue = new Object(); // not null
+            var processResponse =
+                ServiceResponseGlobalFilter
+                    .Process(
+                        serviceResponse, new UrlHelper());
 
-            ServiceResponseGlobalFilter
-                .Process(
-                    serviceResponse,
-                    status => processedStatus = status,
-                    value => processedValue = value);
-
-            Assert.Equal(null, processedStatus);
-            Assert.Equal(null, processedValue);
+            Assert.Equal(null, processResponse);
         }
 
         [Fact]
@@ -34,17 +29,14 @@ namespace Antix.Tests.Http.Filters.Responses
                 .Empty
                 .WithErrors(errors);
 
-            var processedStatus = default(HttpStatusCode?);
-            var processedValue = default(object);
+            var processResponse =
+                ServiceResponseGlobalFilter
+                    .Process(
+                        serviceResponse,
+                        new UrlHelper());
 
-            ServiceResponseGlobalFilter
-                .Process(
-                    serviceResponse,
-                    status => processedStatus = status,
-                    value => processedValue = value);
-
-            Assert.Equal(HttpStatusCode.BadRequest, processedStatus);
-            Assert.Equal(errors, processedValue);
+            Assert.Equal(HttpStatusCode.BadRequest, processResponse.StatusCode);
+            Assert.Equal(errors, processResponse.Content);
         }
 
         [Fact]
@@ -54,35 +46,28 @@ namespace Antix.Tests.Http.Filters.Responses
             var serviceResponse = ServiceResponse.Empty
                 .WithData(data);
 
-            var processedStatus = default(HttpStatusCode?);
-            var processedValue = default(object);
+            var processResponse =
+                ServiceResponseGlobalFilter
+                    .Process(
+                        serviceResponse,
+                        new UrlHelper());
 
-            ServiceResponseGlobalFilter
-                .Process(
-                    serviceResponse,
-                    status => processedStatus = status,
-                    value => processedValue = value);
-
-            Assert.Equal(null, processedStatus);
-            Assert.Equal(data, processedValue);
+            Assert.Equal(null, processResponse.StatusCode);
+            Assert.Equal(data, processResponse.Content);
         }
 
         [Fact]
         public void no_change_when_not_IServiceResponse()
         {
-            var responseValue = new { frog = true };
+            var responseValue = new {frog = true};
 
-            var processedStatus = default (HttpStatusCode?);
-            var processedValue = default(object);
-
+            var processResponse =
             ServiceResponseGlobalFilter
                 .Process(
                     responseValue,
-                    status => processedStatus = status,
-                    value => processedValue = value);
+                    new UrlHelper());
 
-            Assert.Equal(null, processedStatus);
-            Assert.Equal(null, processedValue);
+            Assert.Equal(null, processResponse);
         }
     }
 }
