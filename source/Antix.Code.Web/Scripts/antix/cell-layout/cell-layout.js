@@ -6,7 +6,8 @@
             var columns,
                 cellElements = [];
 
-            var positionElement = function(cellElement) {
+            var positionElement = function (cellElement) {
+                $log.debug('cellLayoutContainer.positionElement()');
 
                 cellElement.css({ marginTop: 0, marginBottom: 0 });
 
@@ -22,29 +23,37 @@
                 columns[column] += height;
             }
 
-            this.addElement = function(cellElement) {
+            this.addElement = function (cellElement) {
+                $log.debug('cellLayoutContainer.addElement()');
 
                 cellElements.push(cellElement);
             };
 
-            var resize = this.resize = function() {
-                    $log.debug('cellLayoutContainer.resize()');
+            this.removeElement = function (cellElement) {
+                $log.debug('cellLayoutContainer.removeElement()');
 
-                    columns = {};
-                    $scope.$evalAsync(function() {
-                        angular.forEach(cellElements, positionElement);
-                    });
-                },
+                var index = cellElements.indexOf(cellElement);
+                cellElements.splice(index, 1);
+            };
+
+            var resize = this.resize = function () {
+                $log.debug('cellLayoutContainer.resize(' + cellElements.length + ')');
+
+                columns = {};
+                $scope.$evalAsync(function () {
+                    angular.forEach(cellElements, positionElement);
+                });
+            },
                 getSize = function () {
                     var size = $element[0].offsetWidth;
-                    angular.forEach(cellElements, function(cellElement) {
+                    angular.forEach(cellElements, function (cellElement) {
                         size += cellElement[0].offsetHeight;
                     });
-                   return size;
+                    return size;
                 };
 
             $scope.$watch(getSize, resize);
-            angular.element($window).on('resize', function() { $scope.$apply(); });
+            angular.element($window).on('resize', function () { $scope.$apply(); });
         }
     ])
     .directive('cellLayoutContainer', [
@@ -55,7 +64,7 @@
 
             return {
                 restrict: 'AE',
-                link: function($scope, element) {
+                link: function ($scope, element) {
                     $log.debug('cellLayoutContainer.link()');
                     element.addClass('cell-layout-container');
                 },
@@ -64,19 +73,23 @@
         }
     ])
     .directive('cellLayoutCell', [
-        function() {
+        function () {
 
             return {
                 restrict: 'AE',
                 require: '^cellLayoutContainer',
-                link: function(
+                link: function (
                     $scope,
                     element,
                     attributes,
                     cellsContainer) {
                     element.addClass('cell-layout-cell');
-                    
+
                     cellsContainer.addElement(element);
+
+                    $scope.$on('$destroy', function () {
+                        cellsContainer.removeElement(element);
+                    });
                 }
             };
         }
