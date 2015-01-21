@@ -10,7 +10,8 @@ namespace Antix.Data.Keywords.Processing
         /// <summary>
         ///     <para>Process a string to extract keywords</para>
         /// </summary>
-        /// <para>String to process</para>
-        IEnumerable<string> Process(string value);
+        /// <param name="value">String to process</param>
+        /// <param name="allowStopWords">Allow stop words in processed result</param>
+        IEnumerable<string> Process(string value, bool allowStopWords = false);
     }
 }

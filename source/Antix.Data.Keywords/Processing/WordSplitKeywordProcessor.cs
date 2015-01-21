@@ -21,14 +21,17 @@ namespace Antix.Data.Keywords.Processing
             _stopWords = stopWords;
         }
 
-        public IEnumerable<string> Process(string value)
+        public IEnumerable<string> Process(string value, bool allowStopWords = false)
         {
-            return value == null
-                ? null
-                : _splitter.Split(value.Replace("'", "").ToLower())
+            if (value == null) return null;
+
+                var words= _splitter.Split(value.Replace("'", "").ToLower())
                     .Where(w => !string.IsNullOrWhiteSpace(w))
-                    .Select(word => _stemmer.Stem(word))
-                    .Except(_stopWords);
+                    .Select(word => _stemmer.Stem(word));
+
+            return allowStopWords 
+                ? words 
+                : words.Except(_stopWords);
         }
 
         /// <summary>

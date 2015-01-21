@@ -33,14 +33,14 @@ namespace Antix.Data.Keywords.EF
             Contract.Requires(!string.IsNullOrWhiteSpace(text));
             Contract.Requires(keywordProcessor != null);
 
-            var keywords = keywordProcessor.Process(text);
+            var keywords = keywordProcessor.Process(text, true);
 
             return
                 from e in source
                 let rank =
                     (
                         from ek in e.Keywords
-                        where keywords.Any(k => k == ek.Keyword.Value)
+                        where keywords.Any(k => ek.Keyword.Value.StartsWith(k))
                         select ek.Frequency/(decimal) ek.Keyword.Frequency
                         ).Sum()
                 where rank > 0
