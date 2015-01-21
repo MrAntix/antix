@@ -69,6 +69,19 @@ namespace Antix.Tests.Data.Keywords.EF
             var keywords = new List<Keyword> {keyword};
             var keywordsSet = keywords.AsDbSet();
 
+            var entity = new TestEntity
+            {
+                Name = "two two",
+                Keywords = new List<IndexedEntityKeyword>
+                {
+                    new IndexedEntityKeyword
+                    {
+                        Keyword = keyword,
+                        Frequency = 1
+                    }
+                }
+            };
+
             var service = GetService();
 
             await service.UpdateKeywordsAsync(
@@ -76,23 +89,16 @@ namespace Antix.Tests.Data.Keywords.EF
                 {
                     new EFEntityState
                     {
-                        Entity = new TestEntity
-                        {
-                            Name = "two two",
-                            Keywords = new List<IndexedEntityKeyword>
-                            {
-                                new IndexedEntityKeyword
-                                {
-                                    Keyword = keyword,
-                                    Frequency = 1
-                                }
-                            }
-                        }
+                        Entity =entity
                     }
                 },
                 keywordsSet);
 
             Assert.Equal(1, keyword.Frequency);
+
+            var entityKeyword = entity.Keywords.Single();
+            Assert.Equal("two", entityKeyword.Keyword.Value);
+            Assert.Equal(2, entityKeyword.Frequency);
         }
 
         [Fact]
