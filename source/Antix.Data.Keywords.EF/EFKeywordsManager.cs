@@ -18,41 +18,47 @@ namespace Antix.Data.Keywords.EF
 
         public async Task UpdateKeywordsAsync(DbContext context)
         {
-            var objectContext = ((IObjectContextAdapter) context).ObjectContext;
+            var objectContext = ((IObjectContextAdapter)context).ObjectContext;
 
             objectContext.DetectChanges();
-            var entities =
-                objectContext.ObjectStateManager.GetObjectStateEntries(
-                    EntityState.Added | EntityState.Modified)
-                    .Where(es => es.Entity is IndexedEntity)
-                    .Select(es =>
-                        new EFEntityState
-                        {
-                            Entity = (IndexedEntity) es.Entity,
-                            IsDeleted = es.State == EntityState.Deleted
-                        })
-                    .ToArray();
+            var entities = new List<EFEntityState>();
+            foreach (var es in objectContext.ObjectStateManager
+                .GetObjectStateEntries(EntityState.Added | EntityState.Modified)
+                .Where(es => es.Entity is IndexedEntity))
+            {
+                var keywords =
+                context
+                    .Entry((IndexedEntity)es.Entity)
+                    .Collection(ie => ie.Keywords);
+
+                if (!keywords.IsLoaded)
+                    keywords.Query().Include(k => k.Keyword).Load();
+
+                entities.Add(new EFEntityState
+                {
+                    Entity = (IndexedEntity)es.Entity,
+                    IsDeleted = es.State == EntityState.Deleted
+                });
+            }
 
             await UpdateKeywordsAsync(entities, context.Set<Keyword>());
-
-            objectContext.DetectChanges();
         }
 
         public async Task UpdateKeywordsAsync(
-            EFEntityState[] entityStates,
+           IList<EFEntityState> entityStates,
             IDbSet<Keyword> keywordsSet)
         {
             if (!entityStates.Any()) return;
 
             // get all the entities and their new keywords
             var entityKeywordValues = (from entityState in entityStates
-                select new
-                {
-                    entity = entityState.Entity,
-                    keywordValues = entityState.IsDeleted
-                        ? new string[] {}
-                        : GetKeywords(entityState.Entity)
-                })
+                                       select new
+                                       {
+                                           entity = entityState.Entity,
+                                           keywordValues = entityState.IsDeleted
+                                               ? new string[] { }
+                                               : GetKeywords(entityState.Entity)
+                                       })
                 .ToArray();
 
             var existingKeywords = await GetExistingKeywordsAsync(
@@ -62,6 +68,7 @@ namespace Antix.Data.Keywords.EF
 
             foreach (var entityNewKeyword in entityKeywordValues)
             {
+
                 UpdateEntityKeyword
                     (entityNewKeyword.entity,
                         entityNewKeyword.keywordValues,
@@ -99,7 +106,7 @@ namespace Antix.Data.Keywords.EF
             foreach (var keywordValue in keywordValues)
             {
                 var entityKeyword
-                    = entity.Keywords.SingleOrDefault(ek => ek.Keyword.Value == keywordValue);
+                    = entity.Keywords.FirstOrDefault(ek => ek.Keyword.Value == keywordValue);
 
                 if (entityKeyword != null)
                 {
