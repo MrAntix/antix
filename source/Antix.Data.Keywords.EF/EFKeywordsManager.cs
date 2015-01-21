@@ -26,13 +26,16 @@ namespace Antix.Data.Keywords.EF
                 .GetObjectStateEntries(EntityState.Added | EntityState.Modified)
                 .Where(es => es.Entity is IndexedEntity))
             {
-                var keywords =
-                context
-                    .Entry((IndexedEntity)es.Entity)
-                    .Collection(ie => ie.Keywords);
+                if (es.State != EntityState.Added)
+                {
+                    var keywords =
+                    context
+                        .Entry((IndexedEntity)es.Entity)
+                        .Collection(ie => ie.Keywords);
 
-                if (!keywords.IsLoaded)
-                    keywords.Query().Include(k => k.Keyword).Load();
+                    if (!keywords.IsLoaded)
+                        keywords.Query().Include(k => k.Keyword).Load();
+                }
 
                 entities.Add(new EFEntityState
                 {
