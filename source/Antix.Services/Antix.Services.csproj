@@ -41,8 +41,13 @@
   <ItemGroup>
     <Compile Include="IService.cs" />
     <Compile Include="IServiceHandler.cs" />
+    <Compile Include="IServiceIn.cs" />
+    <Compile Include="IServiceInOut.cs" />
+    <Compile Include="IServiceNInOut.cs" />
+    <Compile Include="IServiceOut.cs" />
     <Compile Include="Models\IServiceResponse.cs" />
     <Compile Include="Models\IServiceResponseExtensions.cs" />
+    <Compile Include="Models\IServiceResponseWithData.cs" />
     <Compile Include="Models\ServiceErrorCollection.cs" />
     <Compile Include="Models\ServiceResponse.cs">
       <SubType>Code</SubType>
@@ -61,6 +66,7 @@
     <Compile Include="Validation\Predicates\IStandardValidationPredicates.cs" />
     <Compile Include="Validation\Predicates\IStringPredicates.cs" />
     <Compile Include="Validation\Predicates\IValidationPredicate.cs" />
+    <Compile Include="Validation\Predicates\NotNullPredicate.cs" />
     <Compile Include="Validation\Predicates\NullPredicate.cs" />
     <Compile Include="Validation\Predicates\NumberPredicates.cs">
       <AutoGen>True</AutoGen>
@@ -68,7 +74,15 @@
       <DependentUpon>NumberPredicates.tt</DependentUpon>
     </Compile>
     <Compile Include="Validation\Predicates\StandardValidationPredicates.cs" />
-    <Compile Include="Validation\Predicates\StringPredicates.cs" />
+    <Compile Include="Validation\Predicates\StringLengthPredicate.cs" />
+    <Compile Include="Validation\Predicates\StringMaxLengthPredicate.cs" />
+    <Compile Include="Validation\Predicates\StringMinLengthPredicate.cs" />
+    <Compile Include="Validation\Predicates\StringNotEmptyPredicate.cs" />
+    <Compile Include="Validation\Predicates\StringNotNullOrEmptyPredicate.cs" />
+    <Compile Include="Validation\Predicates\StringNotNullOrWhiteSpacePredicate.cs" />
+    <Compile Include="Validation\Predicates\StringNullOrEmptyPredicate.cs" />
+    <Compile Include="Validation\Predicates\StringNullOrWhiteSpacePredicate.cs" />
+    <Compile Include="Validation\Predicates\StringEmptyPredicate.cs" />
     <Compile Include="Validation\Predicates\ValidationPredicateBase.cs" />
     <Compile Include="Validation\Predicates\ValidationPredicateCache.cs" />
     <Compile Include="Validation\Services\ValidatingServiceBase.cs" />

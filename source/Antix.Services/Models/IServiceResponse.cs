@@ -14,12 +14,6 @@ namespace Antix.Services.Models
             IEnumerable<string> errors);
     }
 
-    public interface IServiceResponseWithData :
-        IServiceResponse
-    {
-        object Data { get; }
-    }
-
     public interface IServiceResponse<out TData> :
         IServiceResponseWithData
     {

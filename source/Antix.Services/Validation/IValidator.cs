@@ -1,6 +1,4 @@
-﻿using Antix.Services;
-
-namespace Antix.Services.Validation
+﻿namespace Antix.Services.Validation
 {
     public interface IValidator<in TModel> :
         IService

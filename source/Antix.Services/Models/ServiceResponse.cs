@@ -81,7 +81,7 @@ namespace Antix.Services.Models
             return new ServiceResponse<TData>(_data, errors);
         }
 
-        public static readonly new ServiceResponse<TData> Empty
+        public new static readonly ServiceResponse<TData> Empty
             = new ServiceResponse<TData>(null);
     }
 }

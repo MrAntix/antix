@@ -3,10 +3,10 @@ using Antix.Services.Validation.Predicates;
 
 namespace Antix.Services.Validation
 {
-    public abstract class ValidatorBase<TModel, TPredicates> : 
+    public abstract class ValidatorBase<TModel, TPredicates> :
         IValidator<TModel>
         where TModel : class
-        where TPredicates:IObjectPredicates
+        where TPredicates : IObjectPredicates
     {
         readonly TPredicates _is;
         readonly Func<IValidationRuleBuilder<TModel>> _getRulesBuilder;
@@ -30,7 +30,10 @@ namespace Antix.Services.Validation
             return rules.Build(model, path);
         }
 
-        protected TPredicates Is { get { return _is; } }
+        protected TPredicates Is
+        {
+            get { return _is; }
+        }
 
         protected abstract void Validate(IValidationRuleBuilder<TModel> rules);
     }
@@ -42,8 +45,8 @@ namespace Antix.Services.Validation
     {
         public ValidatorBase(
             IStandardValidationPredicates @is,
-            Func<IValidationRuleBuilder<TModel>> getRulesBuilder):
-            base(@is, getRulesBuilder)
+            Func<IValidationRuleBuilder<TModel>> getRulesBuilder) :
+                base(@is, getRulesBuilder)
         {
         }
     }
