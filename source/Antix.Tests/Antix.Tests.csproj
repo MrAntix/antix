@@ -85,7 +85,7 @@
     <Compile Include="Data\Keywords\KeywordsBuilderTest.cs" />
     <Compile Include="Data\Keywords\WordSplitKeywordProcessorTest.cs" />
     <Compile Include="Data\Static\PhoneTests.cs" />
-    <Compile Include="Drawing\FitTest.cs" />
+    <Compile Include="Drawing\FitCropTest.cs" />
     <Compile Include="Html\HtmlDataTryConsumeToTest.cs" />
     <Compile Include="Html\HtmlExtensionsAttrGetTest.cs" />
     <Compile Include="Html\HtmlExtensionsAttrSetTest.cs" />

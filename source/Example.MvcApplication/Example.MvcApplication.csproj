@@ -152,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\Extensions.cs" />
+    <Compile Include="Api\Filters\IRealFilter.cs" />
     <Compile Include="Api\Filters\ProxyFilterProvider.cs" />
     <Compile Include="Api\Filters\IProxyFilterAttribute.cs" />
     <Compile Include="Api\Filters\TokenAuthorizeAttribute.cs" />

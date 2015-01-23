@@ -6,10 +6,4 @@ namespace Example.MvcApplication.Api.Filters
     {
         Type FilterType { get; }
     }
-
-    public interface IRealFilter<T>
-        where T : IProxyFilterAttribute
-    {
-        IProxyFilterAttribute Proxy { set; }
-    }
 }

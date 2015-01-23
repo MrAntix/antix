@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="HtmlAttribute.cs" />
     <Compile Include="HtmlExtensionsAttr.cs" />
+    <Compile Include="HtmlExtensionsHasClass.cs" />
     <Compile Include="HtmlExtensionsQuery.cs" />
     <Compile Include="HtmlReader.cs" />
     <Compile Include="HtmlElement.cs" />
@@ -51,7 +52,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>HtmlSettings.settings</DependentUpon>
     </Compile>
-    <Compile Include="HtmlText.cs" />
+    <Compile Include="HtmlTextElement.cs" />
     <Compile Include="IHtmlNode.cs" />
     <Compile Include="IHtmlReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
