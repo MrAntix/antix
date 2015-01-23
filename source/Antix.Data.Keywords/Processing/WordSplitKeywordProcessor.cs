@@ -25,12 +25,12 @@ namespace Antix.Data.Keywords.Processing
         {
             if (value == null) return null;
 
-                var words= _splitter.Split(value.Replace("'", "").ToLower())
-                    .Where(w => !string.IsNullOrWhiteSpace(w))
-                    .Select(word => _stemmer.Stem(word));
+            var words = _splitter.Split(value.Replace("'", "").ToLower())
+                .Where(w => !string.IsNullOrWhiteSpace(w))
+                .Select(word => _stemmer.Stem(word));
 
-            return allowStopWords 
-                ? words 
+            return allowStopWords
+                ? words
                 : words.Except(_stopWords);
         }
 
