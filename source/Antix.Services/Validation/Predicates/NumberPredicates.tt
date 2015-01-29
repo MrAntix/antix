@@ -59,7 +59,7 @@ namespace Antix.Services.Validation.Predicates
         readonly <#= type.Name #> _max;
 
         public <#= type.Name #>MaxPredicate(<#= type.Name #> max) :
-			base("number-max")
+			base("max")
         {
             _max = max;
         }
@@ -81,7 +81,7 @@ namespace Antix.Services.Validation.Predicates
         readonly <#= type.Name #> _min;
 
         public <#= type.Name #>MinPredicate(<#= type.Name #> min) :
-			base("number-min")
+			base("min")
         {
             _min = min;
         }
@@ -104,7 +104,7 @@ namespace Antix.Services.Validation.Predicates
         readonly <#= type.Name #> _max;
 
         public <#= type.Name #>RangePredicate(<#= type.Name #> min, <#= type.Name #> max) :
-			base("number-range")
+			base("range")
         {
             _min = min;
             _max = max;
