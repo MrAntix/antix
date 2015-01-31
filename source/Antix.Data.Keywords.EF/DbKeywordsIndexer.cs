@@ -8,9 +8,9 @@ using Antix.Data.Keywords.Processing;
 
 namespace Antix.Data.Keywords.EF
 {
-    public class EFKeywordsManager : KeywordsIndexer
+    public class DbKeywordsIndexer : KeywordsIndexer
     {
-        public EFKeywordsManager(
+        public DbKeywordsIndexer(
             IKeywordsBuilderProvider builderProvider)
             : base(builderProvider)
         {

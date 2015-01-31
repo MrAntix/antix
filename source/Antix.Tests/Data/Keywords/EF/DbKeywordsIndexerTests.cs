@@ -9,9 +9,9 @@ using Xunit;
 
 namespace Antix.Tests.Data.Keywords.EF
 {
-    public class EFKeywordsManagerTests
+    public class DbKeywordsIndexerTests
     {
-        static EFKeywordsManager GetService()
+        static DbKeywordsIndexer GetService()
         {
             var mockBuilder = new Mock<IKeywordsBuilder<TestEntity>>();
             mockBuilder
@@ -23,7 +23,7 @@ namespace Antix.Tests.Data.Keywords.EF
             mockBuilderProvider.Setup(o => o.Create<TestEntity>())
                 .Returns(mockBuilder.Object);
 
-            var manager = new EFKeywordsManager(mockBuilderProvider.Object);
+            var manager = new DbKeywordsIndexer(mockBuilderProvider.Object);
 
             manager.Entity<TestEntity>();
 

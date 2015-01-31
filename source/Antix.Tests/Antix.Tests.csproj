@@ -79,7 +79,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Keywords\EF\EFKeywordsManagerTests.cs" />
+    <Compile Include="Data\Keywords\EF\DbKeywordsIndexerTests.cs" />
     <Compile Include="Data\Keywords\EF\Extensions.cs" />
     <Compile Include="Data\Keywords\KeywordIndexerTests.cs" />
     <Compile Include="Data\Keywords\KeywordsBuilderTest.cs" />

@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EFEntityState.cs" />
-    <Compile Include="EFKeywordsManager.cs" />
+    <Compile Include="DbKeywordsIndexer.cs" />
     <Compile Include="Entities\IndexedEntityKeyword.cs" />
     <Compile Include="Entities\IndexedEntity.cs" />
     <Compile Include="Entities\Keyword.cs" />
