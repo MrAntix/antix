@@ -389,8 +389,8 @@ namespace Antix.Services.Validation.Predicates
 
         public override bool Is(Decimal model)
         {
-            return model <= _min
-					&& model >= _max;
+            return model >= _min
+					&& model <= _max;
         }
 
         public override string ToString()
@@ -458,8 +458,8 @@ namespace Antix.Services.Validation.Predicates
 
         public override bool Is(Double model)
         {
-            return model <= _min
-					&& model >= _max;
+            return model >= _min
+					&& model <= _max;
         }
 
         public override string ToString()
@@ -527,8 +527,8 @@ namespace Antix.Services.Validation.Predicates
 
         public override bool Is(Single model)
         {
-            return model <= _min
-					&& model >= _max;
+            return model >= _min
+					&& model <= _max;
         }
 
         public override string ToString()
@@ -596,8 +596,8 @@ namespace Antix.Services.Validation.Predicates
 
         public override bool Is(Int16 model)
         {
-            return model <= _min
-					&& model >= _max;
+            return model >= _min
+					&& model <= _max;
         }
 
         public override string ToString()
@@ -665,8 +665,8 @@ namespace Antix.Services.Validation.Predicates
 
         public override bool Is(Int32 model)
         {
-            return model <= _min
-					&& model >= _max;
+            return model >= _min
+					&& model <= _max;
         }
 
         public override string ToString()
@@ -734,8 +734,8 @@ namespace Antix.Services.Validation.Predicates
 
         public override bool Is(Int64 model)
         {
-            return model <= _min
-					&& model >= _max;
+            return model >= _min
+					&& model <= _max;
         }
 
         public override string ToString()
@@ -803,8 +803,8 @@ namespace Antix.Services.Validation.Predicates
 
         public override bool Is(UInt16 model)
         {
-            return model <= _min
-					&& model >= _max;
+            return model >= _min
+					&& model <= _max;
         }
 
         public override string ToString()
@@ -872,8 +872,8 @@ namespace Antix.Services.Validation.Predicates
 
         public override bool Is(UInt32 model)
         {
-            return model <= _min
-					&& model >= _max;
+            return model >= _min
+					&& model <= _max;
         }
 
         public override string ToString()
@@ -941,8 +941,8 @@ namespace Antix.Services.Validation.Predicates
 
         public override bool Is(UInt64 model)
         {
-            return model <= _min
-					&& model >= _max;
+            return model >= _min
+					&& model <= _max;
         }
 
         public override string ToString()
@@ -1010,8 +1010,8 @@ namespace Antix.Services.Validation.Predicates
 
         public override bool Is(DateTime model)
         {
-            return model <= _min
-					&& model >= _max;
+            return model >= _min
+					&& model <= _max;
         }
 
         public override string ToString()
@@ -1079,8 +1079,8 @@ namespace Antix.Services.Validation.Predicates
 
         public override bool Is(DateTimeOffset model)
         {
-            return model <= _min
-					&& model >= _max;
+            return model >= _min
+					&& model <= _max;
         }
 
         public override string ToString()

@@ -102,6 +102,7 @@
     <Compile Include="Logging\log_tests.cs" />
     <Compile Include="Services\ActionCache\ActionCacheTests.cs" />
     <Compile Include="Services\Models\ServiceResponseTest.cs" />
+    <Compile Include="Services\Validation\Predicates\RangePredicateTests.cs" />
     <Compile Include="Services\Validation\ValidationTests.cs" />
     <Compile Include="Services\Validation\ValidatorBaseTest.cs" />
     <Compile Include="StringSearchTests.cs" />

@@ -112,8 +112,8 @@ namespace Antix.Services.Validation.Predicates
 
         public override bool Is(<#= type.Name #> model)
         {
-            return model <= _min
-					&& model >= _max;
+            return model >= _min
+					&& model <= _max;
         }
 
         public override string ToString()
