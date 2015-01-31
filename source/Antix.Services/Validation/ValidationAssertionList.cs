@@ -31,7 +31,7 @@ namespace Antix.Services.Validation
                 {
                     var errors = new[] {predicate}.Concat(predicates)
                         .Where(p => !p.Is(model))
-                        .Select(p => string.Format("{0}:{1}", path, p));
+                        .Select(p => string.Format("{0}:{1}", path, p.Name));
 
                     return errors;
                 });

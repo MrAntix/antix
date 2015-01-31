@@ -148,7 +148,7 @@ namespace Antix.Tests.Services.Validation
             foreach (var error in result)
                 Console.WriteLine(error);
 
-            Assert.Equal("Name:string-not-empty",
+            Assert.Equal("Name:not-empty",
                 Assert.Single(result)
                 );
         }
@@ -175,9 +175,9 @@ namespace Antix.Tests.Services.Validation
                 Console.WriteLine(error);
 
             Assert.True(result.ElementAt(0)
-                .StartsWith("Name:string-not-empty"));
+                .StartsWith("Name:not-empty"));
             Assert.True(result.ElementAt(1)
-                .StartsWith("Size:number-min"));
+                .StartsWith("Size:min"));
         }
 
         [Fact]
@@ -198,9 +198,9 @@ namespace Antix.Tests.Services.Validation
                 Console.WriteLine(error);
 
             Assert.True(result.ElementAt(0)
-                .StartsWith("Name:string-not-empty"));
+                .StartsWith("Name:not-empty"));
             Assert.True(result.ElementAt(1)
-                .StartsWith("Size:number-min"));
+                .StartsWith("Size:min"));
         }
 
         void validate_with_method_name(

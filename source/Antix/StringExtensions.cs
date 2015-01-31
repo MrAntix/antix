@@ -13,12 +13,27 @@ namespace Antix
                 || string.IsNullOrEmpty(trimString)) return value;
 
             var lastIndex = value.Length;
-            int index;
-            while ((index = value.LastIndexOf(trimString, lastIndex, comparisonType)) != -1)
-                lastIndex = index;
+            while (value.LastIndexOf(trimString, lastIndex, comparisonType) == lastIndex - trimString.Length)
+                lastIndex -= trimString.Length;
 
             return lastIndex != value.Length
                 ? value.Substring(0, lastIndex)
+                : value;
+        }
+
+        public static string TrimStart(
+            this string value, string trimString,
+            StringComparison comparisonType = StringComparison.Ordinal)
+        {
+            if (string.IsNullOrEmpty(value)
+                || string.IsNullOrEmpty(trimString)) return value;
+
+            var lastIndex = 0;
+            while (value.IndexOf(trimString, lastIndex, comparisonType) == lastIndex)
+                lastIndex += trimString.Length;
+
+            return lastIndex > 0
+                ? value.Substring(lastIndex)
                 : value;
         }
 

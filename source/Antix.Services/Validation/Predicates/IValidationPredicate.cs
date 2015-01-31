@@ -7,5 +7,6 @@ namespace Antix.Services.Validation.Predicates
 
     public interface IValidationPredicate
     {
+        string Name { get; }
     }
 }

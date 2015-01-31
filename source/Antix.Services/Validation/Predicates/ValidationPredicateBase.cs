@@ -5,7 +5,10 @@ namespace Antix.Services.Validation.Predicates
     public abstract class ValidationPredicateBase<TModel> :
         IValidationPredicate<TModel>
     {
-        const string SUFFIX = "Predicate";
+        const string Suffix = "Predicate";
+        const string StringPrefix = "String";
+        const string NumberPrefix = "Number";
+
         readonly string _name;
 
         protected ValidationPredicateBase(string name)
@@ -16,8 +19,10 @@ namespace Antix.Services.Validation.Predicates
         protected ValidationPredicateBase()
         {
             var typeName = GetType().Name;
-            if (typeName.EndsWith(SUFFIX))
-                typeName = typeName.Substring(0, typeName.Length - SUFFIX.Length);
+            typeName = typeName
+                .TrimEnd(Suffix)
+                .TrimStart(StringPrefix)
+                .TrimStart(NumberPrefix);
 
             _name = string.Join(
                 "",
@@ -30,9 +35,9 @@ namespace Antix.Services.Validation.Predicates
 
         public abstract bool Is(TModel model);
 
-        public override string ToString()
+        public string Name
         {
-            return _name;
+            get { return _name; }
         }
 
         protected string NameFormat(params object[] parameters)

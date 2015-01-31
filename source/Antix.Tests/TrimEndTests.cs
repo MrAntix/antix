@@ -12,6 +12,12 @@ namespace Antix.Tests
         }
 
         [Fact]
+        public void DoesNotTrimNotEnd()
+        {
+            Assert.Equal("LeftEndRight", "LeftEndRight".TrimEnd("End"));
+        }
+
+        [Fact]
         public void TrimsMultiEnd()
         {
             Assert.Equal("Left", "LeftEndEnd".TrimEnd("End"));

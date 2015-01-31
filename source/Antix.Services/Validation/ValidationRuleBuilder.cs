@@ -99,13 +99,13 @@ namespace Antix.Services.Validation
         }
 
         public IValidationAssertionBuilder<TModel> Assert(
-            string ruleName,
+            string predicateName,
             Func<TModel, bool> function,
             params Func<TModel, bool>[] functions)
         {
             return GetAssertionBuilder(
                 true,
-                ruleName,
+                predicateName,
                 function, functions);
         }
 

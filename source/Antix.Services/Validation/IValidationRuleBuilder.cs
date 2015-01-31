@@ -28,7 +28,7 @@ namespace Antix.Services.Validation
             params IValidationPredicate<TModel>[] predicates);
 
         IValidationAssertionBuilder<TModel> Assert(
-            string ruleName,
+            string predicateName,
             Func<TModel, bool> function,
             params Func<TModel, bool>[] functions);
 
