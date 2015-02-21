@@ -25,7 +25,7 @@ namespace Antix.Tests.Logging
             var actual = new Actual();
 
             GetDelegate(actual)
-                .Error(m => m(ExpectedException, EXPECTED_FORMAT, ExpectedArgs));
+                .Error(m => m(EXPECTED_FORMAT, ExpectedArgs), ExpectedException);
 
             Assert.Equal(EXPECTED_LEVEL, actual.Level);
             Assert.Equal(EXPECTED_FORMAT, actual.Format);
@@ -33,10 +33,30 @@ namespace Antix.Tests.Logging
             Assert.Equal(ExpectedException, actual.Exception);
         }
 
+        [Fact]
+        public void can_build_log()
+        {
+            var actual = new Actual();
+
+            var logAction = Log
+                .Entry(m => m(EXPECTED_FORMAT, ExpectedArgs))
+                .Append(m => m(EXPECTED_FORMAT, ExpectedArgs));
+
+            GetDelegate(actual)
+                .Error(logAction);
+
+            Assert.Equal(EXPECTED_LEVEL, actual.Level);
+            Assert.Equal(EXPECTED_BUILD_FORMAT, actual.Format);
+            Assert.Equal(ExpectedBuildArgs, actual.Args);
+        }
+
         const Log.Level EXPECTED_LEVEL = Log.Level.Error;
         const string EXPECTED_FORMAT = "{0}";
         static readonly Exception ExpectedException = new Exception();
-        static readonly object[] ExpectedArgs = {1};
+        static readonly object[] ExpectedArgs = { 1 };
+
+        const string EXPECTED_BUILD_FORMAT = "{0}\n{1}";
+        static readonly object[] ExpectedBuildArgs = { "1", "1" };
 
         class Actual
         {
@@ -48,7 +68,7 @@ namespace Antix.Tests.Logging
 
         static Log.Delegate GetDelegate(Actual actual)
         {
-            return  (l, id, tags) => (ex, f, a) =>
+            return (l, id, ex, tags) => (f, a) =>
             {
                 actual.Level = l;
                 actual.Exception = ex;

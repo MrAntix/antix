@@ -20,31 +20,20 @@ namespace Antix.Logging
         }
 
         static Guid Write(
-            Delegate log, Level level, Action<MessageException> getMessage,
+            Delegate log, Level level, Action<Message> getMessage,
+            Exception ex,
             string[] tags)
         {
             if (log == null) return default(Guid);
 
             var identifier = Guid.NewGuid();
-            getMessage(log(level, identifier, tags));
+            getMessage(log(level, identifier, ex, tags));
 
             return identifier;
         }
 
-        static Guid Write(
-            Delegate log, Level level, Action<Message> getMessage,
-            string[] tags)
-        {
-            return Write(
-                log, level,
-                (MessageException m) => getMessage((f, a) => m(null, f, a)),
-                tags);
-        }
-
-        public delegate MessageException Delegate(Level level, Guid id, string[] tags);
+        public delegate Message Delegate(Level level, Guid id, Exception ex, string[] tags);
 
         public delegate void Message(string format, params object[] args);
-
-        public delegate void MessageException(Exception ex, string format, params object[] args);
     }
 }

@@ -16,6 +16,7 @@ namespace Antix.Http.Filters.Logging
     {
         readonly JsonSerializerSettings _jsonSerializerSettings;
         readonly Log.Delegate _log;
+        const string LOG_TAG = "HTTP Action Filter";
 
         public LogActionFilter(Log.Delegate log)
         {
@@ -34,23 +35,29 @@ namespace Antix.Http.Filters.Logging
         {
             var requestEntry = new ActionRequestEntry(actionContext);
 
-            _log.Debug(m => m("Action Request: {0}",
-                JsonConvert.SerializeObject(requestEntry, _jsonSerializerSettings)
-                ));
+            var logEntry = Log.Entry(
+                m => m("Action Request: {0}",
+                    JsonConvert.SerializeObject(requestEntry, _jsonSerializerSettings)
+                    ));
 
             try
             {
                 var result = await continuation();
                 var responseEntry = new ActionResponseEntry(result);
-                _log.Debug(m => m("Action Response: {0}",
+
+                logEntry.Append(m => m("Action Response: {0}",
                     JsonConvert.SerializeObject(responseEntry, _jsonSerializerSettings)
                     ));
+
+                _log.Debug(logEntry, LOG_TAG);
 
                 return result;
             }
             catch (Exception ex)
             {
-                _log.Error(m => m(ex, "Action Error"));
+                logEntry.Append(m => m("Action Error"));
+
+                _log.Error(logEntry, ex, LOG_TAG);
                 throw;
             }
         }

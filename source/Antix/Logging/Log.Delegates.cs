@@ -10,7 +10,7 @@ namespace Antix.Logging
         const string MessageFormatWithId = "{0} {1:yyyy-MM-dd hh:mm:ss:ffff} [{2}] [{3}]: {4}";
 
         public static readonly Delegate ToConsole
-            = (l, id, tags) => (ex, f, a) =>
+            = (l, id, ex, tags) => (f, a) =>
             {
                 var m = string.Format(f, a);
                 Console.WriteLine(
@@ -26,7 +26,7 @@ namespace Antix.Logging
             };
 
         public static readonly Delegate ToDebug
-            = (l, id, tags) => (ex, f, a) =>
+            = (l, id, ex, tags) => (f, a) =>
             {
                 var m = string.Format(f, a);
                 System.Diagnostics.Debug.WriteLine(
@@ -42,7 +42,7 @@ namespace Antix.Logging
             };
 
         public static readonly Delegate ToTrace
-            = (l, id, tags) => (ex, f, a) =>
+            = (l, id, ex, tags) => (f, a) =>
             {
                 var m = string.Format(f, a);
                 Trace.WriteLine(
@@ -63,8 +63,8 @@ namespace Antix.Logging
 
         public static Delegate ToList(List<Event> list)
         {
-            return (l, id, tags) => 
-                    (ex, f, a) => list.Add(new Event(id, l, ex, f, a, tags));
+            return (l, id, ex, tags) =>
+                    (f, a) => list.Add(new Event(id, l, ex, f, a, tags));
         }
     }
 }

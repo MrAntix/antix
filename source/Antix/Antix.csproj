@@ -82,6 +82,7 @@
     <Compile Include="IO\FileSystemChangeMonitorOptions.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Logging\Log.Delegates.cs" />
+    <Compile Include="Logging\Log.Entry.cs" />
     <Compile Include="Logging\Log.Extensions.cs" />
     <Compile Include="StringSearch.cs" />
     <Compile Include="IO\IOExtensions.cs" />
