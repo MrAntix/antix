@@ -12,6 +12,6 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Antix Logging Delegates</description>
     <copyright>Copyright Antix Software Limited 2013</copyright>
-    <tags>Logging, Logging Deletes</tags>
+    <tags>Logging Delegates</tags>
   </metadata>
 </package>
