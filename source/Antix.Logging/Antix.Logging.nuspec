@@ -1,0 +1,17 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Antix.Logging</id>
+    <version>$version$</version>
+    <title>Antix Logging</title>
+    <authors>Anthony Johnston</authors>
+    <owners>Antix Software Limited</owners>
+    <licenseUrl>https://raw.github.com/MrAntix/antix/master/LICENCE.md</licenseUrl>
+    <projectUrl>https://github.com/MrAntix/antix/tree/master/source/Antix/Logging</projectUrl>
+    <iconUrl>https://raw.github.com/MrAntix/antix/master/graphics/antix_logging_32x32.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Antix Logging Delegates</description>
+    <copyright>Copyright Antix Software Limited 2013</copyright>
+    <tags>Logging, Logging Deletes</tags>
+  </metadata>
+</package>
