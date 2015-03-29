@@ -1,5 +1,6 @@
 ﻿using System;
 using Antix.Logging;
+using Antix.Testing;
 using Xunit;
 
 namespace Antix.Tests.Logging
@@ -50,13 +51,32 @@ namespace Antix.Tests.Logging
             Assert.Equal(ExpectedBuildArgs, actual.Args);
         }
 
+        [Fact]
+        public void thrash_log()
+        {
+            Log.Delegate log = (l, id, ex, tags) => (f, a) => { var _ = string.Format(f, a); };
+
+            var originalByteCount = GC.GetTotalMemory(true);
+
+            var benchmark = Benchmark
+                .Run(() => log.Debug(m => m("Testing")), 100, 10000, 1000000);
+
+            foreach (var result in benchmark.Results)
+            {
+                Console.WriteLine(result);
+            }
+
+            var finalByteCount = GC.GetTotalMemory(true);
+            Console.WriteLine(@"Memory {0} => {1}", originalByteCount, finalByteCount);
+        }
+
         const Log.Level EXPECTED_LEVEL = Log.Level.Error;
         const string EXPECTED_FORMAT = "{0}";
         static readonly Exception ExpectedException = new Exception();
-        static readonly object[] ExpectedArgs = { 1 };
+        static readonly object[] ExpectedArgs = {1};
 
         const string EXPECTED_BUILD_FORMAT = "{0}\n{1}";
-        static readonly object[] ExpectedBuildArgs = { "1", "1" };
+        static readonly object[] ExpectedBuildArgs = {"1", "1"};
 
         class Actual
         {
