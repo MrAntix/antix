@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IServiceResolver.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="IServiceHandler.cs" />
     <Compile Include="IServiceIn.cs" />
