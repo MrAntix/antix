@@ -84,6 +84,11 @@
     <Compile Include="Logging\Log.Delegates.cs" />
     <Compile Include="Logging\Log.Entry.cs" />
     <Compile Include="Logging\Log.Extensions.cs" />
+    <Compile Include="Logging\LogSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>LogSettings.settings</DependentUpon>
+    </Compile>
     <Compile Include="StringSearch.cs" />
     <Compile Include="IO\IOExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,6 +99,10 @@
   <ItemGroup>
     <None Include="app.config" />
     <Compile Include="Logging\Log.Event.cs" />
+    <None Include="Logging\LogSettings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>LogSettings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

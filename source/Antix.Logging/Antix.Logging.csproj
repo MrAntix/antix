@@ -54,9 +54,20 @@
     <Compile Include="..\Antix\Logging\Log.Extensions.cs">
       <Link>Log.Extensions.cs</Link>
     </Compile>
+    <Compile Include="..\Antix\Logging\LogSettings.Designer.cs">
+      <Link>LogSettings.Designer.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>LogSettings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Antix\Logging\LogSettings.settings">
+      <Link>LogSettings.settings</Link>
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>LogSettings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Antix.Logging.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

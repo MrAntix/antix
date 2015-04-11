@@ -34,7 +34,8 @@ namespace Antix.Logging
             Exception ex,
             params string[] tags)
         {
-            if (log == null) return default(Guid);
+            if (log == null
+                || level < (Level)LogSettings.Default.Level) return default(Guid);
 
             var identifier = Guid.NewGuid();
             getMessage(log(level, identifier, ex, tags));
