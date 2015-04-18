@@ -100,6 +100,7 @@
     <Compile Include="Http\Filters\Responses\ResponseGlobalFilterTest.cs" />
     <Compile Include="IO\FileSystemChangeMonitorTest.cs" />
     <Compile Include="Logging\log_tests.cs" />
+    <Compile Include="Net\NetExtensionsTests.cs" />
     <Compile Include="Services\ActionCache\ActionCacheTests.cs" />
     <Compile Include="Services\Models\ServiceResponseTest.cs" />
     <Compile Include="Services\Validation\Predicates\RangePredicateTests.cs" />
@@ -142,6 +143,10 @@
     <ProjectReference Include="..\Antix.Http\Antix.Http.csproj">
       <Project>{7963D77F-CD09-4477-B5B5-A39250575CE8}</Project>
       <Name>Antix.Http</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Antix.Net\Antix.Net.csproj">
+      <Project>{5AD8DC77-E27A-4F72-8407-0E6FED4D4400}</Project>
+      <Name>Antix.Net</Name>
     </ProjectReference>
     <ProjectReference Include="..\Antix.Security\Antix.Security.csproj">
       <Project>{098AC085-ED76-4EF7-BA88-99AEC66E4E35}</Project>
