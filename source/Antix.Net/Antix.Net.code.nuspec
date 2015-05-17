@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Antix.Net.code</id>
+    <version>$version$</version>
+    <title>Antix Net Code</title>
+    <authors>Anthony Johnston</authors>
+    <owners>Antix Software Limited</owners>
+    <licenseUrl>https://raw.github.com/MrAntix/antix/master/LICENCE.md</licenseUrl>
+    <projectUrl>https://github.com/MrAntix/antix/tree/master/source/Antix.Net</projectUrl>
+    <iconUrl>https://raw.github.com/MrAntix/antix/master/graphics/antix_32x32.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Antix Net Common Code</description>
+    <copyright>Copyright Antix Software Limited 2013</copyright>
+    <tags>Common Code, Net, Network</tags>
+  </metadata>
+  <files>
+    <file src="**" target="content" exclude="bin\**\*;obj\**\*;**\assemblyinfo.cs;**\*.designer.cs;**\*.csproj;**\*.user;**\*.config" />
+  </files>
+</package>
