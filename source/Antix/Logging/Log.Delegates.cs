@@ -12,6 +12,8 @@ namespace Antix.Logging
         public static readonly Delegate ToConsole
             = (l, id, ex, tags) => (f, a) =>
             {
+                if (f == null) return;
+
                 var m = string.Format(f, a);
                 Console.WriteLine(
                     MessageFormat,
@@ -28,6 +30,8 @@ namespace Antix.Logging
         public static readonly Delegate ToDebug
             = (l, id, ex, tags) => (f, a) =>
             {
+                if (f == null) return;
+
                 var m = string.Format(f, a);
                 System.Diagnostics.Debug.WriteLine(
                     MessageFormat,
@@ -44,6 +48,8 @@ namespace Antix.Logging
         public static readonly Delegate ToTrace
             = (l, id, ex, tags) => (f, a) =>
             {
+                if (f == null) return;
+
                 var m = string.Format(f, a);
                 Trace.WriteLine(
                     string.Format(
