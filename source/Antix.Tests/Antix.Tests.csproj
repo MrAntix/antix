@@ -98,6 +98,7 @@
     <Compile Include="Html\Services\StringHtmlReader.cs" />
     <Compile Include="Html\TextTest.cs" />
     <Compile Include="Http\Filters\Responses\ResponseGlobalFilterTest.cs" />
+    <Compile Include="Http\Services\Models\HttpServiceResponseTests.cs" />
     <Compile Include="IO\FileSystemChangeMonitorTest.cs" />
     <Compile Include="Logging\log_tests.cs" />
     <Compile Include="Net\NetExtensionsTests.cs" />

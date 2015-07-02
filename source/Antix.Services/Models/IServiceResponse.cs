@@ -4,19 +4,22 @@ namespace Antix.Services.Models
 {
     public interface IServiceResponse
     {
-        IEnumerable<string> Errors { get; }
-
-        IServiceResponse Create(
-            IEnumerable<string> errors);
-
-        IServiceResponse<TData> Create<TData>(
-            TData data,
-            IEnumerable<string> errors);
+        string[] Errors { get; }
     }
 
-    public interface IServiceResponse<out TData> :
-        IServiceResponseWithData
+    public interface IServiceResponse<out T> :
+        IServiceResponse
+        where T : IServiceResponse<T>
     {
-        new TData Data { get; }
+        T WithErrors(IEnumerable<string> errors);
+    }
+
+    public interface IServiceResponse<out T, TData> :
+        IServiceResponse<T>, IServiceResponseHasData
+        where T : IServiceResponse<T>
+    {
+        TData Data { get; }
+
+        T WithData(TData data);
     }
 }

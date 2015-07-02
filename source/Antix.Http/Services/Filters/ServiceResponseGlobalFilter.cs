@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
-using System.Web.Http.Routing;
+using Antix.Http.Services.Models;
 using Antix.Services.Models;
 
 namespace Antix.Http.Services.Filters
@@ -32,7 +32,7 @@ namespace Antix.Http.Services.Filters
             if (objectContent == null) return result;
 
             var processResponse =
-                Process(objectContent.Value, actionContext.RequestContext.Url);
+                Process(objectContent.Value);
 
             if (processResponse == null) return result;
 
@@ -62,73 +62,67 @@ namespace Antix.Http.Services.Filters
         }
 
         public static ProcessResponse Process(
-            object responseValue,
-            UrlHelper url)
+            object responseValue)
         {
             var serviceResponse
                 = responseValue as IServiceResponse;
             if (serviceResponse == null) return null;
 
-            return
+            var processResponse = 
                 ProcessErrors(serviceResponse)
-                ?? ProcessCreated(serviceResponse as ICreatedServiceResponse, url)
-                ?? ProcessContent(serviceResponse as IServiceResponseWithData);
+                ?? ProcessHttp(serviceResponse as IHttpServiceResponse)
+                ?? ProcessContent(serviceResponse as IServiceResponseHasData);
+
+            return processResponse;
         }
 
         public static ProcessResponse ProcessErrors(
             IServiceResponse serviceResponse)
         {
-            if (serviceResponse.Errors.Any())
-            {
-                return new ProcessResponse
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    Content = serviceResponse.Errors
-                };
-            }
+            if (!serviceResponse.Errors.Any()) return null;
 
-            return null;
+            return new ProcessResponse
+            {
+                StatusCode = HttpStatusCode.BadRequest,
+                Content = serviceResponse.Errors
+            };
         }
 
-        public static ProcessResponse ProcessCreated(
-            ICreatedServiceResponse serviceResponse,
-            UrlHelper url)
+        public static ProcessResponse ProcessHttp(
+            IHttpServiceResponse httpResponse)
         {
-            if (serviceResponse != null)
-            {
-                return new ProcessResponse
-                {
-                    StatusCode = HttpStatusCode.Created,
-                    Content = serviceResponse.Data,
-                    Headers = new Dictionary<string, string>
-                    {
-                        {"Location", url.Route(serviceResponse.RouteName, serviceResponse.Data)}
-                    }
-                };
-            }
+            if (httpResponse == null) return null;
 
-            return null;
+            var processResponse =
+                new ProcessResponse
+                {
+                    StatusCode = httpResponse.StatusCode,
+                    Headers = httpResponse.Headers
+                };
+
+            var withData = httpResponse as IServiceResponseHasData;
+            if (withData != null)
+                processResponse.Content = withData.Data;
+
+            return processResponse;
         }
 
         public static ProcessResponse ProcessContent(
-            IServiceResponseWithData serviceResponse)
+            IServiceResponseHasData serviceResponse)
         {
-            if (serviceResponse != null)
-            {
-                return new ProcessResponse
-                {
-                    Content = serviceResponse.Data
-                };
-            }
+            if (serviceResponse == null) return null;
 
-            return null;
+            return new ProcessResponse
+            {
+                Content = serviceResponse.Data
+            };
         }
 
         public class ProcessResponse
         {
             public HttpStatusCode? StatusCode { get; set; }
             public object Content { get; set; }
-            public IDictionary<string, string> Headers { get; set; }
+            public IReadOnlyDictionary<string, string> Headers { get; set; }
         }
     }
 }

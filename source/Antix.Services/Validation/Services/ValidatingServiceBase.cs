@@ -5,7 +5,7 @@ using Antix.Services.Models;
 namespace Antix.Services.Validation.Services
 {
     public abstract class ValidatingServiceBase<TModel, TResult> :
-        IServiceInOut<TModel, IServiceResponse<TResult>>
+        IServiceInOut<TModel, ServiceResponse<TResult>>
     {
         readonly IValidator<TModel> _validator;
 
@@ -15,7 +15,7 @@ namespace Antix.Services.Validation.Services
             _validator = validator;
         }
 
-        public async Task<IServiceResponse<TResult>> ExecuteAsync(
+        public async Task<ServiceResponse<TResult>> ExecuteAsync(
             TModel model)
         {
             var errors =
@@ -30,7 +30,7 @@ namespace Antix.Services.Validation.Services
             return await ThenAsync(model);
         }
 
-        protected abstract Task<IServiceResponse<TResult>> ThenAsync(
+        protected abstract Task<ServiceResponse<TResult>> ThenAsync(
             TModel model);
 
         protected virtual async Task<bool> CatchAsync(
@@ -41,7 +41,7 @@ namespace Antix.Services.Validation.Services
     }
 
     public abstract class ValidatingServiceBase<TModel> :
-        IServiceInOut<TModel, IServiceResponse>
+        IServiceInOut<TModel, ServiceResponse>
     {
         readonly IValidator<TModel> _validator;
 
@@ -51,7 +51,7 @@ namespace Antix.Services.Validation.Services
             _validator = validator;
         }
 
-        public async Task<IServiceResponse> ExecuteAsync(
+        public async Task<ServiceResponse> ExecuteAsync(
             TModel model)
         {
             var errors =
@@ -66,7 +66,7 @@ namespace Antix.Services.Validation.Services
             return await ThenAsync(model);
         }
 
-        protected abstract Task<IServiceResponse> ThenAsync(
+        protected abstract Task<ServiceResponse> ThenAsync(
             TModel model);
 
         protected virtual async Task<bool> CatchAsync(

@@ -47,12 +47,10 @@
     <Compile Include="IServiceNInOut.cs" />
     <Compile Include="IServiceOut.cs" />
     <Compile Include="Models\IServiceResponse.cs" />
-    <Compile Include="Models\IServiceResponseExtensions.cs" />
-    <Compile Include="Models\IServiceResponseWithData.cs" />
+    <Compile Include="Models\IServiceResponseHasData.cs" />
     <Compile Include="Models\ServiceErrorCollection.cs" />
-    <Compile Include="Models\ServiceResponse.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Models\ServiceResponse.cs" />
+    <Compile Include="Models\ServiceResponseExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceHandler.cs" />
     <Compile Include="ServiceSyncExtensions.cs" />

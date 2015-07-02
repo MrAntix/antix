@@ -1,87 +1,81 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Antix.Services.Models
 {
-    public class ServiceResponse :
-        IServiceResponse
+    public class ServiceResponse<TData> :
+        IServiceResponse<ServiceResponse<TData>, TData>
     {
-        readonly IReadOnlyCollection<string> _errors;
+        readonly string[] _errors;
+        readonly TData _data;
 
-        public ServiceResponse(
+        internal ServiceResponse(
+            TData data,
             IEnumerable<string> errors)
         {
-            _errors = errors == null ? new string[] {} : errors.ToArray();
+            _data = data;
+            _errors = ServiceResponse.GetValueOrDefault(errors);
         }
 
-        public ServiceResponse() :
-            this(null)
-        {
-        }
-
-        IEnumerable<string> IServiceResponse.Errors
+        public string[] Errors
         {
             get { return _errors; }
         }
 
-        IServiceResponse IServiceResponse.Create(
+        public TData Data
+        {
+            get { return _data; }
+        }
+
+        public ServiceResponse<TData> WithErrors(IEnumerable<string> errors)
+        {
+            return new ServiceResponse<TData>(Data, errors);
+        }
+
+        public ServiceResponse<TData> WithData(TData data)
+        {
+            return new ServiceResponse<TData>(data, Errors);
+        }
+
+        public static readonly ServiceResponse<TData> Empty
+            = new ServiceResponse<TData>(default(TData), null);
+
+        object IServiceResponseHasData.Data
+        {
+            get { return Data; }
+        }
+    }
+
+    public class ServiceResponse :
+        IServiceResponse<ServiceResponse>
+    {
+        readonly string[] _errors;
+
+        internal ServiceResponse(IEnumerable<string> errors)
+        {
+            _errors = GetValueOrDefault(errors);
+        }
+
+        public string[] Errors
+        {
+            get { return _errors; }
+        }
+
+        public ServiceResponse WithErrors(
             IEnumerable<string> errors)
         {
             return new ServiceResponse(errors);
         }
 
-        IServiceResponse<TData> IServiceResponse.Create<TData>(
-            TData data,
+        public static readonly ServiceResponse Empty
+            = new ServiceResponse(null);
+
+        public static string[] GetValueOrDefault(
             IEnumerable<string> errors)
         {
-            return new ServiceResponse<TData>(data, errors);
+            return errors == null
+                ? new string[] {}
+                : errors.ToArray();
         }
-
-        public static readonly IServiceResponse Empty = new ServiceResponse();
-    }
-
-    public class ServiceResponse<TData> :
-        ServiceResponse, IServiceResponse<TData>
-    {
-        readonly TData _data;
-
-        public ServiceResponse(
-            TData data,
-            IEnumerable<string> errors) :
-                base(errors)
-        {
-            _data = data;
-        }
-
-        public ServiceResponse(
-            IEnumerable<string> errors) :
-                this(default(TData), errors)
-        {
-        }
-
-        public ServiceResponse(
-            TData data) :
-                this(data, null)
-        {
-        }
-
-        TData IServiceResponse<TData>.Data
-        {
-            get { return _data; }
-        }
-
-        object IServiceResponseWithData.Data
-        {
-            get { return _data; }
-        }
-
-        IServiceResponse IServiceResponse.Create(
-            IEnumerable<string> errors)
-        {
-            return new ServiceResponse<TData>(_data, errors);
-        }
-
-        public new static readonly ServiceResponse<TData> Empty
-            = new ServiceResponse<TData>(null);
     }
 }

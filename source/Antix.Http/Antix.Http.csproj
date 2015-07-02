@@ -55,9 +55,9 @@
   <ItemGroup>
     <Compile Include="Filters\Logging\ActionRequestEntry.cs" />
     <Compile Include="Filters\Logging\ActionResponseEntry.cs" />
-    <Compile Include="CreatedServiceResponse.cs" />
-    <Compile Include="HttpResponseExtenstions.cs" />
-    <Compile Include="ICreatedServiceResponse.cs" />
+    <Compile Include="Services\Models\HttpServiceResponseExtensions.cs" />
+    <Compile Include="Services\Models\HttpServiceResponseHeader.cs" />
+    <Compile Include="Services\Models\IHttpServiceResponse.cs" />
     <Compile Include="Services\Filters\ServiceResponseGlobalFilter.cs" />
     <Compile Include="HttpRequestMessageExtensions.cs" />
     <Compile Include="Dispatcher\ServiceHttpControllerActivator.cs" />
@@ -69,7 +69,7 @@
     <Compile Include="Filters\Logging\LogActionFilter.cs" />
     <Compile Include="Filters\ServiceFilterProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ServiceModelExtensions.cs" />
+    <Compile Include="Services\Models\HttpServiceResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Ioc\" />
