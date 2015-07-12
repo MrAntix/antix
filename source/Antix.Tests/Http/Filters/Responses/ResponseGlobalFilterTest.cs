@@ -100,5 +100,23 @@ namespace Antix.Tests.Http.Filters.Responses
             Assert.Equal(data, processResponse.Content);
             Assert.Equal(url, processResponse.Headers["location"]);
         }
+
+        [Fact]
+        public void when_http_response_set_status_code_is_sent_with_errors()
+        {
+            var errors = new[] { "Eek" };
+            var serviceResponse = ServiceResponse
+                .Empty
+                .WithErrors(errors)
+                .AsHttp(HttpStatusCode.Forbidden);
+
+            var processResponse =
+                ServiceResponseGlobalFilter
+                    .Process(serviceResponse);
+
+            Assert.Equal(HttpStatusCode.Forbidden, processResponse.StatusCode);
+            Assert.Equal(errors, processResponse.Content);
+        }
+
     }
 }
