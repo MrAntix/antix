@@ -46,5 +46,28 @@ namespace Antix.Tests.Services.Models
             Assert.Equal(data, result.Data);
             Assert.Equal(errors, result.Errors);
         }
+
+        [Fact]
+        public void can_map()
+        {
+            var name = "Data";
+            var errors = new[] { "An Error", "An Other Error" };
+            var result = ServiceResponse.Empty
+                .WithData(new A {Name = name})
+                .WithErrors(errors)
+                .Map(a => new B
+                {
+                    Name = a.Name
+                });
+
+            Assert.Equal(name, result.Data.Name);
+            Assert.Equal(errors, result.Errors);
+        }
+
+        class A
+        {
+            public string Name { get; set; }
+        }
+        class B { public string Name { get; set; } }
     }
 }

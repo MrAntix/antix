@@ -32,11 +32,6 @@ namespace Antix.Services.Models
             return new ServiceResponse<TData>(Data, errors);
         }
 
-        public ServiceResponse<TData> WithData(TData data)
-        {
-            return new ServiceResponse<TData>(data, Errors);
-        }
-
         public static readonly ServiceResponse<TData> Empty
             = new ServiceResponse<TData>(default(TData), null);
 

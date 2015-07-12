@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Antix.Services.Models
 {
@@ -14,12 +15,10 @@ namespace Antix.Services.Models
         T WithErrors(IEnumerable<string> errors);
     }
 
-    public interface IServiceResponse<out T, TData> :
+    public interface IServiceResponse<out T, out TData> :
         IServiceResponse<T>, IServiceResponseHasData
         where T : IServiceResponse<T>
     {
-        TData Data { get; }
-
-        T WithData(TData data);
+        new TData Data { get; }
     }
 }

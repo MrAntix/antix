@@ -19,11 +19,12 @@ namespace Antix.Services.Models
             return model.WithErrors(errors.Select(e => e.ToString()));
         }
 
-        public static ServiceResponse<TTo> Map<T, TFrom, TTo>(
-            this T model, Func<TFrom, TTo> mapper)
-            where T : IServiceResponse<T, TFrom>
+        public static ServiceResponse<TDataTo> Map<T, TData, TDataTo>(
+            this IServiceResponse<T, TData> model,
+            Func<TData, TDataTo> mapper)
+            where T : IServiceResponse<T, TData>
         {
-            return model.WithData(mapper(model.Data));
+            return new ServiceResponse<TDataTo>(mapper(model.Data), model.Errors);
         }
     }
 }
