@@ -68,9 +68,9 @@ namespace Antix.Http.Services.Filters
                 = responseValue as IServiceResponse;
             if (serviceResponse == null) return null;
 
-            var processResponse = 
-                ProcessErrors(serviceResponse)
-                ?? ProcessHttp(serviceResponse as IHttpServiceResponse)
+            var processResponse =
+                ProcessHttp(serviceResponse as IHttpServiceResponse)
+                ?? ProcessErrors(serviceResponse)
                 ?? ProcessContent(serviceResponse as IServiceResponseHasData);
 
             return processResponse;
@@ -89,20 +89,33 @@ namespace Antix.Http.Services.Filters
         }
 
         public static ProcessResponse ProcessHttp(
-            IHttpServiceResponse httpResponse)
+            IHttpServiceResponse response)
         {
-            if (httpResponse == null) return null;
+            if (response == null) return null;
 
             var processResponse =
                 new ProcessResponse
                 {
-                    StatusCode = httpResponse.StatusCode,
-                    Headers = httpResponse.Headers
+                    StatusCode = response.StatusCode,
+                    Headers = response.Headers
                 };
 
-            var withData = httpResponse as IServiceResponseHasData;
-            if (withData != null)
-                processResponse.Content = withData.Data;
+            if (response.Errors.Any())
+            {
+                processResponse.StatusCode 
+                    = response.StatusCode ?? HttpStatusCode.BadRequest;
+
+                processResponse.Content = response.Errors;
+            }
+            else
+            {
+                processResponse.StatusCode 
+                    = response.StatusCode ?? HttpStatusCode.OK;
+
+                var withData = response as IServiceResponseHasData;
+                if (withData != null)
+                    processResponse.Content = withData.Data;
+            }
 
             return processResponse;
         }

@@ -7,7 +7,7 @@ namespace Antix.Http.Services.Models
     public interface IHttpServiceResponse :
         IServiceResponse
     {
-        HttpStatusCode StatusCode { get; }
+        HttpStatusCode? StatusCode { get; }
         IReadOnlyDictionary<string, string> Headers { get; }
     }
 

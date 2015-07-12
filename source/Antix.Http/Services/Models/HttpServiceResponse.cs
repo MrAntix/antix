@@ -10,11 +10,11 @@ namespace Antix.Http.Services.Models
         IHttpServiceResponse<HttpServiceResponse>
     {
         readonly string[] _errors;
-        readonly HttpStatusCode _statusCode;
+        readonly HttpStatusCode? _statusCode;
         readonly IReadOnlyDictionary<string, string> _headers;
 
         internal HttpServiceResponse(
-            HttpStatusCode statusCode,
+            HttpStatusCode? statusCode,
             IEnumerable<KeyValuePair<string, string>> headers,
             IEnumerable<string> errors)
         {
@@ -28,7 +28,7 @@ namespace Antix.Http.Services.Models
             get { return _errors; }
         }
 
-        public HttpStatusCode StatusCode
+        public HttpStatusCode? StatusCode
         {
             get { return _statusCode; }
         }
@@ -71,13 +71,13 @@ namespace Antix.Http.Services.Models
     public class HttpServiceResponse<TData> :
         IHttpServiceResponse<HttpServiceResponse<TData>, TData>
     {
-        readonly HttpStatusCode _statusCode;
+        readonly HttpStatusCode? _statusCode;
         readonly TData _data;
         readonly string[] _errors;
         readonly IReadOnlyDictionary<string, string> _headers;
 
         internal HttpServiceResponse(
-            HttpStatusCode statusCode,
+            HttpStatusCode? statusCode,
             TData data,
             IEnumerable<KeyValuePair<string, string>> headers,
             IEnumerable<string> errors)
@@ -94,7 +94,7 @@ namespace Antix.Http.Services.Models
             get { return Data; }
         }
 
-        public HttpStatusCode StatusCode
+        public HttpStatusCode? StatusCode
         {
             get { return _statusCode; }
         }
