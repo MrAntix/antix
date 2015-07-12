@@ -102,7 +102,24 @@ namespace Antix.Tests.Http.Filters.Responses
         }
 
         [Fact]
-        public void when_http_response_set_status_code_is_sent_with_errors()
+        public void when_http_response_has_errors_default_status_code_is_sent()
+        {
+            var errors = new[] { "Eek" };
+            var serviceResponse = ServiceResponse
+                .Empty
+                .WithErrors(errors)
+                .AsHttp();
+
+            var processResponse =
+                ServiceResponseGlobalFilter
+                    .Process(serviceResponse);
+
+            Assert.Equal(HttpStatusCode.BadRequest, processResponse.StatusCode);
+            Assert.Equal(errors, processResponse.Content);
+        }
+
+        [Fact]
+        public void when_http_response_has_errors_set_status_code_is_sent()
         {
             var errors = new[] { "Eek" };
             var serviceResponse = ServiceResponse

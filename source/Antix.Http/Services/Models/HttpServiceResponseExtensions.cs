@@ -27,7 +27,7 @@ namespace Antix.Http.Services.Models
 
         public static HttpServiceResponse AsHttp<T>(
             this IServiceResponse<T> model,
-            HttpStatusCode statusCode = HttpStatusCode.OK,
+            HttpStatusCode? statusCode = null,
             IReadOnlyDictionary<string, string> headers = null)
             where T : IServiceResponse<T>
         {
@@ -36,7 +36,7 @@ namespace Antix.Http.Services.Models
 
         public static HttpServiceResponse<TData> AsHttp<T, TData>(
             this IServiceResponse<T, TData> model,
-            HttpStatusCode statusCode = HttpStatusCode.OK,
+            HttpStatusCode? statusCode = null,
             IReadOnlyDictionary<string, string> headers = null)
             where T : IServiceResponse<T, TData>
         {
