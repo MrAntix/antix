@@ -7,7 +7,7 @@ using Antix.Services.Models;
 namespace Antix.Http.Services.Models
 {
     public class HttpServiceResponse :
-        IHttpServiceResponse<HttpServiceResponse>
+        IHttpServiceResponse
     {
         readonly string[] _errors;
         readonly HttpStatusCode? _statusCode;
@@ -38,17 +38,22 @@ namespace Antix.Http.Services.Models
             get { return _headers; }
         }
 
-        public HttpServiceResponse WithErrors(IEnumerable<string> errors)
+        IServiceResponse IServiceResponse.Copy(IEnumerable<string> errors)
         {
             return new HttpServiceResponse(_statusCode, _headers, errors);
         }
 
-        public HttpServiceResponse WithStatusCode(HttpStatusCode statusCode)
+        IServiceResponse<TData> IServiceResponse.Copy<TData>(TData data)
+        {
+            return new HttpServiceResponse<TData>(_statusCode, data, _headers, _errors);
+        }
+
+        IHttpServiceResponse IHttpServiceResponse.Copy(HttpStatusCode statusCode)
         {
             return new HttpServiceResponse(statusCode, _headers, _errors);
         }
 
-        public HttpServiceResponse WithHeaders(IReadOnlyDictionary<string, string> headers)
+        IHttpServiceResponse IHttpServiceResponse.Copy(IReadOnlyDictionary<string, string> headers)
         {
             return new HttpServiceResponse(_statusCode, headers, _errors);
         }
@@ -69,39 +74,24 @@ namespace Antix.Http.Services.Models
     }
 
     public class HttpServiceResponse<TData> :
-        IHttpServiceResponse<HttpServiceResponse<TData>, TData>
+        HttpServiceResponse,
+        IHttpServiceResponse<TData>
     {
-        readonly HttpStatusCode? _statusCode;
         readonly TData _data;
-        readonly string[] _errors;
-        readonly IReadOnlyDictionary<string, string> _headers;
 
         internal HttpServiceResponse(
             HttpStatusCode? statusCode,
             TData data,
             IEnumerable<KeyValuePair<string, string>> headers,
-            IEnumerable<string> errors)
+            IEnumerable<string> errors) :
+                base(statusCode, headers, errors)
         {
-            _statusCode = statusCode;
             _data = data;
-            _headers = HttpServiceResponse.GetValueOrDefault(headers);
-            _errors = ServiceResponse.GetValueOrDefault(errors);
         }
-
 
         object IServiceResponseHasData.Data
         {
             get { return Data; }
-        }
-
-        public HttpStatusCode? StatusCode
-        {
-            get { return _statusCode; }
-        }
-
-        public IReadOnlyDictionary<string, string> Headers
-        {
-            get { return _headers; }
         }
 
         public TData Data
@@ -109,29 +99,24 @@ namespace Antix.Http.Services.Models
             get { return _data; }
         }
 
-        public string[] Errors
+        IHttpServiceResponse IHttpServiceResponse.Copy(HttpStatusCode statusCode)
         {
-            get { return _errors; }
+            return new HttpServiceResponse<TData>(statusCode, _data, Headers, Errors);
         }
 
-        public HttpServiceResponse<TData> WithErrors(IEnumerable<string> errors)
+        IHttpServiceResponse IHttpServiceResponse.Copy(IReadOnlyDictionary<string, string> headers)
         {
-            return new HttpServiceResponse<TData>(StatusCode, Data, Headers, errors);
+            return new HttpServiceResponse<TData>(StatusCode, _data, headers, Errors);
         }
 
-        public HttpServiceResponse<TData> WithStatusCode(HttpStatusCode statusCode)
+        IServiceResponse IServiceResponse.Copy(IEnumerable<string> errors)
         {
-            return new HttpServiceResponse<TData>(statusCode, Data, Headers, Errors);
+            return new HttpServiceResponse<TData>(StatusCode, _data, Headers, errors);
         }
 
-        public HttpServiceResponse<TData> WithHeaders(IReadOnlyDictionary<string, string> headers)
+        IServiceResponse<TDataTo> IServiceResponse.Copy<TDataTo>(TDataTo data)
         {
-            return new HttpServiceResponse<TData>(StatusCode, Data, headers, Errors);
-        }
-
-        public HttpServiceResponse<TData> WithData(TData data)
-        {
-            return new HttpServiceResponse<TData>(StatusCode, data, Headers, Errors);
+            return new HttpServiceResponse<TDataTo>(StatusCode, data, Headers, Errors);
         }
     }
 }

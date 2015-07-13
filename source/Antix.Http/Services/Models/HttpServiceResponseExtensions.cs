@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -10,47 +11,59 @@ namespace Antix.Http.Services.Models
     {
         public static ObjectContent<TData> AsJsonContent<T, TData>(
             T response)
-            where T : IServiceResponse<T, TData>
+            where T : IServiceResponse<TData>
         {
             return new ObjectContent<TData>(
                 response.Data,
                 new JsonMediaTypeFormatter());
         }
 
-        public static HttpServiceResponse<TData> WithData<T, TData>(
-            this IHttpServiceResponse<T> model, TData data)
-            where T : IHttpServiceResponse<T>
+        public static HttpServiceResponse AsHttp(
+            this IServiceResponse model,
+            HttpStatusCode? statusCode = null)
         {
-            return new HttpServiceResponse<TData>(
-                model.StatusCode, data, model.Headers, model.Errors);
+            return new HttpServiceResponse(statusCode, null, model.Errors);
         }
 
-        public static HttpServiceResponse AsHttp<T>(
-            this IServiceResponse<T> model,
-            HttpStatusCode? statusCode = null,
-            IReadOnlyDictionary<string, string> headers = null)
-            where T : IServiceResponse<T>
+        public static HttpServiceResponse<TData> AsHttp<TData>(
+            this IServiceResponse<TData> model,
+            HttpStatusCode? statusCode = null)
         {
-            return new HttpServiceResponse(statusCode, headers, model.Errors);
+            return new HttpServiceResponse<TData>(statusCode, model.Data, null, model.Errors);
         }
 
-        public static HttpServiceResponse<TData> AsHttp<T, TData>(
-            this IServiceResponse<T, TData> model,
-            HttpStatusCode? statusCode = null,
-            IReadOnlyDictionary<string, string> headers = null)
-            where T : IServiceResponse<T, TData>
+        public static T WithStatusCode<T>(
+            this T model,
+            HttpStatusCode statusCode)
+            where T : IHttpServiceResponse
         {
-            return new HttpServiceResponse<TData>(
-                statusCode, 
-                model.Data, 
-                headers, 
-                model.Errors);
+            return (T) model.Copy(statusCode);
         }
 
-        public static HttpServiceResponse AsHttpCreated<T>(
-            this IServiceResponse<T> model,
+        public static T WithHeaders<T>(
+            this T model,
+            IReadOnlyDictionary<string, string> headers)
+            where T : IHttpServiceResponse
+        {
+            return (T) model.Copy(headers);
+        }
+
+        public static HttpServiceResponse<TData> WithData<TData>(
+            this IHttpServiceResponse model, TData data)
+        {
+            return (HttpServiceResponse<TData>) model.Copy(data);
+        }
+
+        public static HttpServiceResponse<TDataTo> Map<TData, TDataTo>(
+            this IHttpServiceResponse<TData> model,
+            Func<TData, TDataTo> mapper)
+        {
+            return (HttpServiceResponse<TDataTo>) model.Copy(mapper(model.Data));
+        }
+
+        public static HttpServiceResponse AsHttpCreated(
+            this IServiceResponse model,
             string location)
-            where T : IServiceResponse<T>
         {
             return new HttpServiceResponse(
                 HttpStatusCode.Created,
@@ -61,10 +74,9 @@ namespace Antix.Http.Services.Models
                 model.Errors);
         }
 
-        public static HttpServiceResponse<TData> AsHttpCreated<T, TData>(
-            this IServiceResponse<T, TData> model,
+        public static HttpServiceResponse<TData> AsHttpCreated<TData>(
+            this IServiceResponse<TData> model,
             string location)
-            where T : IServiceResponse<T, TData>
         {
             return new HttpServiceResponse<TData>(
                 HttpStatusCode.Created,

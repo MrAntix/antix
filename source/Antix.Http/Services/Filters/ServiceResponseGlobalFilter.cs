@@ -102,14 +102,14 @@ namespace Antix.Http.Services.Filters
 
             if (response.Errors.Any())
             {
-                processResponse.StatusCode 
+                processResponse.StatusCode
                     = response.StatusCode ?? HttpStatusCode.BadRequest;
 
                 processResponse.Content = response.Errors;
             }
             else
             {
-                processResponse.StatusCode 
+                processResponse.StatusCode
                     = response.StatusCode ?? HttpStatusCode.OK;
 
                 var withData = response as IServiceResponseHasData;

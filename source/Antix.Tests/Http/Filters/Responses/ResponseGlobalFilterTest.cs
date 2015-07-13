@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using Antix.Http.Services.Filters;
 using Antix.Http.Services.Models;
 using Antix.Services.Models;
@@ -54,7 +55,7 @@ namespace Antix.Tests.Http.Filters.Responses
         [Fact]
         public void no_change_when_not_IServiceResponse()
         {
-            var responseValue = new { frog = true };
+            var responseValue = new {frog = true};
 
             var processResponse =
                 ServiceResponseGlobalFilter
@@ -66,7 +67,7 @@ namespace Antix.Tests.Http.Filters.Responses
         [Fact]
         public void using_created_http_response()
         {
-            var data = new { frog = true };
+            var data = new {frog = true};
             var url = "/somewhere";
 
             var serviceResponse = ServiceResponse.Empty
@@ -85,7 +86,7 @@ namespace Antix.Tests.Http.Filters.Responses
         [Fact]
         public void using_created_http_response_set_data_first()
         {
-            var data = new { frog = true };
+            var data = new {frog = true};
             var url = "/somewhere";
 
             var serviceResponse = ServiceResponse.Empty
@@ -104,7 +105,7 @@ namespace Antix.Tests.Http.Filters.Responses
         [Fact]
         public void when_http_response_has_errors_default_status_code_is_sent()
         {
-            var errors = new[] { "Eek" };
+            var errors = new[] {"Eek"};
             var serviceResponse = ServiceResponse
                 .Empty
                 .WithErrors(errors)
@@ -121,11 +122,18 @@ namespace Antix.Tests.Http.Filters.Responses
         [Fact]
         public void when_http_response_has_errors_set_status_code_is_sent()
         {
-            var errors = new[] { "Eek" };
+            var errors = new[] {"Eek"};
+            var headers = new Dictionary<string, string>
+            {
+                {"One", "1"}
+            };
+
             var serviceResponse = ServiceResponse
                 .Empty
                 .WithErrors(errors)
-                .AsHttp(HttpStatusCode.Forbidden);
+                .AsHttp(HttpStatusCode.Forbidden)
+                .WithData("some data")
+                .WithHeaders(headers);
 
             var processResponse =
                 ServiceResponseGlobalFilter
@@ -133,7 +141,7 @@ namespace Antix.Tests.Http.Filters.Responses
 
             Assert.Equal(HttpStatusCode.Forbidden, processResponse.StatusCode);
             Assert.Equal(errors, processResponse.Content);
+            Assert.Equal(headers.Values, processResponse.Headers.Values);
         }
-
     }
 }

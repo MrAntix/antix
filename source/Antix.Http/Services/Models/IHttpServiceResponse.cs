@@ -9,22 +9,13 @@ namespace Antix.Http.Services.Models
     {
         HttpStatusCode? StatusCode { get; }
         IReadOnlyDictionary<string, string> Headers { get; }
+
+        IHttpServiceResponse Copy(HttpStatusCode statusCode);
+        IHttpServiceResponse Copy(IReadOnlyDictionary<string, string> headers);
     }
 
-    public interface IHttpServiceResponse<out T> :
-        IHttpServiceResponse
-        where T : IHttpServiceResponse<T>
+    public interface IHttpServiceResponse<TData> :
+        IHttpServiceResponse, IServiceResponse<TData>
     {
-        T WithStatusCode(HttpStatusCode statusCode);
-        T WithHeaders(IReadOnlyDictionary<string, string> headers);
-    }
-
-    public interface IHttpServiceResponse<out T, TData> :
-        IHttpServiceResponse<T>, IServiceResponseHasData
-        where T : IHttpServiceResponse<T>
-    {
-        new TData Data { get; }
-
-        T WithData(TData data);
     }
 }

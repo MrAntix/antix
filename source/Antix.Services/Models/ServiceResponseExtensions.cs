@@ -5,26 +5,24 @@ namespace Antix.Services.Models
 {
     public static class ServiceResponseExtensions
     {
-        public static ServiceResponse<TData> WithData<T, TData>(
-            this IServiceResponse<T> model, TData data)
-            where T : IServiceResponse<T>
+        public static ServiceResponse<TData> WithData<TData>(
+            this IServiceResponse model, TData data)
         {
-            return new ServiceResponse<TData>(data, model.Errors);
+            return (ServiceResponse<TData>) model.Copy(data);
         }
 
         public static T WithErrors<T>(
             this T model, params object[] errors)
-            where T : IServiceResponse<T>
+            where T : IServiceResponse
         {
-            return model.WithErrors(errors.Select(e => e.ToString()));
+            return (T) model.Copy(errors.Select(e => e.ToString()));
         }
 
-        public static ServiceResponse<TDataTo> Map<T, TData, TDataTo>(
-            this IServiceResponse<T, TData> model,
+        public static ServiceResponse<TDataTo> Map<TData, TDataTo>(
+            this IServiceResponse<TData> model,
             Func<TData, TDataTo> mapper)
-            where T : IServiceResponse<T, TData>
         {
-            return new ServiceResponse<TDataTo>(mapper(model.Data), model.Errors);
+            return (ServiceResponse<TDataTo>) model.Copy(mapper(model.Data));
         }
     }
 }

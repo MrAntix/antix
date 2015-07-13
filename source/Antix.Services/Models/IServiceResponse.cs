@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Antix.Services.Models
 {
     public interface IServiceResponse
     {
         string[] Errors { get; }
+
+        IServiceResponse Copy(IEnumerable<string> errors);
+        IServiceResponse<TData> Copy<TData>(TData data);
     }
 
-    public interface IServiceResponse<out T> :
-        IServiceResponse
-        where T : IServiceResponse<T>
-    {
-        T WithErrors(IEnumerable<string> errors);
-    }
-
-    public interface IServiceResponse<out T, out TData> :
-        IServiceResponse<T>, IServiceResponseHasData
-        where T : IServiceResponse<T>
+    public interface IServiceResponse<TData> :
+        IServiceResponse, IServiceResponseHasData
     {
         new TData Data { get; }
     }

@@ -16,17 +16,28 @@ namespace Antix.Tests.Http.Services.Models
             var serviceResponse = ServiceResponse.Empty
                 .AsHttp(ExpectedStatusCode);
 
-            Assert.IsType<HttpServiceResponse>(serviceResponse);
             Assert.Equal(ExpectedStatusCode, serviceResponse.StatusCode);
         }
+
         [Fact]
         public void can_create_http_response_with_data()
         {
             var serviceResponse = ServiceResponse.Empty
-                .WithData(ExpectedData)
-                .AsHttp(ExpectedStatusCode);
+                .AsHttp(ExpectedStatusCode)
+                .WithData(ExpectedData);
 
-            Assert.IsType<HttpServiceResponse<string>>(serviceResponse);
+            Assert.Equal(ExpectedStatusCode, serviceResponse.StatusCode);
+            Assert.Equal(ExpectedData, serviceResponse.Data);
+        }
+
+        [Fact]
+        public void can_create_http_response_with_data_map()
+        {
+            var serviceResponse = ServiceResponse.Empty
+                .AsHttp(ExpectedStatusCode)
+                .WithData("NOT ExpectedData")
+                .Map(d => ExpectedData);
+
             Assert.Equal(ExpectedStatusCode, serviceResponse.StatusCode);
             Assert.Equal(ExpectedData, serviceResponse.Data);
         }
