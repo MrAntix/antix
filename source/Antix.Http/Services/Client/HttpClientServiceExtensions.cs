@@ -2,15 +2,19 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Antix.Http.Services.Models;
+using Antix.Services;
 using Antix.Services.Models;
 
 namespace Antix.Http.Services.Client
 {
     public static class HttpClientServiceExtensions
     {
-        public static async Task<HttpServiceResponse<T>> ReadAsync<T>(
-            this HttpResponseMessage responseMessage)
+        public static async Task<HttpServiceResponse<T>> ExecuteAndReadAsync<T>(
+            this IServiceInOut<HttpClientServiceRequest, HttpResponseMessage> client,
+            HttpClientServiceRequest request
+            )
         {
+            var responseMessage = await client.ExecuteAsync(request);
             var serviceResponse = await ReadAsync(
                 HttpServiceResponse<T>.Empty,
                 responseMessage);
@@ -24,9 +28,12 @@ namespace Antix.Http.Services.Client
                 ;
         }
 
-        public static async Task<HttpServiceResponse> ReadAsync(
-            this HttpResponseMessage responseMessage)
+        public static async Task<HttpServiceResponse> ExecuteAndReadAsync(
+            this IServiceInOut<HttpClientServiceRequest, HttpResponseMessage> client,
+            HttpClientServiceRequest request
+            )
         {
+            var responseMessage = await client.ExecuteAsync(request);
             var serviceResponse = await ReadAsync(
                 HttpServiceResponse.Empty,
                 responseMessage);
