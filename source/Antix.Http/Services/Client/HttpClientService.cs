@@ -27,7 +27,7 @@ namespace Antix.Http.Services.Client
                 var requestMessage = new HttpRequestMessage
                 {
                     Method = model.Method,
-                    RequestUri = new Uri(model.UriString, UriKind.Relative)
+                    RequestUri = new Uri(model.UriString)
                 };
                 foreach (var header in model.Headers)
                     requestMessage.Headers.Add(header.Key, header.Value);

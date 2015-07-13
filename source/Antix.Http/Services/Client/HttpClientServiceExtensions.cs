@@ -2,7 +2,6 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Antix.Http.Services.Models;
-using Antix.Services;
 using Antix.Services.Models;
 
 namespace Antix.Http.Services.Client
@@ -10,7 +9,7 @@ namespace Antix.Http.Services.Client
     public static class HttpClientServiceExtensions
     {
         public static async Task<HttpServiceResponse<T>> ExecuteAndReadAsync<T>(
-            this IServiceInOut<HttpClientServiceRequest, HttpResponseMessage> client,
+            this IHttpClientService client,
             HttpClientServiceRequest request
             )
         {
@@ -29,7 +28,7 @@ namespace Antix.Http.Services.Client
         }
 
         public static async Task<HttpServiceResponse> ExecuteAndReadAsync(
-            this IServiceInOut<HttpClientServiceRequest, HttpResponseMessage> client,
+            this IHttpClientService client,
             HttpClientServiceRequest request
             )
         {
