@@ -1,5 +1,5 @@
 using System;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace Antix.Services.Models
 {
@@ -15,7 +15,27 @@ namespace Antix.Services.Models
             this T model, params object[] errors)
             where T : IServiceResponse
         {
-            return (T) model.Copy(errors.Select(e => e.ToString()));
+            var errorStrings = new List<string>();
+            foreach (var error in errors)
+            {
+                if (error == null) continue;
+
+                var errorString = error as string;
+                if (errorString != null)
+                    errorStrings.Add(errorString);
+
+                else
+                {
+                    var enumerableStrings = error as IEnumerable<string>;
+                    if (enumerableStrings != null)
+                        errorStrings.AddRange(enumerableStrings);
+
+                    else
+                        errorStrings.Add(error.ToString());
+                }
+            }
+
+            return (T) model.Copy(errorStrings);
         }
 
         public static ServiceResponse<TDataTo> Map<TData, TDataTo>(
