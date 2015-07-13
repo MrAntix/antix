@@ -58,6 +58,9 @@ namespace Antix.Http.Services.Models
             return new HttpServiceResponse(_statusCode, headers, _errors);
         }
 
+        public static readonly HttpServiceResponse Empty
+            = new HttpServiceResponse(null, null, null);
+
         public static IReadOnlyDictionary<string, string> GetValueOrDefault(
             IEnumerable<KeyValuePair<string, string>> value)
         {
@@ -98,6 +101,9 @@ namespace Antix.Http.Services.Models
         {
             get { return _data; }
         }
+
+        public new static readonly HttpServiceResponse<TData> Empty
+            = new HttpServiceResponse<TData>(null, default(TData), null, null);
 
         IHttpServiceResponse IHttpServiceResponse.Copy(HttpStatusCode statusCode)
         {

@@ -56,6 +56,10 @@
   <ItemGroup>
     <Compile Include="Filters\Logging\ActionRequestEntry.cs" />
     <Compile Include="Filters\Logging\ActionResponseEntry.cs" />
+    <Compile Include="Services\Client\HttpClientServiceRequest.cs" />
+    <Compile Include="Services\Client\HttpClientService.cs" />
+    <Compile Include="Services\Client\HttpClientServiceExtensions.cs" />
+    <Compile Include="Services\Client\IHttpClientService.cs" />
     <Compile Include="Services\Models\HttpServiceResponseExtensions.cs" />
     <Compile Include="Services\Models\HttpServiceResponseHeader.cs" />
     <Compile Include="Services\Models\IHttpServiceResponse.cs" />
