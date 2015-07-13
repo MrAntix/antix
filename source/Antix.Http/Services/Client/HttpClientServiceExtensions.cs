@@ -46,8 +46,7 @@ namespace Antix.Http.Services.Client
             HttpResponseMessage responseMessage)
             where T : IHttpServiceResponse
         {
-            serviceResponse = serviceResponse
-                .WithStatusCode(responseMessage.StatusCode);
+            serviceResponse = HttpServiceResponseExtensions.WithStatusCode(serviceResponse, responseMessage.StatusCode);
 
             if (responseMessage.IsSuccessStatusCode)
                 return serviceResponse;
@@ -55,8 +54,7 @@ namespace Antix.Http.Services.Client
             var errors = await responseMessage.Content
                 .ReadAsAsync<IEnumerable<string>>();
 
-            return serviceResponse
-                .WithErrors(errors);
+            return ServiceResponseExtensions.WithErrors(serviceResponse, errors);
         }
     }
 }

@@ -6,12 +6,12 @@ namespace Antix.Services.Models
     {
         string[] Errors { get; }
 
-        IServiceResponse Copy(IEnumerable<string> errors);
-        IServiceResponse<TData> Copy<TData>(TData data);
+        IServiceResponse WithErrors(IEnumerable<string> errors);
+        IServiceResponse<TData> WithData<TData>(TData data);
     }
 
-    public interface IServiceResponse<TData> :
-        IServiceResponse, IServiceResponseHasData
+    public interface IServiceResponse<out TData> :
+        IServiceResponseHasData
     {
         new TData Data { get; }
     }

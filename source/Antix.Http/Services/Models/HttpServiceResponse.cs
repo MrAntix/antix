@@ -38,22 +38,22 @@ namespace Antix.Http.Services.Models
             get { return _headers; }
         }
 
-        IServiceResponse IServiceResponse.Copy(IEnumerable<string> errors)
+        IServiceResponse IServiceResponse.WithErrors(IEnumerable<string> errors)
         {
             return new HttpServiceResponse(_statusCode, _headers, errors);
         }
 
-        IServiceResponse<TData> IServiceResponse.Copy<TData>(TData data)
+        IServiceResponse<TData> IServiceResponse.WithData<TData>(TData data)
         {
             return new HttpServiceResponse<TData>(_statusCode, data, _headers, _errors);
         }
 
-        IHttpServiceResponse IHttpServiceResponse.Copy(HttpStatusCode statusCode)
+        IHttpServiceResponse IHttpServiceResponse.WithStatusCode(HttpStatusCode statusCode)
         {
             return new HttpServiceResponse(statusCode, _headers, _errors);
         }
 
-        IHttpServiceResponse IHttpServiceResponse.Copy(IReadOnlyDictionary<string, string> headers)
+        IHttpServiceResponse IHttpServiceResponse.WithHeaders(IReadOnlyDictionary<string, string> headers)
         {
             return new HttpServiceResponse(_statusCode, headers, _errors);
         }
@@ -105,22 +105,22 @@ namespace Antix.Http.Services.Models
         public new static readonly HttpServiceResponse<TData> Empty
             = new HttpServiceResponse<TData>(null, default(TData), null, null);
 
-        IHttpServiceResponse IHttpServiceResponse.Copy(HttpStatusCode statusCode)
+        IHttpServiceResponse IHttpServiceResponse.WithStatusCode(HttpStatusCode statusCode)
         {
             return new HttpServiceResponse<TData>(statusCode, _data, Headers, Errors);
         }
 
-        IHttpServiceResponse IHttpServiceResponse.Copy(IReadOnlyDictionary<string, string> headers)
+        IHttpServiceResponse IHttpServiceResponse.WithHeaders(IReadOnlyDictionary<string, string> headers)
         {
             return new HttpServiceResponse<TData>(StatusCode, _data, headers, Errors);
         }
 
-        IServiceResponse IServiceResponse.Copy(IEnumerable<string> errors)
+        IServiceResponse IServiceResponse.WithErrors(IEnumerable<string> errors)
         {
             return new HttpServiceResponse<TData>(StatusCode, _data, Headers, errors);
         }
 
-        IServiceResponse<TDataTo> IServiceResponse.Copy<TDataTo>(TDataTo data)
+        IServiceResponse<TDataTo> IServiceResponse.WithData<TDataTo>(TDataTo data)
         {
             return new HttpServiceResponse<TDataTo>(StatusCode, data, Headers, Errors);
         }

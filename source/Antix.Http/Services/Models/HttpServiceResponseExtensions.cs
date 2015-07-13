@@ -37,7 +37,7 @@ namespace Antix.Http.Services.Models
             HttpStatusCode statusCode)
             where T : IHttpServiceResponse
         {
-            return (T) model.Copy(statusCode);
+            return (T) model.WithStatusCode(statusCode);
         }
 
         public static T WithHeaders<T>(
@@ -45,20 +45,20 @@ namespace Antix.Http.Services.Models
             IReadOnlyDictionary<string, string> headers)
             where T : IHttpServiceResponse
         {
-            return (T) model.Copy(headers);
+            return (T) model.WithHeaders(headers);
         }
 
         public static HttpServiceResponse<TData> WithData<TData>(
             this IHttpServiceResponse model, TData data)
         {
-            return (HttpServiceResponse<TData>) model.Copy(data);
+            return (HttpServiceResponse<TData>) model.WithData(data);
         }
 
         public static HttpServiceResponse<TDataTo> Map<TData, TDataTo>(
             this IHttpServiceResponse<TData> model,
             Func<TData, TDataTo> mapper)
         {
-            return (HttpServiceResponse<TDataTo>) model.Copy(mapper(model.Data));
+            return (HttpServiceResponse<TDataTo>) model.WithData(mapper(model.Data));
         }
 
         public static HttpServiceResponse AsHttpCreated(

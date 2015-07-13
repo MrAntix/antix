@@ -10,11 +10,11 @@ namespace Antix.Http.Services.Models
         HttpStatusCode? StatusCode { get; }
         IReadOnlyDictionary<string, string> Headers { get; }
 
-        IHttpServiceResponse Copy(HttpStatusCode statusCode);
-        IHttpServiceResponse Copy(IReadOnlyDictionary<string, string> headers);
+        IHttpServiceResponse WithStatusCode(HttpStatusCode statusCode);
+        IHttpServiceResponse WithHeaders(IReadOnlyDictionary<string, string> headers);
     }
 
-    public interface IHttpServiceResponse<TData> :
+    public interface IHttpServiceResponse<out TData> :
         IHttpServiceResponse, IServiceResponse<TData>
     {
     }

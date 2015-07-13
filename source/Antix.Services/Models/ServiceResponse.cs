@@ -18,13 +18,13 @@ namespace Antix.Services.Models
             get { return _errors; }
         }
 
-        IServiceResponse IServiceResponse.Copy(
+        IServiceResponse IServiceResponse.WithErrors(
             IEnumerable<string> errors)
         {
             return new ServiceResponse(errors);
         }
 
-        IServiceResponse<TData> IServiceResponse.Copy<TData>(
+        IServiceResponse<TData> IServiceResponse.WithData<TData>(
             TData data)
         {
             return new ServiceResponse<TData>(data, Errors);
@@ -60,13 +60,13 @@ namespace Antix.Services.Models
             get { return _data; }
         }
 
-        IServiceResponse IServiceResponse.Copy(
+        IServiceResponse IServiceResponse.WithErrors(
             IEnumerable<string> errors)
         {
             return new ServiceResponse<TData>(Data, errors);
         }
 
-        IServiceResponse<TDataTo> IServiceResponse.Copy<TDataTo>(
+        IServiceResponse<TDataTo> IServiceResponse.WithData<TDataTo>(
             TDataTo data)
         {
             return new ServiceResponse<TDataTo>(data, Errors);

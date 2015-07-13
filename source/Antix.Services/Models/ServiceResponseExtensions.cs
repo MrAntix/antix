@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Antix.Services.Models
 {
@@ -8,7 +9,7 @@ namespace Antix.Services.Models
         public static ServiceResponse<TData> WithData<TData>(
             this IServiceResponse model, TData data)
         {
-            return (ServiceResponse<TData>) model.Copy(data);
+            return (ServiceResponse<TData>) model.WithData(data);
         }
 
         public static T WithErrors<T>(
@@ -35,14 +36,14 @@ namespace Antix.Services.Models
                 }
             }
 
-            return (T) model.Copy(errorStrings);
+            return (T) model.WithErrors(errorStrings.AsEnumerable());
         }
 
         public static ServiceResponse<TDataTo> Map<TData, TDataTo>(
             this IServiceResponse<TData> model,
             Func<TData, TDataTo> mapper)
         {
-            return (ServiceResponse<TDataTo>) model.Copy(mapper(model.Data));
+            return (ServiceResponse<TDataTo>) model.WithData(mapper(model.Data));
         }
     }
 }
