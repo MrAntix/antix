@@ -41,5 +41,27 @@ namespace Antix.Tests.Http.Services.Models
             Assert.Equal(ExpectedStatusCode, serviceResponse.StatusCode);
             Assert.Equal(ExpectedData, serviceResponse.Data);
         }
+
+        [Fact]
+        public void sets_not_found_when_null()
+        {
+            var serviceResponse = ServiceResponse.Empty
+                .WithData(default(object))
+                .AsHttp()
+                .NotFoundWhenNull();
+
+            Assert.Equal(HttpStatusCode.NotFound, serviceResponse.StatusCode);
+        }
+
+        [Fact]
+        public void default_when_not_null()
+        {
+            var serviceResponse = ServiceResponse.Empty
+                .WithData(ExpectedData)
+                .AsHttp()
+                .NotFoundWhenNull();
+
+            Assert.Equal(default(HttpStatusCode), serviceResponse.StatusCode);
+        }
     }
 }

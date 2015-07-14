@@ -32,6 +32,16 @@ namespace Antix.Http.Services.Models
             return new HttpServiceResponse<TData>(statusCode, model.Data, null, model.Errors);
         }
 
+        public static T NotFoundWhenNull<T>(
+            this T model)
+            where T : IHttpServiceResponse, IServiceResponseHasData
+        {
+            return (T) model
+                .WithStatusCode(model.Data == null
+                    ? HttpStatusCode.NotFound
+                    : default(HttpStatusCode));
+        }
+
         public static T WithStatusCode<T>(
             this T model,
             HttpStatusCode statusCode)
