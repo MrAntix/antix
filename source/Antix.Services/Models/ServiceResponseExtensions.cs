@@ -13,6 +13,13 @@ namespace Antix.Services.Models
         }
 
         public static T WithErrors<T>(
+            this T model, IEnumerable<string> errors)
+            where T : IServiceResponse
+        {
+            return (T) model.WithErrors(errors);
+        }
+
+        public static T WithErrors<T>(
             this T model, params object[] errors)
             where T : IServiceResponse
         {
