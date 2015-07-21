@@ -14,7 +14,15 @@ namespace Antix.Services.Validation
 
         public virtual string[] Build(TModel model, string path)
         {
-            return Actions.SelectMany(a => a(model, path)).ToArray();
+            var errors = new List<string>();
+            var i = 0;
+            while (i < Actions.Count)
+            {
+                errors.AddRange(Actions[i](model, path));
+                i++;
+            }
+
+            return errors.ToArray();
         }
 
         public IValidationRuleBuilder<TProperty> For<TProperty>(

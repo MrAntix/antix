@@ -242,5 +242,34 @@ namespace Antix.Tests.Services.Validation
         {
             return false;
         }
+        //[Fact]
+        //public void fail_on_size_when_name_not_empty()
+        //{
+        //    var builder = GetService();
+        //    builder
+        //        .For(m => m.Name)
+        //        .Assert(_is.NotEmpty)
+        //        .Then(_ =>
+        //            builder
+        //                .For(m => m.Size)
+        //                .Assert(_is.Min(1))
+        //        );
+
+        //    var result = builder.Build(new ModelA
+        //    {
+        //        Name = "NOT EMPTY",
+        //        Size = 0
+        //    });
+
+        //    Assert.Equal(new[] { "Size:min" }, result);
+
+        //    result = builder.Build(new ModelA
+        //    {
+        //        Name = string.Empty,
+        //        Size = 0
+        //    });
+
+        //    Assert.Equal(new[] { "Name:not-empty" }, result);
+        //}
     }
 }
