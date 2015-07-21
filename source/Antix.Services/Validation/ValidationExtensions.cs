@@ -22,8 +22,21 @@ namespace Antix.Services.Validation
             return builder.Build(model, string.Empty);
         }
 
-        public static IEnumerable<string> Build<TModel, TProperty>(
+        public static string[] Build<TModel>(
+            this IValidationBuilder<TModel> builder,
+            TModel model,
+            string path
+            )
+        {
+            var state = new ValidationBuildState();
+            builder.Build(state, model, path);
+
+            return state.Errors.ToArray();
+        }
+
+        public static void Build<TModel, TProperty>(
             this IValidationBuilder<TProperty> builder,
+            ValidationBuildState state,
             TModel model,
             Expression<Func<TModel, TProperty>> propertyExpression,
             string path)
@@ -31,11 +44,12 @@ namespace Antix.Services.Validation
             var subPath = ConcatPath(path, propertyExpression);
             var subModel = propertyExpression.Compile()(model);
 
-            return builder.Build(subModel, subPath);
+            builder.Build(state, subModel, subPath);
         }
 
-        public static string[] BuildEach<TParentModel, TModel>(
+        public static void BuildEach<TParentModel, TModel>(
             this IValidationBuilder<TModel> builder,
+            ValidationBuildState state,
             TParentModel model,
             Expression<Func<TParentModel, IEnumerable<TModel>>> propertyExpression,
             string path)
@@ -43,12 +57,13 @@ namespace Antix.Services.Validation
             var subPath = ConcatPath(path, propertyExpression);
             var subModels = propertyExpression.Compile()(model);
 
-            return subModels.SelectMany(
-                (subModel, index)
-                    => builder.Build(
-                        subModel,
-                        string.Format("{0}[{1}]", subPath, index))
-                ).ToArray();
+            var index = 0;
+            foreach (var subModel in subModels)
+            {
+                builder.Build(state, 
+                    subModel, string.Format("{0}[{1}]", subPath, index));
+                index++;
+            }
         }
 
         static string ConcatPath(string path, Expression propertyExpression)

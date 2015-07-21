@@ -32,7 +32,7 @@ namespace Antix.Services.Validation
             Func<TModel, bool> function,
             params Func<TModel, bool>[] functions);
 
-        IValidationRuleBuilder<TModel> Then(
+        IValidationAssertionBuilder<TModel> Then(
             Action<IValidationRuleBuilder<TModel>> action);
 
         IValidationRuleBuilder<TProperty> ForEach<TProperty>(

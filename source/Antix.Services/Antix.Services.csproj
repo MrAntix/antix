@@ -95,7 +95,8 @@
     <Compile Include="Validation\Predicates\ValidationPredicateCache.cs" />
     <Compile Include="Validation\Services\ValidatingServiceBase.cs" />
     <Compile Include="Validation\ValidationAssertionBuilder.cs" />
-    <Compile Include="Validation\ValidationAssertionList.cs" />
+    <Compile Include="Validation\ValidationActionList.cs" />
+    <Compile Include="Validation\ValidationBuildState.cs" />
     <Compile Include="Validation\ValidationConstants.cs" />
     <Compile Include="Validation\ValidationExtensions.cs" />
     <Compile Include="Validation\ValidationRuleBuilder.cs" />

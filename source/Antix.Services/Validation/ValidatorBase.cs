@@ -27,7 +27,10 @@ namespace Antix.Services.Validation
             rules.When(_is.NotNull)
                 .Then(Validate);
 
-            return rules.Build(model, path);
+            var state = new ValidationBuildState();
+            rules.Build(state,model, path);
+
+            return state.Errors.ToArray();
         }
 
         protected TPredicates Is

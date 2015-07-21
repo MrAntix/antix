@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Antix.Services.Validation.Predicates;
 
 namespace Antix.Services.Validation
@@ -7,41 +6,50 @@ namespace Antix.Services.Validation
     public class ValidationAssertionBuilder<TModel> :
         ValidationRuleBuilder<TModel>, IValidationAssertionBuilder<TModel>
     {
-        readonly ValidationAssertionList<TModel> _assertionList;
+        readonly ValidationActionList<TModel> _predicateActions;
+        readonly bool _assert;
 
         public ValidationAssertionBuilder(
-            ValidationAssertionList<TModel> assertionList)
+            ValidationActionList<TModel> predicateActions,
+            bool assert)
         {
-            _assertionList = assertionList;
+            _predicateActions = predicateActions;
+            _assert = assert;
+        }
+
+        public bool Assert
+        {
+            get { return _assert; }
         }
 
         public IValidationAssertionBuilder<TModel> Or(
             IValidationPredicate<TModel> predicate,
             params IValidationPredicate<TModel>[] predicates)
         {
-            _assertionList.Add(predicate, predicates);
+            _predicateActions.Add(predicate, predicates);
 
             return this;
         }
 
-        public override string[] Build(TModel model, string path)
+        public override void Build(
+            ValidationBuildState state, TModel model, string path)
         {
-            var errors = new List<string>();
-            foreach (var actionErrors in _assertionList
-                .Actions
-                .Select(action => action(model, path).ToArray()))
+            foreach (var predicateAction in _predicateActions)
             {
-                if (!actionErrors.Any())
+                var localState = new ValidationBuildState();
+                predicateAction(localState, model, path);
+
+                if (!localState.Errors.Any())
                 {
-                    return !Actions.Any()
-                        ? new string[] {}
-                        : base.Build(model, path);
+                    if (Actions.Any())
+                        base.Build(state, model, path);
+
+                    return;
                 }
 
-                if (_assertionList.Assert) errors.AddRange(actionErrors);
+                if (Assert)
+                    state.Errors.AddRange(localState.Errors);
             }
-
-            return errors.ToArray();
         }
     }
 }

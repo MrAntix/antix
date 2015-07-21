@@ -9,20 +9,24 @@ namespace Antix.Services.Validation
     public class ValidationRuleBuilder<TModel> :
         IValidationRuleBuilder<TModel>
     {
-        protected readonly List<Func<TModel, string, IEnumerable<string>>> Actions
-            = new List<Func<TModel, string, IEnumerable<string>>>();
+        protected readonly ValidationActionList<TModel> Actions =
+            new ValidationActionList<TModel>();
 
-        public virtual string[] Build(TModel model, string path)
+        public virtual void Build(
+            ValidationBuildState state,
+            TModel model, string path)
         {
-            var errors = new List<string>();
+            var originalActions = Actions.ToArray();
+
             var i = 0;
             while (i < Actions.Count)
             {
-                errors.AddRange(Actions[i](model, path));
+                Actions[i](state, model, path);
                 i++;
             }
 
-            return errors.ToArray();
+            Actions.Clear();
+            Actions.AddRange(originalActions);
         }
 
         public IValidationRuleBuilder<TProperty> For<TProperty>(
@@ -30,9 +34,9 @@ namespace Antix.Services.Validation
         {
             var builder = new ValidationRuleBuilder<TProperty>();
             Actions.Add(
-                (model, path) => builder.Build(
-                    model,
-                    propertyExpression,
+                (state, model, path) => builder.Build(
+                    state,
+                    model, propertyExpression,
                     path));
 
             return builder;
@@ -43,12 +47,13 @@ namespace Antix.Services.Validation
             Action<IValidationRuleBuilder<TProperty>> action)
         {
             Actions.Add(
-                (model, path) =>
+                (state, model, path) =>
                 {
                     var builder = new ValidationRuleBuilder<TProperty>();
                     action(builder);
 
-                    return builder.Build(model, propertyExpression, path);
+                    builder.Build(state,
+                        model, propertyExpression, path);
                 });
 
             return this;
@@ -59,10 +64,9 @@ namespace Antix.Services.Validation
         {
             var builder = new ValidationRuleBuilder<TProperty>();
             Actions.Add(
-                (model, path) => builder.BuildEach(
-                    model,
-                    propertyExpression,
-                    path));
+                (state, model, path) => builder
+                    .BuildEach(state,
+                        model, propertyExpression, path));
 
             return builder;
         }
@@ -72,12 +76,13 @@ namespace Antix.Services.Validation
             Action<IValidationRuleBuilder<TProperty>> action)
         {
             Actions.Add(
-                (model, path) =>
+                (state, model, path) =>
                 {
                     var builder = new ValidationRuleBuilder<TProperty>();
                     action(builder);
 
-                    return builder.BuildEach(model, propertyExpression, path);
+                    builder.BuildEach(state,
+                        model, propertyExpression, path);
                 });
 
             return this;
@@ -87,7 +92,9 @@ namespace Antix.Services.Validation
             IValidator<TModel> validator)
         {
             Actions.Add(
-                validator.Validate);
+                (state, model, path) =>
+                    state.Errors.AddRange(validator.Validate(model, path))
+                );
 
             return this;
         }
@@ -127,19 +134,26 @@ namespace Antix.Services.Validation
                 function, functions);
         }
 
-        public IValidationRuleBuilder<TModel> Then(
+        public IValidationAssertionBuilder<TModel> Then(
             Action<IValidationRuleBuilder<TModel>> action)
         {
+            var actions = new ValidationActionList<TModel>();
             Actions.Add(
-                (model, path) =>
+                (state, model, path) =>
                 {
+                    if (state.Errors.Any()) return;
+
                     var builder = new ValidationRuleBuilder<TModel>();
                     action(builder);
 
-                    return builder.Build(model, path);
+                    builder.Build(state, model, path);
                 });
 
-            return this;
+            var assertionBuilder = new ValidationAssertionBuilder<TModel>(actions, false);
+
+            Actions.Add(assertionBuilder.Build);
+
+            return assertionBuilder;
         }
 
         IValidationAssertionBuilder<TModel> GetAssertionBuilder(
@@ -148,10 +162,10 @@ namespace Antix.Services.Validation
             params IValidationPredicate<TModel>[] predicates
             )
         {
-            var assertion = new ValidationAssertionList<TModel>(assert);
+            var assertion = new ValidationActionList<TModel>();
             assertion.Add(predicate, predicates);
 
-            var assertionBuilder = new ValidationAssertionBuilder<TModel>(assertion);
+            var assertionBuilder = new ValidationAssertionBuilder<TModel>(assertion, assert);
 
             Actions.Add(assertionBuilder.Build);
 
