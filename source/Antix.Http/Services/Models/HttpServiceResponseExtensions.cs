@@ -84,6 +84,13 @@ namespace Antix.Http.Services.Models
                 model.Errors);
         }
 
+        public static HttpServiceResponse AsHttpCreated(
+            this IServiceResponse model,
+            string route, object routeData)
+        {
+            return model.AsHttpCreated(route.MergeRouteData(routeData));
+        }
+
         public static HttpServiceResponse<TData> AsHttpCreated<TData>(
             this IServiceResponse<TData> model,
             string location)
@@ -97,6 +104,28 @@ namespace Antix.Http.Services.Models
                 },
                 model.Errors
                 );
+        }
+
+        public static HttpServiceResponse<TData> AsHttpCreated<TData>(
+            this IServiceResponse<TData> model,
+            string route, object routeData)
+        {
+            return model.AsHttpCreated(route.MergeRouteData(routeData));
+        }
+
+        public static string MergeRouteData(
+            this string route,
+            object routeData)
+        {
+            foreach (var property in routeData.GetType().GetProperties())
+            {
+                route = route.Replace(
+                    string.Format("{{{0}}}", property.Name),
+                    string.Format("{0}", property.GetValue(routeData)),
+                    StringComparison.OrdinalIgnoreCase);
+            }
+
+            return route;
         }
     }
 }
