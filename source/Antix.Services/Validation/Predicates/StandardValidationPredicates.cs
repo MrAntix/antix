@@ -5,6 +5,23 @@ namespace Antix.Services.Validation.Predicates
     public partial class StandardValidationPredicates :
         IStandardValidationPredicates
     {
+        readonly ValidationPredicateCache<EqualPredicate, object> _equal
+            = ValidationPredicateCache.Create(
+                (object comparison) => new EqualPredicate(comparison));
+        readonly ValidationPredicateCache<NotEqualPredicate, object> _notEqual
+            = ValidationPredicateCache.Create(
+                (object comparison) => new NotEqualPredicate(comparison));
+
+        public IValidationPredicate<object> Equal(object value)
+        {
+            return _equal.GetOrCreate(value);
+        }
+
+        public IValidationPredicate<object> NotEqual(object value)
+        {
+            return _notEqual.GetOrCreate(value);
+        }
+
         readonly IValidationPredicate<object> _null = new NullPredicate();
         readonly IValidationPredicate<object> _notNull = new NotNullPredicate();
 
@@ -18,6 +35,12 @@ namespace Antix.Services.Validation.Predicates
             get { return _notNull; }
         }
 
+        readonly ValidationPredicateCache<StringEqualPredicate, Tuple<string, StringComparison>> _stringEqual
+            = ValidationPredicateCache.Create(
+                (Tuple<string, StringComparison> t) => new StringEqualPredicate(t.Item1, t.Item2));
+        readonly ValidationPredicateCache<StringNotEqualPredicate, Tuple<string, StringComparison>> _stringNotEqual
+            = ValidationPredicateCache.Create(
+                (Tuple<string, StringComparison> t) => new StringNotEqualPredicate(t.Item1, t.Item2));
         readonly IValidationPredicate<string> _empty = new StringEmptyPredicate();
         readonly IValidationPredicate<string> _nullOrEmpty = new StringNullOrEmptyPredicate();
         readonly IValidationPredicate<string> _nullOrWhiteSpace = new StringNullOrWhiteSpacePredicate();
@@ -26,6 +49,16 @@ namespace Antix.Services.Validation.Predicates
         readonly IValidationPredicate<string> _notNullOrWhiteSpace = new StringNotNullOrWhiteSpacePredicate();
         readonly IValidationPredicate<string> _email = new EmailPredicate();
 
+        public IValidationPredicate<string> Equal(string value, StringComparison comparison)
+        {
+            return _stringEqual.GetOrCreate(Tuple.Create(value, comparison));
+        }
+
+        public IValidationPredicate<string> NotEqual(string value, StringComparison comparison)
+        {
+            return _stringNotEqual.GetOrCreate(Tuple.Create(value, comparison));
+        }
+        
         public IValidationPredicate<string> Empty
         {
             get { return _empty; }

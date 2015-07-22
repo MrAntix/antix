@@ -64,8 +64,8 @@
     <Compile Include="ServiceHandler.cs" />
     <Compile Include="ServiceSyncExtensions.cs" />
     <Compile Include="Validation\ExpressionPathVisitor.cs" />
-    <Compile Include="Validation\IValidationAssertionBuilder.cs" />
     <Compile Include="Validation\IValidationBuilder.cs" />
+    <Compile Include="Validation\IValidationAssertionBuilder.cs" />
     <Compile Include="Validation\IValidationRuleBuilder.cs" />
     <Compile Include="Validation\IValidator.cs" />
     <Compile Include="Validation\Predicates\EmailPredicate.cs" />
@@ -74,6 +74,7 @@
     <Compile Include="Validation\Predicates\IStandardValidationPredicates.cs" />
     <Compile Include="Validation\Predicates\IStringPredicates.cs" />
     <Compile Include="Validation\Predicates\IValidationPredicate.cs" />
+    <Compile Include="Validation\Predicates\NotEqualPredicate.cs" />
     <Compile Include="Validation\Predicates\NotNullPredicate.cs" />
     <Compile Include="Validation\Predicates\NullPredicate.cs" />
     <Compile Include="Validation\Predicates\NumberPredicates.cs">
@@ -82,10 +83,13 @@
       <DependentUpon>NumberPredicates.tt</DependentUpon>
     </Compile>
     <Compile Include="Validation\Predicates\StandardValidationPredicates.cs" />
+    <Compile Include="Validation\Predicates\EqualPredicate.cs" />
+    <Compile Include="Validation\Predicates\StringEqualPredicate.cs" />
     <Compile Include="Validation\Predicates\StringLengthPredicate.cs" />
     <Compile Include="Validation\Predicates\StringMaxLengthPredicate.cs" />
     <Compile Include="Validation\Predicates\StringMinLengthPredicate.cs" />
     <Compile Include="Validation\Predicates\StringNotEmptyPredicate.cs" />
+    <Compile Include="Validation\Predicates\StringNotEqualPredicate.cs" />
     <Compile Include="Validation\Predicates\StringNotNullOrEmptyPredicate.cs" />
     <Compile Include="Validation\Predicates\StringNotNullOrWhiteSpacePredicate.cs" />
     <Compile Include="Validation\Predicates\StringNullOrEmptyPredicate.cs" />
