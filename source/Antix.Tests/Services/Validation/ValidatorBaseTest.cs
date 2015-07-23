@@ -15,7 +15,7 @@ namespace Antix.Tests.Services.Validation
 
             var model = new A();
 
-            Assert.Equal("Name:not-null", validator.Validate(model).Single());
+            Assert.Equal("Name:not-null", validator.ValidateAsync(model).Result.Single());
         }
 
         [Fact]
@@ -25,14 +25,14 @@ namespace Antix.Tests.Services.Validation
 
             var model = new B {A = new A()};
 
-            Assert.Equal("A.Name:not-null", validator.Validate(model).Single());
+            Assert.Equal("A.Name:not-null", validator.ValidateAsync(model).Result.Single());
         }
 
         static AValidator GetAValidator()
         {
             return new AValidator(
                 new StandardValidationPredicates(),
-                () => new ValidationRuleBuilder<A>()
+                () => new Rules<A>()
                 );
         }
 
@@ -40,7 +40,7 @@ namespace Antix.Tests.Services.Validation
         {
             return new BValidator(
                 new StandardValidationPredicates(),
-                () => new ValidationRuleBuilder<B>(),
+                () => new Rules<B>(),
                 aValidator ?? GetAValidator()
                 );
         }
@@ -54,12 +54,12 @@ namespace Antix.Tests.Services.Validation
         {
             public AValidator(
                 IStandardValidationPredicates @is,
-                Func<IValidationRuleBuilder<A>> getRulesBuilder) :
-                    base(@is, getRulesBuilder)
+                Func<IRules<A>> getRules) :
+                    base(@is, getRules)
             {
             }
 
-            protected override void Validate(IValidationRuleBuilder<A> rules)
+            protected override void Validate(IRule<A> rules)
             {
                 rules.For(a => a.Name)
                     .Assert(Is.NotNull);
@@ -77,17 +77,17 @@ namespace Antix.Tests.Services.Validation
 
             public BValidator(
                 IStandardValidationPredicates @is,
-                Func<IValidationRuleBuilder<B>> getRulesBuilder,
+                Func<IRules<B>> getRules,
                 IValidator<A> aValidator) :
-                    base(@is, getRulesBuilder)
+                    base(@is, getRules)
             {
                 _aValidator = aValidator;
             }
 
-            protected override void Validate(IValidationRuleBuilder<B> rules)
+            protected override void Validate(IRule<B> rules)
             {
                 rules.For(b => b.A)
-                    .Validate(_aValidator);
+                    .Assert(_aValidator);
             }
         }
     }

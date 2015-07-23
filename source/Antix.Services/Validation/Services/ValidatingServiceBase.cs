@@ -18,8 +18,8 @@ namespace Antix.Services.Validation.Services
         public async Task<ServiceResponse<TResult>> ExecuteAsync(
             TModel model)
         {
-            var errors =
-                _validator.Validate(model);
+            var errors = await _validator
+                .ValidateAsync(model);
 
             if (errors.Any())
             {
@@ -54,8 +54,8 @@ namespace Antix.Services.Validation.Services
         public async Task<ServiceResponse> ExecuteAsync(
             TModel model)
         {
-            var errors =
-                _validator.Validate(model);
+            var errors =await _validator
+                .ValidateAsync(model);
 
             if (errors.Any())
             {

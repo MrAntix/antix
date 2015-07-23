@@ -12,15 +12,16 @@ namespace Antix.Services.Validation
             IValidationPredicate<TModel> predicate,
             params IValidationPredicate<TModel>[] predicates)
         {
-            Add(
-                (state, model, path) =>
-                {
-                    var errors = new[] {predicate}.Concat(predicates)
-                        .Where(p => !p.Is(model))
-                        .Select(p => string.Format("{0}:{1}", path, p.Name));
+            //Add(
+            //    (state, model, path) =>
+            //    {
+            //        var errors = new[] {predicate}.Concat(predicates)
+            //            .Where(p => !p.Is(model))
+            //            .Select(p => string.Format("{0}:{1}", path, p.Name));
 
-                    state.Errors.AddRange(errors);
-                });
+            //        state.Errors.AddRange(errors);
+            //    }
+            //    );
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Antix.Services.Validation.Predicates;
 
 namespace Antix.Services.Validation
@@ -42,7 +43,7 @@ namespace Antix.Services.Validation
             Expression<Func<TModel, IEnumerable<TProperty>>> propertyExpression,
             Action<IValidationRuleBuilder<TProperty>> action);
 
-        IValidationRuleBuilder<TModel> Validate(
+        Task<IValidationRuleBuilder<TModel>> Validate(
             IValidator<TModel> validator);
     }
 }

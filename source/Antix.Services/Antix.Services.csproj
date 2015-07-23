@@ -63,6 +63,7 @@
     <Compile Include="Serialization\SerializerIgnoreAttribute.cs" />
     <Compile Include="ServiceHandler.cs" />
     <Compile Include="ServiceSyncExtensions.cs" />
+    <Compile Include="Validation\Class1.cs" />
     <Compile Include="Validation\ExpressionPathVisitor.cs" />
     <Compile Include="Validation\IValidationBuilder.cs" />
     <Compile Include="Validation\IValidationAssertionBuilder.cs" />
@@ -97,7 +98,9 @@
     <Compile Include="Validation\Predicates\StringEmptyPredicate.cs" />
     <Compile Include="Validation\Predicates\ValidationPredicateBase.cs" />
     <Compile Include="Validation\Predicates\ValidationPredicateCache.cs" />
+    <Compile Include="Validation\Predicates\ValidationPredicateExtensions.cs" />
     <Compile Include="Validation\Services\ValidatingServiceBase.cs" />
+    <Compile Include="Validation\ValidateRequest.cs" />
     <Compile Include="Validation\ValidationAssertionBuilder.cs" />
     <Compile Include="Validation\ValidationActionList.cs" />
     <Compile Include="Validation\ValidationBuildState.cs" />

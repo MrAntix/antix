@@ -1,8 +1,7 @@
 ﻿namespace Antix.Services.Validation
 {
-    public interface IValidator<in TModel> :
-        IService
+    public interface IValidator<TModel> :
+        IServiceInOut<ValidateRequest<TModel>, string[]>
     {
-        string[] Validate(TModel model, string path);
     }
 }

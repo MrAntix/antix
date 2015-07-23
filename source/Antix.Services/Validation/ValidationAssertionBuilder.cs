@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Antix.Services.Validation.Predicates;
 
 namespace Antix.Services.Validation
@@ -31,7 +32,7 @@ namespace Antix.Services.Validation
             return this;
         }
 
-        public override void Build(
+        public override async Task Build(
             ValidationBuildState state, TModel model, string path)
         {
             foreach (var predicateAction in _predicateActions)

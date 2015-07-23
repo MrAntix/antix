@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Antix.Services.Validation.Predicates;
 
 namespace Antix.Services.Validation
@@ -12,7 +13,7 @@ namespace Antix.Services.Validation
         protected readonly ValidationActionList<TModel> Actions =
             new ValidationActionList<TModel>();
 
-        public virtual void Build(
+        public virtual async Task Build(
             ValidationBuildState state,
             TModel model, string path)
         {
@@ -88,12 +89,12 @@ namespace Antix.Services.Validation
             return this;
         }
 
-        public IValidationRuleBuilder<TModel> Validate(
+        public async Task<IValidationRuleBuilder<TModel>> Validate(
             IValidator<TModel> validator)
         {
             Actions.Add(
-                (state, model, path) =>
-                    state.Errors.AddRange(validator.Validate(model, path))
+                async (state, model, path) => 
+                    state.Errors.AddRange(await validator. ValidateAsync(model, path))
                 );
 
             return this;
@@ -146,12 +147,12 @@ namespace Antix.Services.Validation
                     var builder = new ValidationRuleBuilder<TModel>();
                     action(builder);
 
-                    builder.Build(state, model, path);
+                   // builder.Build(state, model, path);
                 });
 
             var assertionBuilder = new ValidationAssertionBuilder<TModel>(actions, false);
 
-            Actions.Add(assertionBuilder.Build);
+           // Actions.Add(assertionBuilder.Build);
 
             return assertionBuilder;
         }
@@ -167,7 +168,7 @@ namespace Antix.Services.Validation
 
             var assertionBuilder = new ValidationAssertionBuilder<TModel>(assertion, assert);
 
-            Actions.Add(assertionBuilder.Build);
+            //Actions.Add(assertionBuilder.Build);
 
             return assertionBuilder;
         }
