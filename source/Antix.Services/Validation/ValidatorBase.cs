@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Antix.Services.Validation.Predicates;
+using Antix.Services.Validation.Rules;
 
 namespace Antix.Services.Validation
 {
@@ -9,11 +10,11 @@ namespace Antix.Services.Validation
         where TModel : class
         where TPredicates : IObjectPredicates
     {
-        readonly Func<IRules<TModel>> _getRules;
+        readonly Func<IValidationRules<TModel>> _getRules;
 
         public ValidatorBase(
             TPredicates @is,
-            Func<IRules<TModel>> getRules)
+            Func<IValidationRules<TModel>> getRules)
         {
             Is = @is;
             _getRules = getRules;
@@ -31,7 +32,7 @@ namespace Antix.Services.Validation
 
         protected TPredicates Is { get; }
 
-        protected abstract void Validate(IRule<TModel> rules);
+        protected abstract void Validate(IValidationRule<TModel> validationRules);
     }
 
     public abstract class ValidatorBase<TModel> :
@@ -41,7 +42,7 @@ namespace Antix.Services.Validation
     {
         public ValidatorBase(
             IStandardValidationPredicates @is,
-            Func<IRules<TModel>> getRules) :
+            Func<IValidationRules<TModel>> getRules) :
                 base(@is, getRules)
         {
         }

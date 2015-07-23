@@ -2,6 +2,7 @@
 using System.Linq;
 using Antix.Services.Validation;
 using Antix.Services.Validation.Predicates;
+using Antix.Services.Validation.Rules;
 using Xunit;
 
 namespace Antix.Tests.Services.Validation
@@ -32,7 +33,7 @@ namespace Antix.Tests.Services.Validation
         {
             return new AValidator(
                 new StandardValidationPredicates(),
-                () => new Rules<A>()
+                () => new ValidationRules<A>()
                 );
         }
 
@@ -40,7 +41,7 @@ namespace Antix.Tests.Services.Validation
         {
             return new BValidator(
                 new StandardValidationPredicates(),
-                () => new Rules<B>(),
+                () => new ValidationRules<B>(),
                 aValidator ?? GetAValidator()
                 );
         }
@@ -54,14 +55,14 @@ namespace Antix.Tests.Services.Validation
         {
             public AValidator(
                 IStandardValidationPredicates @is,
-                Func<IRules<A>> getRules) :
+                Func<IValidationRules<A>> getRules) :
                     base(@is, getRules)
             {
             }
 
-            protected override void Validate(IRule<A> rules)
+            protected override void Validate(IValidationRule<A> validationRules)
             {
-                rules.For(a => a.Name)
+                validationRules.For(a => a.Name)
                     .Assert(Is.NotNull);
             }
         }
@@ -77,16 +78,16 @@ namespace Antix.Tests.Services.Validation
 
             public BValidator(
                 IStandardValidationPredicates @is,
-                Func<IRules<B>> getRules,
+                Func<IValidationRules<B>> getRules,
                 IValidator<A> aValidator) :
                     base(@is, getRules)
             {
                 _aValidator = aValidator;
             }
 
-            protected override void Validate(IRule<B> rules)
+            protected override void Validate(IValidationRule<B> validationRules)
             {
-                rules.For(b => b.A)
+                validationRules.For(b => b.A)
                     .Assert(_aValidator);
             }
         }

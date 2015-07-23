@@ -63,11 +63,18 @@
     <Compile Include="Serialization\SerializerIgnoreAttribute.cs" />
     <Compile Include="ServiceHandler.cs" />
     <Compile Include="ServiceSyncExtensions.cs" />
-    <Compile Include="Validation\Class1.cs" />
+    <Compile Include="Validation\Rules\ValidationRuleExtensions.cs" />
     <Compile Include="Validation\ExpressionPathVisitor.cs" />
-    <Compile Include="Validation\IValidationBuilder.cs" />
-    <Compile Include="Validation\IValidationAssertionBuilder.cs" />
-    <Compile Include="Validation\IValidationRuleBuilder.cs" />
+    <Compile Include="Validation\Rules\IValidationRule.cs" />
+    <Compile Include="Validation\Rules\IValidationRuleBuilder.cs" />
+    <Compile Include="Validation\Rules\IValidationRuleElse.cs" />
+    <Compile Include="Validation\Rules\IValidationRuleFor.cs" />
+    <Compile Include="Validation\Rules\IValidationRuleOr.cs" />
+    <Compile Include="Validation\Rules\IValidationRulePredicate.cs" />
+    <Compile Include="Validation\Rules\IValidationRulePredicated.cs" />
+    <Compile Include="Validation\Rules\IValidationRulePredicatedElse.cs" />
+    <Compile Include="Validation\Rules\IValidationRules.cs" />
+    <Compile Include="Validation\Rules\IValidationRuleWith.cs" />
     <Compile Include="Validation\IValidator.cs" />
     <Compile Include="Validation\Predicates\EmailPredicate.cs" />
     <Compile Include="Validation\Predicates\FunctionPredicate.cs" />
@@ -99,14 +106,19 @@
     <Compile Include="Validation\Predicates\ValidationPredicateBase.cs" />
     <Compile Include="Validation\Predicates\ValidationPredicateCache.cs" />
     <Compile Include="Validation\Predicates\ValidationPredicateExtensions.cs" />
+    <Compile Include="Validation\Rules\ValidationRule.cs" />
+    <Compile Include="Validation\Rules\ValidationRuleBuilder.cs" />
+    <Compile Include="Validation\Rules\ValidationRuleConditionalValidator.cs" />
+    <Compile Include="Validation\Rules\ValidationRuleForEachValidator.cs" />
+    <Compile Include="Validation\Rules\ValidationRuleForValidator.cs" />
+    <Compile Include="Validation\Rules\ValidationRulePredicated.cs" />
+    <Compile Include="Validation\Rules\ValidationRules.cs" />
+    <Compile Include="Validation\Rules\ValidationRuleValidator.cs" />
     <Compile Include="Validation\Services\ValidatingServiceBase.cs" />
     <Compile Include="Validation\ValidateRequest.cs" />
-    <Compile Include="Validation\ValidationAssertionBuilder.cs" />
-    <Compile Include="Validation\ValidationActionList.cs" />
-    <Compile Include="Validation\ValidationBuildState.cs" />
     <Compile Include="Validation\ValidationConstants.cs" />
     <Compile Include="Validation\ValidationExtensions.cs" />
-    <Compile Include="Validation\ValidationRuleBuilder.cs" />
+    <Compile Include="Validation\Rules\ValidationRulePredicateGroupList.cs" />
     <Compile Include="Validation\ValidatorBase.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -125,6 +137,7 @@
       <Name>Antix</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

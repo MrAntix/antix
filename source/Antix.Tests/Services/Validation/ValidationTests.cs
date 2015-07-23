@@ -2,6 +2,7 @@
 using System.Linq;
 using Antix.Services.Validation;
 using Antix.Services.Validation.Predicates;
+using Antix.Services.Validation.Rules;
 using Xunit;
 
 namespace Antix.Tests.Services.Validation
@@ -30,14 +31,14 @@ namespace Antix.Tests.Services.Validation
         readonly IStandardValidationPredicates _is
             = new StandardValidationPredicates();
 
-        IRule<ModelA> GetRule(IRuleBuilder<ModelA> builder)
+        IValidationRule<ModelA> GetRule(IValidationRuleBuilder<ModelA> builder)
         {
-            return new Rule<ModelA>(builder);
+            return new ValidationRule<ModelA>(builder);
         }
 
-        IRuleBuilder<ModelA> GetBuilder()
+        IValidationRuleBuilder<ModelA> GetBuilder()
         {
-            return new RuleBuilder<ModelA>();
+            return new ValidationRuleBuilder<ModelA>();
         }
 
 #endregion
@@ -51,7 +52,7 @@ namespace Antix.Tests.Services.Validation
                 .ForEach(m => m.B.Cs)
                 .Assert(_is.NotNull);
 
-            var result = new RuleValidator<ModelA>(builder)
+            var result = new ValidationRuleValidator<ModelA>(builder)
                 .Validate(new ModelA
                 {
                     B = new ModelB
@@ -83,7 +84,7 @@ namespace Antix.Tests.Services.Validation
                 .For(m => m.Name)
                 .Assert(_is.NotNull);
 
-            var result = new RuleValidator<ModelA>(builder)
+            var result = new ValidationRuleValidator<ModelA>(builder)
                 .Validate(new ModelA
                 {
                     B = new ModelB
@@ -112,7 +113,7 @@ namespace Antix.Tests.Services.Validation
             GetRule(builder)
                 .Assert(_is.NotNull);
 
-            var result = new RuleValidator<ModelA>(builder)
+            var result = new ValidationRuleValidator<ModelA>(builder)
                 .Validate(null);
 
             foreach (var error in result)
@@ -131,7 +132,7 @@ namespace Antix.Tests.Services.Validation
                 .For(m => m.Name)
                 .Assert(_is.NotNull);
 
-            var result = new RuleValidator<ModelA>(builder)
+            var result = new ValidationRuleValidator<ModelA>(builder)
                 .Validate(new ModelA
                 {
                     Name = null
@@ -154,7 +155,7 @@ namespace Antix.Tests.Services.Validation
                 .Assert(_is.NotNull)
                 .Assert(_is.NotEmpty);
 
-            var result = new RuleValidator<ModelA>(builder)
+            var result = new ValidationRuleValidator<ModelA>(builder)
                 .Validate(new ModelA
                 {
                     Name = string.Empty
@@ -181,7 +182,7 @@ namespace Antix.Tests.Services.Validation
                 .For(m => m.Size)
                 .Assert(_is.Min(1));
 
-            var result = new RuleValidator<ModelA>(builder)
+            var result = new ValidationRuleValidator<ModelA>(builder)
                 .Validate(new ModelA
                 {
                     Name = string.Empty,
@@ -209,7 +210,7 @@ namespace Antix.Tests.Services.Validation
                 .For(m => m.Size)
                 .Assert(validate_with_method_size);
 
-            var result = new RuleValidator<ModelA>(builder)
+            var result = new ValidationRuleValidator<ModelA>(builder)
                 .Validate(new ModelA
                 {
                     Name = string.Empty,
@@ -226,7 +227,7 @@ namespace Antix.Tests.Services.Validation
         }
 
         void validate_with_method_name(
-            IRule<string> rule)
+            IValidationRule<string> rule)
         {
             rule
                 .Assert(_is.NotNull)
@@ -234,7 +235,7 @@ namespace Antix.Tests.Services.Validation
         }
 
         void validate_with_method_size(
-            IRule<int> rule)
+            IValidationRule<int> rule)
         {
             rule.Assert(_is.Min(1));
         }
@@ -248,7 +249,7 @@ namespace Antix.Tests.Services.Validation
                 .For(m => m.Name)
                 .Assert("a-function", validate_with_method_predicate_name);
 
-            var result = new RuleValidator<ModelA>(builder)
+            var result = new ValidationRuleValidator<ModelA>(builder)
                 .Validate(new ModelA
                 {
                     Name = string.Empty,
@@ -277,7 +278,7 @@ namespace Antix.Tests.Services.Validation
                 .Assert(_is.NotEmpty)
                 .Assert(_is.Email);
 
-            var result = new RuleValidator<ModelA>(builder)
+            var result = new ValidationRuleValidator<ModelA>(builder)
                 .Validate(new ModelA
                 {
                     Name = "NOT EMPTY"
@@ -285,7 +286,7 @@ namespace Antix.Tests.Services.Validation
 
             Assert.Equal(new[] {"Name:email"}, result);
 
-            result = new RuleValidator<ModelA>(builder)
+            result = new ValidationRuleValidator<ModelA>(builder)
                 .Validate(new ModelA
                 {
                     Name = string.Empty
@@ -304,7 +305,7 @@ namespace Antix.Tests.Services.Validation
                 .When(_is.NotEmpty)
                 .Assert(_is.Email);
 
-            var result = new RuleValidator<ModelA>(builder)
+            var result = new ValidationRuleValidator<ModelA>(builder)
                 .Validate(new ModelA
                 {
                     Name = "NOT EMPTY"
@@ -312,7 +313,7 @@ namespace Antix.Tests.Services.Validation
 
             Assert.Equal(new[] {"Name:email"}, result);
 
-            result = new RuleValidator<ModelA>(builder)
+            result = new ValidationRuleValidator<ModelA>(builder)
                 .Validate(new ModelA
                 {
                     Name = string.Empty
