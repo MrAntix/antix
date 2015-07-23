@@ -1,50 +1,73 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Antix.Services.Validation.Predicates
 {    
 	public interface INumberPredicates
     {
- 		IValidationPredicate<Decimal> Range(Decimal min, Decimal max);
+        IValidationPredicate<Decimal> Equal(Decimal value);
+        IValidationPredicate<Decimal> NotEqual(Decimal value);
+		IValidationPredicate<Decimal> Range(Decimal min, Decimal max);
         IValidationPredicate<Decimal> Max(Decimal max);
 		IValidationPredicate<Decimal> Min(Decimal min);
  
- 		IValidationPredicate<Double> Range(Double min, Double max);
+        IValidationPredicate<Double> Equal(Double value);
+        IValidationPredicate<Double> NotEqual(Double value);
+		IValidationPredicate<Double> Range(Double min, Double max);
         IValidationPredicate<Double> Max(Double max);
 		IValidationPredicate<Double> Min(Double min);
  
- 		IValidationPredicate<Single> Range(Single min, Single max);
+        IValidationPredicate<Single> Equal(Single value);
+        IValidationPredicate<Single> NotEqual(Single value);
+		IValidationPredicate<Single> Range(Single min, Single max);
         IValidationPredicate<Single> Max(Single max);
 		IValidationPredicate<Single> Min(Single min);
  
- 		IValidationPredicate<Int16> Range(Int16 min, Int16 max);
+        IValidationPredicate<Int16> Equal(Int16 value);
+        IValidationPredicate<Int16> NotEqual(Int16 value);
+		IValidationPredicate<Int16> Range(Int16 min, Int16 max);
         IValidationPredicate<Int16> Max(Int16 max);
 		IValidationPredicate<Int16> Min(Int16 min);
  
- 		IValidationPredicate<Int32> Range(Int32 min, Int32 max);
+        IValidationPredicate<Int32> Equal(Int32 value);
+        IValidationPredicate<Int32> NotEqual(Int32 value);
+		IValidationPredicate<Int32> Range(Int32 min, Int32 max);
         IValidationPredicate<Int32> Max(Int32 max);
 		IValidationPredicate<Int32> Min(Int32 min);
  
- 		IValidationPredicate<Int64> Range(Int64 min, Int64 max);
+        IValidationPredicate<Int64> Equal(Int64 value);
+        IValidationPredicate<Int64> NotEqual(Int64 value);
+		IValidationPredicate<Int64> Range(Int64 min, Int64 max);
         IValidationPredicate<Int64> Max(Int64 max);
 		IValidationPredicate<Int64> Min(Int64 min);
  
- 		IValidationPredicate<UInt16> Range(UInt16 min, UInt16 max);
+        IValidationPredicate<UInt16> Equal(UInt16 value);
+        IValidationPredicate<UInt16> NotEqual(UInt16 value);
+		IValidationPredicate<UInt16> Range(UInt16 min, UInt16 max);
         IValidationPredicate<UInt16> Max(UInt16 max);
 		IValidationPredicate<UInt16> Min(UInt16 min);
  
- 		IValidationPredicate<UInt32> Range(UInt32 min, UInt32 max);
+        IValidationPredicate<UInt32> Equal(UInt32 value);
+        IValidationPredicate<UInt32> NotEqual(UInt32 value);
+		IValidationPredicate<UInt32> Range(UInt32 min, UInt32 max);
         IValidationPredicate<UInt32> Max(UInt32 max);
 		IValidationPredicate<UInt32> Min(UInt32 min);
  
- 		IValidationPredicate<UInt64> Range(UInt64 min, UInt64 max);
+        IValidationPredicate<UInt64> Equal(UInt64 value);
+        IValidationPredicate<UInt64> NotEqual(UInt64 value);
+		IValidationPredicate<UInt64> Range(UInt64 min, UInt64 max);
         IValidationPredicate<UInt64> Max(UInt64 max);
 		IValidationPredicate<UInt64> Min(UInt64 min);
  
- 		IValidationPredicate<DateTime> Range(DateTime min, DateTime max);
+        IValidationPredicate<DateTime> Equal(DateTime value);
+        IValidationPredicate<DateTime> NotEqual(DateTime value);
+		IValidationPredicate<DateTime> Range(DateTime min, DateTime max);
         IValidationPredicate<DateTime> Max(DateTime max);
 		IValidationPredicate<DateTime> Min(DateTime min);
  
- 		IValidationPredicate<DateTimeOffset> Range(DateTimeOffset min, DateTimeOffset max);
+        IValidationPredicate<DateTimeOffset> Equal(DateTimeOffset value);
+        IValidationPredicate<DateTimeOffset> NotEqual(DateTimeOffset value);
+		IValidationPredicate<DateTimeOffset> Range(DateTimeOffset min, DateTimeOffset max);
         IValidationPredicate<DateTimeOffset> Max(DateTimeOffset max);
 		IValidationPredicate<DateTimeOffset> Min(DateTimeOffset min);
  
@@ -52,7 +75,13 @@ namespace Antix.Services.Validation.Predicates
 
 	public partial class StandardValidationPredicates
     {
- 		readonly ValidationPredicateCache<DecimalRangePredicate, Tuple<Decimal, Decimal>> _cacheDecimalRange
+ 		readonly ValidationPredicateCache<DecimalEqualPredicate, Decimal> _cacheDecimalEqual
+            = ValidationPredicateCache.Create(
+                (Decimal value) => new DecimalEqualPredicate(value));
+   		readonly ValidationPredicateCache<DecimalNotEqualPredicate, Decimal> _cacheDecimalNotEqual
+            = ValidationPredicateCache.Create(
+                (Decimal value) => new DecimalNotEqualPredicate(value));
+   		readonly ValidationPredicateCache<DecimalRangePredicate, Tuple<Decimal, Decimal>> _cacheDecimalRange
             = ValidationPredicateCache.Create(
                 (Tuple<Decimal, Decimal> k) => new DecimalRangePredicate(k.Item1, k.Item2));
         readonly ValidationPredicateCache<DecimalMinPredicate, Tuple<Decimal>> _cacheDecimalMin
@@ -61,6 +90,16 @@ namespace Antix.Services.Validation.Predicates
         readonly ValidationPredicateCache<DecimalMaxPredicate, Tuple<Decimal>> _cacheDecimalMax
             = ValidationPredicateCache.Create(
                 (Tuple<Decimal> k) => new DecimalMaxPredicate(k.Item1));
+
+		public IValidationPredicate<Decimal> Equal(Decimal value)
+        {
+            return _cacheDecimalEqual.GetOrCreate(value);
+        }
+
+		public IValidationPredicate<Decimal> NotEqual(Decimal value)
+        {
+            return _cacheDecimalNotEqual.GetOrCreate(value);
+        }
 
 		public IValidationPredicate<Decimal> Range(Decimal min, Decimal max)
         {
@@ -77,7 +116,13 @@ namespace Antix.Services.Validation.Predicates
             return _cacheDecimalMax.GetOrCreate(Tuple.Create(max));
         }
  
- 		readonly ValidationPredicateCache<DoubleRangePredicate, Tuple<Double, Double>> _cacheDoubleRange
+ 		readonly ValidationPredicateCache<DoubleEqualPredicate, Double> _cacheDoubleEqual
+            = ValidationPredicateCache.Create(
+                (Double value) => new DoubleEqualPredicate(value));
+   		readonly ValidationPredicateCache<DoubleNotEqualPredicate, Double> _cacheDoubleNotEqual
+            = ValidationPredicateCache.Create(
+                (Double value) => new DoubleNotEqualPredicate(value));
+   		readonly ValidationPredicateCache<DoubleRangePredicate, Tuple<Double, Double>> _cacheDoubleRange
             = ValidationPredicateCache.Create(
                 (Tuple<Double, Double> k) => new DoubleRangePredicate(k.Item1, k.Item2));
         readonly ValidationPredicateCache<DoubleMinPredicate, Tuple<Double>> _cacheDoubleMin
@@ -86,6 +131,16 @@ namespace Antix.Services.Validation.Predicates
         readonly ValidationPredicateCache<DoubleMaxPredicate, Tuple<Double>> _cacheDoubleMax
             = ValidationPredicateCache.Create(
                 (Tuple<Double> k) => new DoubleMaxPredicate(k.Item1));
+
+		public IValidationPredicate<Double> Equal(Double value)
+        {
+            return _cacheDoubleEqual.GetOrCreate(value);
+        }
+
+		public IValidationPredicate<Double> NotEqual(Double value)
+        {
+            return _cacheDoubleNotEqual.GetOrCreate(value);
+        }
 
 		public IValidationPredicate<Double> Range(Double min, Double max)
         {
@@ -102,7 +157,13 @@ namespace Antix.Services.Validation.Predicates
             return _cacheDoubleMax.GetOrCreate(Tuple.Create(max));
         }
  
- 		readonly ValidationPredicateCache<SingleRangePredicate, Tuple<Single, Single>> _cacheSingleRange
+ 		readonly ValidationPredicateCache<SingleEqualPredicate, Single> _cacheSingleEqual
+            = ValidationPredicateCache.Create(
+                (Single value) => new SingleEqualPredicate(value));
+   		readonly ValidationPredicateCache<SingleNotEqualPredicate, Single> _cacheSingleNotEqual
+            = ValidationPredicateCache.Create(
+                (Single value) => new SingleNotEqualPredicate(value));
+   		readonly ValidationPredicateCache<SingleRangePredicate, Tuple<Single, Single>> _cacheSingleRange
             = ValidationPredicateCache.Create(
                 (Tuple<Single, Single> k) => new SingleRangePredicate(k.Item1, k.Item2));
         readonly ValidationPredicateCache<SingleMinPredicate, Tuple<Single>> _cacheSingleMin
@@ -111,6 +172,16 @@ namespace Antix.Services.Validation.Predicates
         readonly ValidationPredicateCache<SingleMaxPredicate, Tuple<Single>> _cacheSingleMax
             = ValidationPredicateCache.Create(
                 (Tuple<Single> k) => new SingleMaxPredicate(k.Item1));
+
+		public IValidationPredicate<Single> Equal(Single value)
+        {
+            return _cacheSingleEqual.GetOrCreate(value);
+        }
+
+		public IValidationPredicate<Single> NotEqual(Single value)
+        {
+            return _cacheSingleNotEqual.GetOrCreate(value);
+        }
 
 		public IValidationPredicate<Single> Range(Single min, Single max)
         {
@@ -127,7 +198,13 @@ namespace Antix.Services.Validation.Predicates
             return _cacheSingleMax.GetOrCreate(Tuple.Create(max));
         }
  
- 		readonly ValidationPredicateCache<Int16RangePredicate, Tuple<Int16, Int16>> _cacheInt16Range
+ 		readonly ValidationPredicateCache<Int16EqualPredicate, Int16> _cacheInt16Equal
+            = ValidationPredicateCache.Create(
+                (Int16 value) => new Int16EqualPredicate(value));
+   		readonly ValidationPredicateCache<Int16NotEqualPredicate, Int16> _cacheInt16NotEqual
+            = ValidationPredicateCache.Create(
+                (Int16 value) => new Int16NotEqualPredicate(value));
+   		readonly ValidationPredicateCache<Int16RangePredicate, Tuple<Int16, Int16>> _cacheInt16Range
             = ValidationPredicateCache.Create(
                 (Tuple<Int16, Int16> k) => new Int16RangePredicate(k.Item1, k.Item2));
         readonly ValidationPredicateCache<Int16MinPredicate, Tuple<Int16>> _cacheInt16Min
@@ -136,6 +213,16 @@ namespace Antix.Services.Validation.Predicates
         readonly ValidationPredicateCache<Int16MaxPredicate, Tuple<Int16>> _cacheInt16Max
             = ValidationPredicateCache.Create(
                 (Tuple<Int16> k) => new Int16MaxPredicate(k.Item1));
+
+		public IValidationPredicate<Int16> Equal(Int16 value)
+        {
+            return _cacheInt16Equal.GetOrCreate(value);
+        }
+
+		public IValidationPredicate<Int16> NotEqual(Int16 value)
+        {
+            return _cacheInt16NotEqual.GetOrCreate(value);
+        }
 
 		public IValidationPredicate<Int16> Range(Int16 min, Int16 max)
         {
@@ -152,7 +239,13 @@ namespace Antix.Services.Validation.Predicates
             return _cacheInt16Max.GetOrCreate(Tuple.Create(max));
         }
  
- 		readonly ValidationPredicateCache<Int32RangePredicate, Tuple<Int32, Int32>> _cacheInt32Range
+ 		readonly ValidationPredicateCache<Int32EqualPredicate, Int32> _cacheInt32Equal
+            = ValidationPredicateCache.Create(
+                (Int32 value) => new Int32EqualPredicate(value));
+   		readonly ValidationPredicateCache<Int32NotEqualPredicate, Int32> _cacheInt32NotEqual
+            = ValidationPredicateCache.Create(
+                (Int32 value) => new Int32NotEqualPredicate(value));
+   		readonly ValidationPredicateCache<Int32RangePredicate, Tuple<Int32, Int32>> _cacheInt32Range
             = ValidationPredicateCache.Create(
                 (Tuple<Int32, Int32> k) => new Int32RangePredicate(k.Item1, k.Item2));
         readonly ValidationPredicateCache<Int32MinPredicate, Tuple<Int32>> _cacheInt32Min
@@ -161,6 +254,16 @@ namespace Antix.Services.Validation.Predicates
         readonly ValidationPredicateCache<Int32MaxPredicate, Tuple<Int32>> _cacheInt32Max
             = ValidationPredicateCache.Create(
                 (Tuple<Int32> k) => new Int32MaxPredicate(k.Item1));
+
+		public IValidationPredicate<Int32> Equal(Int32 value)
+        {
+            return _cacheInt32Equal.GetOrCreate(value);
+        }
+
+		public IValidationPredicate<Int32> NotEqual(Int32 value)
+        {
+            return _cacheInt32NotEqual.GetOrCreate(value);
+        }
 
 		public IValidationPredicate<Int32> Range(Int32 min, Int32 max)
         {
@@ -177,7 +280,13 @@ namespace Antix.Services.Validation.Predicates
             return _cacheInt32Max.GetOrCreate(Tuple.Create(max));
         }
  
- 		readonly ValidationPredicateCache<Int64RangePredicate, Tuple<Int64, Int64>> _cacheInt64Range
+ 		readonly ValidationPredicateCache<Int64EqualPredicate, Int64> _cacheInt64Equal
+            = ValidationPredicateCache.Create(
+                (Int64 value) => new Int64EqualPredicate(value));
+   		readonly ValidationPredicateCache<Int64NotEqualPredicate, Int64> _cacheInt64NotEqual
+            = ValidationPredicateCache.Create(
+                (Int64 value) => new Int64NotEqualPredicate(value));
+   		readonly ValidationPredicateCache<Int64RangePredicate, Tuple<Int64, Int64>> _cacheInt64Range
             = ValidationPredicateCache.Create(
                 (Tuple<Int64, Int64> k) => new Int64RangePredicate(k.Item1, k.Item2));
         readonly ValidationPredicateCache<Int64MinPredicate, Tuple<Int64>> _cacheInt64Min
@@ -186,6 +295,16 @@ namespace Antix.Services.Validation.Predicates
         readonly ValidationPredicateCache<Int64MaxPredicate, Tuple<Int64>> _cacheInt64Max
             = ValidationPredicateCache.Create(
                 (Tuple<Int64> k) => new Int64MaxPredicate(k.Item1));
+
+		public IValidationPredicate<Int64> Equal(Int64 value)
+        {
+            return _cacheInt64Equal.GetOrCreate(value);
+        }
+
+		public IValidationPredicate<Int64> NotEqual(Int64 value)
+        {
+            return _cacheInt64NotEqual.GetOrCreate(value);
+        }
 
 		public IValidationPredicate<Int64> Range(Int64 min, Int64 max)
         {
@@ -202,7 +321,13 @@ namespace Antix.Services.Validation.Predicates
             return _cacheInt64Max.GetOrCreate(Tuple.Create(max));
         }
  
- 		readonly ValidationPredicateCache<UInt16RangePredicate, Tuple<UInt16, UInt16>> _cacheUInt16Range
+ 		readonly ValidationPredicateCache<UInt16EqualPredicate, UInt16> _cacheUInt16Equal
+            = ValidationPredicateCache.Create(
+                (UInt16 value) => new UInt16EqualPredicate(value));
+   		readonly ValidationPredicateCache<UInt16NotEqualPredicate, UInt16> _cacheUInt16NotEqual
+            = ValidationPredicateCache.Create(
+                (UInt16 value) => new UInt16NotEqualPredicate(value));
+   		readonly ValidationPredicateCache<UInt16RangePredicate, Tuple<UInt16, UInt16>> _cacheUInt16Range
             = ValidationPredicateCache.Create(
                 (Tuple<UInt16, UInt16> k) => new UInt16RangePredicate(k.Item1, k.Item2));
         readonly ValidationPredicateCache<UInt16MinPredicate, Tuple<UInt16>> _cacheUInt16Min
@@ -211,6 +336,16 @@ namespace Antix.Services.Validation.Predicates
         readonly ValidationPredicateCache<UInt16MaxPredicate, Tuple<UInt16>> _cacheUInt16Max
             = ValidationPredicateCache.Create(
                 (Tuple<UInt16> k) => new UInt16MaxPredicate(k.Item1));
+
+		public IValidationPredicate<UInt16> Equal(UInt16 value)
+        {
+            return _cacheUInt16Equal.GetOrCreate(value);
+        }
+
+		public IValidationPredicate<UInt16> NotEqual(UInt16 value)
+        {
+            return _cacheUInt16NotEqual.GetOrCreate(value);
+        }
 
 		public IValidationPredicate<UInt16> Range(UInt16 min, UInt16 max)
         {
@@ -227,7 +362,13 @@ namespace Antix.Services.Validation.Predicates
             return _cacheUInt16Max.GetOrCreate(Tuple.Create(max));
         }
  
- 		readonly ValidationPredicateCache<UInt32RangePredicate, Tuple<UInt32, UInt32>> _cacheUInt32Range
+ 		readonly ValidationPredicateCache<UInt32EqualPredicate, UInt32> _cacheUInt32Equal
+            = ValidationPredicateCache.Create(
+                (UInt32 value) => new UInt32EqualPredicate(value));
+   		readonly ValidationPredicateCache<UInt32NotEqualPredicate, UInt32> _cacheUInt32NotEqual
+            = ValidationPredicateCache.Create(
+                (UInt32 value) => new UInt32NotEqualPredicate(value));
+   		readonly ValidationPredicateCache<UInt32RangePredicate, Tuple<UInt32, UInt32>> _cacheUInt32Range
             = ValidationPredicateCache.Create(
                 (Tuple<UInt32, UInt32> k) => new UInt32RangePredicate(k.Item1, k.Item2));
         readonly ValidationPredicateCache<UInt32MinPredicate, Tuple<UInt32>> _cacheUInt32Min
@@ -236,6 +377,16 @@ namespace Antix.Services.Validation.Predicates
         readonly ValidationPredicateCache<UInt32MaxPredicate, Tuple<UInt32>> _cacheUInt32Max
             = ValidationPredicateCache.Create(
                 (Tuple<UInt32> k) => new UInt32MaxPredicate(k.Item1));
+
+		public IValidationPredicate<UInt32> Equal(UInt32 value)
+        {
+            return _cacheUInt32Equal.GetOrCreate(value);
+        }
+
+		public IValidationPredicate<UInt32> NotEqual(UInt32 value)
+        {
+            return _cacheUInt32NotEqual.GetOrCreate(value);
+        }
 
 		public IValidationPredicate<UInt32> Range(UInt32 min, UInt32 max)
         {
@@ -252,7 +403,13 @@ namespace Antix.Services.Validation.Predicates
             return _cacheUInt32Max.GetOrCreate(Tuple.Create(max));
         }
  
- 		readonly ValidationPredicateCache<UInt64RangePredicate, Tuple<UInt64, UInt64>> _cacheUInt64Range
+ 		readonly ValidationPredicateCache<UInt64EqualPredicate, UInt64> _cacheUInt64Equal
+            = ValidationPredicateCache.Create(
+                (UInt64 value) => new UInt64EqualPredicate(value));
+   		readonly ValidationPredicateCache<UInt64NotEqualPredicate, UInt64> _cacheUInt64NotEqual
+            = ValidationPredicateCache.Create(
+                (UInt64 value) => new UInt64NotEqualPredicate(value));
+   		readonly ValidationPredicateCache<UInt64RangePredicate, Tuple<UInt64, UInt64>> _cacheUInt64Range
             = ValidationPredicateCache.Create(
                 (Tuple<UInt64, UInt64> k) => new UInt64RangePredicate(k.Item1, k.Item2));
         readonly ValidationPredicateCache<UInt64MinPredicate, Tuple<UInt64>> _cacheUInt64Min
@@ -261,6 +418,16 @@ namespace Antix.Services.Validation.Predicates
         readonly ValidationPredicateCache<UInt64MaxPredicate, Tuple<UInt64>> _cacheUInt64Max
             = ValidationPredicateCache.Create(
                 (Tuple<UInt64> k) => new UInt64MaxPredicate(k.Item1));
+
+		public IValidationPredicate<UInt64> Equal(UInt64 value)
+        {
+            return _cacheUInt64Equal.GetOrCreate(value);
+        }
+
+		public IValidationPredicate<UInt64> NotEqual(UInt64 value)
+        {
+            return _cacheUInt64NotEqual.GetOrCreate(value);
+        }
 
 		public IValidationPredicate<UInt64> Range(UInt64 min, UInt64 max)
         {
@@ -277,7 +444,13 @@ namespace Antix.Services.Validation.Predicates
             return _cacheUInt64Max.GetOrCreate(Tuple.Create(max));
         }
  
- 		readonly ValidationPredicateCache<DateTimeRangePredicate, Tuple<DateTime, DateTime>> _cacheDateTimeRange
+ 		readonly ValidationPredicateCache<DateTimeEqualPredicate, DateTime> _cacheDateTimeEqual
+            = ValidationPredicateCache.Create(
+                (DateTime value) => new DateTimeEqualPredicate(value));
+   		readonly ValidationPredicateCache<DateTimeNotEqualPredicate, DateTime> _cacheDateTimeNotEqual
+            = ValidationPredicateCache.Create(
+                (DateTime value) => new DateTimeNotEqualPredicate(value));
+   		readonly ValidationPredicateCache<DateTimeRangePredicate, Tuple<DateTime, DateTime>> _cacheDateTimeRange
             = ValidationPredicateCache.Create(
                 (Tuple<DateTime, DateTime> k) => new DateTimeRangePredicate(k.Item1, k.Item2));
         readonly ValidationPredicateCache<DateTimeMinPredicate, Tuple<DateTime>> _cacheDateTimeMin
@@ -286,6 +459,16 @@ namespace Antix.Services.Validation.Predicates
         readonly ValidationPredicateCache<DateTimeMaxPredicate, Tuple<DateTime>> _cacheDateTimeMax
             = ValidationPredicateCache.Create(
                 (Tuple<DateTime> k) => new DateTimeMaxPredicate(k.Item1));
+
+		public IValidationPredicate<DateTime> Equal(DateTime value)
+        {
+            return _cacheDateTimeEqual.GetOrCreate(value);
+        }
+
+		public IValidationPredicate<DateTime> NotEqual(DateTime value)
+        {
+            return _cacheDateTimeNotEqual.GetOrCreate(value);
+        }
 
 		public IValidationPredicate<DateTime> Range(DateTime min, DateTime max)
         {
@@ -302,7 +485,13 @@ namespace Antix.Services.Validation.Predicates
             return _cacheDateTimeMax.GetOrCreate(Tuple.Create(max));
         }
  
- 		readonly ValidationPredicateCache<DateTimeOffsetRangePredicate, Tuple<DateTimeOffset, DateTimeOffset>> _cacheDateTimeOffsetRange
+ 		readonly ValidationPredicateCache<DateTimeOffsetEqualPredicate, DateTimeOffset> _cacheDateTimeOffsetEqual
+            = ValidationPredicateCache.Create(
+                (DateTimeOffset value) => new DateTimeOffsetEqualPredicate(value));
+   		readonly ValidationPredicateCache<DateTimeOffsetNotEqualPredicate, DateTimeOffset> _cacheDateTimeOffsetNotEqual
+            = ValidationPredicateCache.Create(
+                (DateTimeOffset value) => new DateTimeOffsetNotEqualPredicate(value));
+   		readonly ValidationPredicateCache<DateTimeOffsetRangePredicate, Tuple<DateTimeOffset, DateTimeOffset>> _cacheDateTimeOffsetRange
             = ValidationPredicateCache.Create(
                 (Tuple<DateTimeOffset, DateTimeOffset> k) => new DateTimeOffsetRangePredicate(k.Item1, k.Item2));
         readonly ValidationPredicateCache<DateTimeOffsetMinPredicate, Tuple<DateTimeOffset>> _cacheDateTimeOffsetMin
@@ -311,6 +500,16 @@ namespace Antix.Services.Validation.Predicates
         readonly ValidationPredicateCache<DateTimeOffsetMaxPredicate, Tuple<DateTimeOffset>> _cacheDateTimeOffsetMax
             = ValidationPredicateCache.Create(
                 (Tuple<DateTimeOffset> k) => new DateTimeOffsetMaxPredicate(k.Item1));
+
+		public IValidationPredicate<DateTimeOffset> Equal(DateTimeOffset value)
+        {
+            return _cacheDateTimeOffsetEqual.GetOrCreate(value);
+        }
+
+		public IValidationPredicate<DateTimeOffset> NotEqual(DateTimeOffset value)
+        {
+            return _cacheDateTimeOffsetNotEqual.GetOrCreate(value);
+        }
 
 		public IValidationPredicate<DateTimeOffset> Range(DateTimeOffset min, DateTimeOffset max)
         {
@@ -330,6 +529,50 @@ namespace Antix.Services.Validation.Predicates
  	}
 
     
+    public class DecimalEqualPredicate :
+        ValidationPredicateBase<Decimal>
+    {
+        readonly Decimal _value;
+
+        public DecimalEqualPredicate(Decimal value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(Decimal model)
+        {
+            return model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
+        }
+    }
+
+    public class DecimalNotEqualPredicate :
+        ValidationPredicateBase<Decimal>
+    {
+        readonly Decimal _value;
+
+        public DecimalNotEqualPredicate(Decimal value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(Decimal model)
+        {
+            return !model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
+        }
+    }
+
     public class DecimalMaxPredicate :
         ValidationPredicateBase<Decimal>
     {
@@ -341,7 +584,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(Decimal model)
+        public override async Task<bool> IsAsync(Decimal model)
         {
             return model <= _max;
         }
@@ -363,7 +606,7 @@ namespace Antix.Services.Validation.Predicates
             _min = min;
         }
 
-        public override bool Is(Decimal model)
+        public override async Task<bool> IsAsync(Decimal model)
         {
             return model >= _min;
         }
@@ -387,7 +630,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(Decimal model)
+        public override async Task<bool> IsAsync(Decimal model)
         {
             return model >= _min
 					&& model <= _max;
@@ -396,6 +639,50 @@ namespace Antix.Services.Validation.Predicates
         public override string ToString()
         {
             return NameFormat("min", _min, "max", _max);
+        }
+    }
+
+    public class DoubleEqualPredicate :
+        ValidationPredicateBase<Double>
+    {
+        readonly Double _value;
+
+        public DoubleEqualPredicate(Double value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(Double model)
+        {
+            return model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
+        }
+    }
+
+    public class DoubleNotEqualPredicate :
+        ValidationPredicateBase<Double>
+    {
+        readonly Double _value;
+
+        public DoubleNotEqualPredicate(Double value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(Double model)
+        {
+            return !model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
         }
     }
 
@@ -410,7 +697,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(Double model)
+        public override async Task<bool> IsAsync(Double model)
         {
             return model <= _max;
         }
@@ -432,7 +719,7 @@ namespace Antix.Services.Validation.Predicates
             _min = min;
         }
 
-        public override bool Is(Double model)
+        public override async Task<bool> IsAsync(Double model)
         {
             return model >= _min;
         }
@@ -456,7 +743,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(Double model)
+        public override async Task<bool> IsAsync(Double model)
         {
             return model >= _min
 					&& model <= _max;
@@ -465,6 +752,50 @@ namespace Antix.Services.Validation.Predicates
         public override string ToString()
         {
             return NameFormat("min", _min, "max", _max);
+        }
+    }
+
+    public class SingleEqualPredicate :
+        ValidationPredicateBase<Single>
+    {
+        readonly Single _value;
+
+        public SingleEqualPredicate(Single value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(Single model)
+        {
+            return model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
+        }
+    }
+
+    public class SingleNotEqualPredicate :
+        ValidationPredicateBase<Single>
+    {
+        readonly Single _value;
+
+        public SingleNotEqualPredicate(Single value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(Single model)
+        {
+            return !model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
         }
     }
 
@@ -479,7 +810,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(Single model)
+        public override async Task<bool> IsAsync(Single model)
         {
             return model <= _max;
         }
@@ -501,7 +832,7 @@ namespace Antix.Services.Validation.Predicates
             _min = min;
         }
 
-        public override bool Is(Single model)
+        public override async Task<bool> IsAsync(Single model)
         {
             return model >= _min;
         }
@@ -525,7 +856,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(Single model)
+        public override async Task<bool> IsAsync(Single model)
         {
             return model >= _min
 					&& model <= _max;
@@ -534,6 +865,50 @@ namespace Antix.Services.Validation.Predicates
         public override string ToString()
         {
             return NameFormat("min", _min, "max", _max);
+        }
+    }
+
+    public class Int16EqualPredicate :
+        ValidationPredicateBase<Int16>
+    {
+        readonly Int16 _value;
+
+        public Int16EqualPredicate(Int16 value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(Int16 model)
+        {
+            return model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
+        }
+    }
+
+    public class Int16NotEqualPredicate :
+        ValidationPredicateBase<Int16>
+    {
+        readonly Int16 _value;
+
+        public Int16NotEqualPredicate(Int16 value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(Int16 model)
+        {
+            return !model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
         }
     }
 
@@ -548,7 +923,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(Int16 model)
+        public override async Task<bool> IsAsync(Int16 model)
         {
             return model <= _max;
         }
@@ -570,7 +945,7 @@ namespace Antix.Services.Validation.Predicates
             _min = min;
         }
 
-        public override bool Is(Int16 model)
+        public override async Task<bool> IsAsync(Int16 model)
         {
             return model >= _min;
         }
@@ -594,7 +969,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(Int16 model)
+        public override async Task<bool> IsAsync(Int16 model)
         {
             return model >= _min
 					&& model <= _max;
@@ -603,6 +978,50 @@ namespace Antix.Services.Validation.Predicates
         public override string ToString()
         {
             return NameFormat("min", _min, "max", _max);
+        }
+    }
+
+    public class Int32EqualPredicate :
+        ValidationPredicateBase<Int32>
+    {
+        readonly Int32 _value;
+
+        public Int32EqualPredicate(Int32 value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(Int32 model)
+        {
+            return model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
+        }
+    }
+
+    public class Int32NotEqualPredicate :
+        ValidationPredicateBase<Int32>
+    {
+        readonly Int32 _value;
+
+        public Int32NotEqualPredicate(Int32 value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(Int32 model)
+        {
+            return !model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
         }
     }
 
@@ -617,7 +1036,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(Int32 model)
+        public override async Task<bool> IsAsync(Int32 model)
         {
             return model <= _max;
         }
@@ -639,7 +1058,7 @@ namespace Antix.Services.Validation.Predicates
             _min = min;
         }
 
-        public override bool Is(Int32 model)
+        public override async Task<bool> IsAsync(Int32 model)
         {
             return model >= _min;
         }
@@ -663,7 +1082,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(Int32 model)
+        public override async Task<bool> IsAsync(Int32 model)
         {
             return model >= _min
 					&& model <= _max;
@@ -672,6 +1091,50 @@ namespace Antix.Services.Validation.Predicates
         public override string ToString()
         {
             return NameFormat("min", _min, "max", _max);
+        }
+    }
+
+    public class Int64EqualPredicate :
+        ValidationPredicateBase<Int64>
+    {
+        readonly Int64 _value;
+
+        public Int64EqualPredicate(Int64 value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(Int64 model)
+        {
+            return model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
+        }
+    }
+
+    public class Int64NotEqualPredicate :
+        ValidationPredicateBase<Int64>
+    {
+        readonly Int64 _value;
+
+        public Int64NotEqualPredicate(Int64 value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(Int64 model)
+        {
+            return !model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
         }
     }
 
@@ -686,7 +1149,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(Int64 model)
+        public override async Task<bool> IsAsync(Int64 model)
         {
             return model <= _max;
         }
@@ -708,7 +1171,7 @@ namespace Antix.Services.Validation.Predicates
             _min = min;
         }
 
-        public override bool Is(Int64 model)
+        public override async Task<bool> IsAsync(Int64 model)
         {
             return model >= _min;
         }
@@ -732,7 +1195,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(Int64 model)
+        public override async Task<bool> IsAsync(Int64 model)
         {
             return model >= _min
 					&& model <= _max;
@@ -741,6 +1204,50 @@ namespace Antix.Services.Validation.Predicates
         public override string ToString()
         {
             return NameFormat("min", _min, "max", _max);
+        }
+    }
+
+    public class UInt16EqualPredicate :
+        ValidationPredicateBase<UInt16>
+    {
+        readonly UInt16 _value;
+
+        public UInt16EqualPredicate(UInt16 value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(UInt16 model)
+        {
+            return model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
+        }
+    }
+
+    public class UInt16NotEqualPredicate :
+        ValidationPredicateBase<UInt16>
+    {
+        readonly UInt16 _value;
+
+        public UInt16NotEqualPredicate(UInt16 value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(UInt16 model)
+        {
+            return !model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
         }
     }
 
@@ -755,7 +1262,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(UInt16 model)
+        public override async Task<bool> IsAsync(UInt16 model)
         {
             return model <= _max;
         }
@@ -777,7 +1284,7 @@ namespace Antix.Services.Validation.Predicates
             _min = min;
         }
 
-        public override bool Is(UInt16 model)
+        public override async Task<bool> IsAsync(UInt16 model)
         {
             return model >= _min;
         }
@@ -801,7 +1308,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(UInt16 model)
+        public override async Task<bool> IsAsync(UInt16 model)
         {
             return model >= _min
 					&& model <= _max;
@@ -810,6 +1317,50 @@ namespace Antix.Services.Validation.Predicates
         public override string ToString()
         {
             return NameFormat("min", _min, "max", _max);
+        }
+    }
+
+    public class UInt32EqualPredicate :
+        ValidationPredicateBase<UInt32>
+    {
+        readonly UInt32 _value;
+
+        public UInt32EqualPredicate(UInt32 value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(UInt32 model)
+        {
+            return model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
+        }
+    }
+
+    public class UInt32NotEqualPredicate :
+        ValidationPredicateBase<UInt32>
+    {
+        readonly UInt32 _value;
+
+        public UInt32NotEqualPredicate(UInt32 value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(UInt32 model)
+        {
+            return !model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
         }
     }
 
@@ -824,7 +1375,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(UInt32 model)
+        public override async Task<bool> IsAsync(UInt32 model)
         {
             return model <= _max;
         }
@@ -846,7 +1397,7 @@ namespace Antix.Services.Validation.Predicates
             _min = min;
         }
 
-        public override bool Is(UInt32 model)
+        public override async Task<bool> IsAsync(UInt32 model)
         {
             return model >= _min;
         }
@@ -870,7 +1421,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(UInt32 model)
+        public override async Task<bool> IsAsync(UInt32 model)
         {
             return model >= _min
 					&& model <= _max;
@@ -879,6 +1430,50 @@ namespace Antix.Services.Validation.Predicates
         public override string ToString()
         {
             return NameFormat("min", _min, "max", _max);
+        }
+    }
+
+    public class UInt64EqualPredicate :
+        ValidationPredicateBase<UInt64>
+    {
+        readonly UInt64 _value;
+
+        public UInt64EqualPredicate(UInt64 value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(UInt64 model)
+        {
+            return model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
+        }
+    }
+
+    public class UInt64NotEqualPredicate :
+        ValidationPredicateBase<UInt64>
+    {
+        readonly UInt64 _value;
+
+        public UInt64NotEqualPredicate(UInt64 value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(UInt64 model)
+        {
+            return !model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
         }
     }
 
@@ -893,7 +1488,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(UInt64 model)
+        public override async Task<bool> IsAsync(UInt64 model)
         {
             return model <= _max;
         }
@@ -915,7 +1510,7 @@ namespace Antix.Services.Validation.Predicates
             _min = min;
         }
 
-        public override bool Is(UInt64 model)
+        public override async Task<bool> IsAsync(UInt64 model)
         {
             return model >= _min;
         }
@@ -939,7 +1534,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(UInt64 model)
+        public override async Task<bool> IsAsync(UInt64 model)
         {
             return model >= _min
 					&& model <= _max;
@@ -948,6 +1543,50 @@ namespace Antix.Services.Validation.Predicates
         public override string ToString()
         {
             return NameFormat("min", _min, "max", _max);
+        }
+    }
+
+    public class DateTimeEqualPredicate :
+        ValidationPredicateBase<DateTime>
+    {
+        readonly DateTime _value;
+
+        public DateTimeEqualPredicate(DateTime value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(DateTime model)
+        {
+            return model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
+        }
+    }
+
+    public class DateTimeNotEqualPredicate :
+        ValidationPredicateBase<DateTime>
+    {
+        readonly DateTime _value;
+
+        public DateTimeNotEqualPredicate(DateTime value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(DateTime model)
+        {
+            return !model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
         }
     }
 
@@ -962,7 +1601,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(DateTime model)
+        public override async Task<bool> IsAsync(DateTime model)
         {
             return model <= _max;
         }
@@ -984,7 +1623,7 @@ namespace Antix.Services.Validation.Predicates
             _min = min;
         }
 
-        public override bool Is(DateTime model)
+        public override async Task<bool> IsAsync(DateTime model)
         {
             return model >= _min;
         }
@@ -1008,7 +1647,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(DateTime model)
+        public override async Task<bool> IsAsync(DateTime model)
         {
             return model >= _min
 					&& model <= _max;
@@ -1017,6 +1656,50 @@ namespace Antix.Services.Validation.Predicates
         public override string ToString()
         {
             return NameFormat("min", _min, "max", _max);
+        }
+    }
+
+    public class DateTimeOffsetEqualPredicate :
+        ValidationPredicateBase<DateTimeOffset>
+    {
+        readonly DateTimeOffset _value;
+
+        public DateTimeOffsetEqualPredicate(DateTimeOffset value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(DateTimeOffset model)
+        {
+            return model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
+        }
+    }
+
+    public class DateTimeOffsetNotEqualPredicate :
+        ValidationPredicateBase<DateTimeOffset>
+    {
+        readonly DateTimeOffset _value;
+
+        public DateTimeOffsetNotEqualPredicate(DateTimeOffset value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(DateTimeOffset model)
+        {
+            return !model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
         }
     }
 
@@ -1031,7 +1714,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(DateTimeOffset model)
+        public override async Task<bool> IsAsync(DateTimeOffset model)
         {
             return model <= _max;
         }
@@ -1053,7 +1736,7 @@ namespace Antix.Services.Validation.Predicates
             _min = min;
         }
 
-        public override bool Is(DateTimeOffset model)
+        public override async Task<bool> IsAsync(DateTimeOffset model)
         {
             return model >= _min;
         }
@@ -1077,7 +1760,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(DateTimeOffset model)
+        public override async Task<bool> IsAsync(DateTimeOffset model)
         {
             return model >= _min
 					&& model <= _max;

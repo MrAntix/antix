@@ -8,13 +8,16 @@
 	typeof(DateTime), typeof(DateTimeOffset)
     };
 #>using System;
+using System.Threading.Tasks;
 
 namespace Antix.Services.Validation.Predicates
 {    
 	public interface INumberPredicates
     {
  <# foreach (var type in types) {
- #>		IValidationPredicate<<#= type.Name #>> Range(<#= type.Name #> min, <#= type.Name #> max);
+ #>       IValidationPredicate<<#= type.Name #>> Equal(<#= type.Name #> value);
+        IValidationPredicate<<#= type.Name #>> NotEqual(<#= type.Name #> value);
+		IValidationPredicate<<#= type.Name #>> Range(<#= type.Name #> min, <#= type.Name #> max);
         IValidationPredicate<<#= type.Name #>> Max(<#= type.Name #> max);
 		IValidationPredicate<<#= type.Name #>> Min(<#= type.Name #> min);
  
@@ -23,7 +26,13 @@ namespace Antix.Services.Validation.Predicates
 	public partial class StandardValidationPredicates
     {
  <# foreach (var type in types) {
- #>		readonly ValidationPredicateCache<<#= type.Name #>RangePredicate, Tuple<<#= type.Name #>, <#= type.Name #>>> _cache<#= type.Name #>Range
+ #>		readonly ValidationPredicateCache<<#= type.Name #>EqualPredicate, <#= type.Name #>> _cache<#= type.Name #>Equal
+            = ValidationPredicateCache.Create(
+                (<#= type.Name #> value) => new <#= type.Name #>EqualPredicate(value));
+   		readonly ValidationPredicateCache<<#= type.Name #>NotEqualPredicate, <#= type.Name #>> _cache<#= type.Name #>NotEqual
+            = ValidationPredicateCache.Create(
+                (<#= type.Name #> value) => new <#= type.Name #>NotEqualPredicate(value));
+   		readonly ValidationPredicateCache<<#= type.Name #>RangePredicate, Tuple<<#= type.Name #>, <#= type.Name #>>> _cache<#= type.Name #>Range
             = ValidationPredicateCache.Create(
                 (Tuple<<#= type.Name #>, <#= type.Name #>> k) => new <#= type.Name #>RangePredicate(k.Item1, k.Item2));
         readonly ValidationPredicateCache<<#= type.Name #>MinPredicate, Tuple<<#= type.Name #>>> _cache<#= type.Name #>Min
@@ -32,6 +41,16 @@ namespace Antix.Services.Validation.Predicates
         readonly ValidationPredicateCache<<#= type.Name #>MaxPredicate, Tuple<<#= type.Name #>>> _cache<#= type.Name #>Max
             = ValidationPredicateCache.Create(
                 (Tuple<<#= type.Name #>> k) => new <#= type.Name #>MaxPredicate(k.Item1));
+
+		public IValidationPredicate<<#= type.Name #>> Equal(<#= type.Name #> value)
+        {
+            return _cache<#= type.Name #>Equal.GetOrCreate(value);
+        }
+
+		public IValidationPredicate<<#= type.Name #>> NotEqual(<#= type.Name #> value)
+        {
+            return _cache<#= type.Name #>NotEqual.GetOrCreate(value);
+        }
 
 		public IValidationPredicate<<#= type.Name #>> Range(<#= type.Name #> min, <#= type.Name #> max)
         {
@@ -53,6 +72,50 @@ namespace Antix.Services.Validation.Predicates
 
     <# foreach (var type in types) { #>
 
+    public class <#= type.Name #>EqualPredicate :
+        ValidationPredicateBase<<#= type.Name #>>
+    {
+        readonly <#= type.Name #> _value;
+
+        public <#= type.Name #>EqualPredicate(<#= type.Name #> value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(<#= type.Name #> model)
+        {
+            return model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
+        }
+    }
+
+    public class <#= type.Name #>NotEqualPredicate :
+        ValidationPredicateBase<<#= type.Name #>>
+    {
+        readonly <#= type.Name #> _value;
+
+        public <#= type.Name #>NotEqualPredicate(<#= type.Name #> value) :
+			base("equal")
+        {
+            _value = value;
+        }
+
+        public override async Task<bool> IsAsync(<#= type.Name #> model)
+        {
+            return !model.Equals(_value);
+        }
+
+        public override string ToString()
+        {
+            return NameFormat("value", _value);
+        }
+    }
+
     public class <#= type.Name #>MaxPredicate :
         ValidationPredicateBase<<#= type.Name #>>
     {
@@ -64,7 +127,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(<#= type.Name #> model)
+        public override async Task<bool> IsAsync(<#= type.Name #> model)
         {
             return model <= _max;
         }
@@ -86,7 +149,7 @@ namespace Antix.Services.Validation.Predicates
             _min = min;
         }
 
-        public override bool Is(<#= type.Name #> model)
+        public override async Task<bool> IsAsync(<#= type.Name #> model)
         {
             return model >= _min;
         }
@@ -110,7 +173,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(<#= type.Name #> model)
+        public override async Task<bool> IsAsync(<#= type.Name #> model)
         {
             return model >= _min
 					&& model <= _max;

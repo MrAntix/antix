@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Antix.Services.Validation.Predicates
 {
@@ -33,7 +34,7 @@ namespace Antix.Services.Validation.Predicates
                 );
         }
 
-        public abstract bool Is(TModel model);
+        public abstract Task<bool> IsAsync(TModel model);
 
         public string Name
         {

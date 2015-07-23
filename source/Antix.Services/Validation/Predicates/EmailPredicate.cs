@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Antix.Services.Validation.Predicates
 {
@@ -17,7 +18,7 @@ namespace Antix.Services.Validation.Predicates
                     RegexOptions.IgnoreCase);
         }
 
-        public override bool Is(string model)
+        public override async Task<bool> IsAsync(string model)
         {
             var valueString = Convert.ToString(model);
             if (string.IsNullOrWhiteSpace(valueString)) return false;

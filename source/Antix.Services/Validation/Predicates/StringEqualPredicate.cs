@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 
 namespace Antix.Services.Validation.Predicates
 {
@@ -15,7 +16,7 @@ namespace Antix.Services.Validation.Predicates
             _comparison = comparison;
         }
 
-        public override bool Is(string model)
+        public override async Task<bool> IsAsync(string model)
         {
             return string.Equals(model, _compareTo, _comparison);
         }

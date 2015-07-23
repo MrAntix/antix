@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 
 namespace Antix.Services.Validation.Predicates
 {
@@ -14,7 +15,7 @@ namespace Antix.Services.Validation.Predicates
             _function = function;
         }
 
-        public override bool Is(TModel model)
+        public override async Task<bool> IsAsync(TModel model)
         {
             return _function(model);
         }

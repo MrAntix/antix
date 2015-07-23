@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace Antix.Services.Validation.Predicates
 {
     public class EqualPredicate : ValidationPredicateBase<object>
@@ -9,7 +11,7 @@ namespace Antix.Services.Validation.Predicates
             _compareTo = compareTo;
         }
 
-        public override bool Is(object model)
+        public override async Task<bool> IsAsync(object model)
         {
             return Equals(model, _compareTo);
         }

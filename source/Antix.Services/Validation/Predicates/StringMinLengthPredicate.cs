@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace Antix.Services.Validation.Predicates
 {
     public class StringMinLengthPredicate :
@@ -10,7 +12,7 @@ namespace Antix.Services.Validation.Predicates
             _min = min;
         }
 
-        public override bool Is(string model)
+        public override async Task<bool> IsAsync(string model)
         {
             return model.Length >= _min;
         }

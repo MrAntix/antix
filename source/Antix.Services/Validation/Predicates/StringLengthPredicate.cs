@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace Antix.Services.Validation.Predicates
 {
     public class StringLengthPredicate : ValidationPredicateBase<string>
@@ -11,7 +13,7 @@ namespace Antix.Services.Validation.Predicates
             _max = max;
         }
 
-        public override bool Is(string model)
+        public override async Task<bool> IsAsync(string model)
         {
             return model.Length >= _min
                    && model.Length <= _max;
