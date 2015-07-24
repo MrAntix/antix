@@ -9,30 +9,30 @@ namespace Antix.Services.Validation.Rules
     public class ValidationRule<TModel> :
         IValidationRule<TModel>
     {
-        readonly IValidationRuleBuilder<TModel> _builder;
+        protected readonly IValidationRuleBuilder<TModel> Builder;
 
         public ValidationRule(IValidationRuleBuilder<TModel> builder)
         {
-            _builder = builder;
+            Builder = builder;
         }
 
         public IValidationRule<TProperty> For<TProperty>(
             Expression<Func<TModel, TProperty>> propertyExpression)
         {
-            return _builder.For(propertyExpression);
+            return Builder.For(propertyExpression);
         }
 
         public IValidationRule<TProperty> ForEach<TProperty>(
             Expression<Func<TModel, IEnumerable<TProperty>>> propertyExpression)
         {
-            return _builder.ForEach(propertyExpression);
+            return Builder.ForEach(propertyExpression);
         }
 
         public IValidationRulePredicated<TModel> When(
             IValidationPredicate<TModel> predicate,
             params IValidationPredicate<TModel>[] predicates)
         {
-            return _builder.When(
+            return Builder.When(
                 predicate.And(predicates).ToArray());
         }
 
@@ -40,17 +40,29 @@ namespace Antix.Services.Validation.Rules
             Func<TModel, bool> function,
             params Func<TModel, bool>[] functions)
         {
-            return _builder.When(
+            return Builder.When(
                 new FunctionPredicate<TModel>(string.Empty, function)
                     .And(functions.Select(f => new FunctionPredicate<TModel>(string.Empty, f)))
                 );
+        }
+
+        public IValidationRulePredicated<TModel> When(
+            IValidator<TModel> validator)
+        {
+            return Builder.When(validator);
+        }
+
+        public IValidationRulePredicated<TModel> When(
+            Action<IValidationRule<TModel>> action)
+        {
+            return Builder.When(action);
         }
 
         public IValidationRulePredicated<TModel> Assert(
             IValidationPredicate<TModel> predicate,
             params IValidationPredicate<TModel>[] predicates)
         {
-            return _builder.Assert(
+            return Builder.Assert(
                 predicate.And(predicates).ToArray());
         }
 
@@ -59,26 +71,22 @@ namespace Antix.Services.Validation.Rules
             Func<TModel, bool> function,
             params Func<TModel, bool>[] functions)
         {
-            return _builder.Assert(
+            return Builder.Assert(
                 new FunctionPredicate<TModel>(name, function)
                     .And(functions.Select(f => new FunctionPredicate<TModel>(name, f)))
                 );
         }
 
-        public IValidationRule<TModel> Assert(
+        public IValidationRulePredicated<TModel> Assert(
             IValidator<TModel> validator)
         {
-            _builder.Assert(validator);
-
-            return this;
+            return Builder.Assert(validator);
         }
 
-        public IValidationRule<TModel> Assert(
-            Action<IValidationRule<TModel>> method)
+        public IValidationRulePredicated<TModel> Assert(
+            Action<IValidationRule<TModel>> action)
         {
-            method(this);
-
-            return this;
+            return Builder.Assert(action);
         }
     }
 }

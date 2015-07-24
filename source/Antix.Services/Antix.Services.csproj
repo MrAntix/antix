@@ -63,6 +63,7 @@
     <Compile Include="Serialization\SerializerIgnoreAttribute.cs" />
     <Compile Include="ServiceHandler.cs" />
     <Compile Include="ServiceSyncExtensions.cs" />
+    <Compile Include="Validation\Rules\IValidationRuleAssert.cs" />
     <Compile Include="Validation\Rules\ValidationRuleExtensions.cs" />
     <Compile Include="Validation\ExpressionPathVisitor.cs" />
     <Compile Include="Validation\Rules\IValidationRule.cs" />
@@ -70,11 +71,10 @@
     <Compile Include="Validation\Rules\IValidationRuleElse.cs" />
     <Compile Include="Validation\Rules\IValidationRuleFor.cs" />
     <Compile Include="Validation\Rules\IValidationRuleOr.cs" />
-    <Compile Include="Validation\Rules\IValidationRulePredicate.cs" />
+    <Compile Include="Validation\Rules\IValidationRuleWhen.cs" />
     <Compile Include="Validation\Rules\IValidationRulePredicated.cs" />
     <Compile Include="Validation\Rules\IValidationRulePredicatedElse.cs" />
     <Compile Include="Validation\Rules\IValidationRules.cs" />
-    <Compile Include="Validation\Rules\IValidationRuleWith.cs" />
     <Compile Include="Validation\IValidator.cs" />
     <Compile Include="Validation\Predicates\EmailPredicate.cs" />
     <Compile Include="Validation\Predicates\FunctionPredicate.cs" />

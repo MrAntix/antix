@@ -41,7 +41,7 @@ namespace Antix.Tests.Services.Validation
             return new ValidationRuleBuilder<ModelA>();
         }
 
-#endregion
+        #endregion
 
         [Fact]
         public void fail_model_is_null_in_collection()
@@ -199,16 +199,36 @@ namespace Antix.Tests.Services.Validation
         }
 
         [Fact]
-        public void validate_with_method()
+        public void with_asserts_all_predicates()
+        {
+            var builder = GetBuilder();
+            GetRule(builder)
+                .For(m => m.Name)
+                .Assert(_is.NotNull, _is.Email);
+
+            var result = new ValidationRuleValidator<ModelA>(builder)
+                .Validate(new ModelA
+                {
+                    Name = null
+                });
+
+            foreach (var error in result)
+                Console.WriteLine(error);
+
+            Assert.Equal(new[] {"Name:not-null", "Name:email"}, result);
+        }
+
+        [Fact]
+        public void with_method()
         {
             var builder = GetBuilder();
             var rule = GetRule(builder);
             rule
-                .For(m => m.Name)
-                .Assert(validate_with_method_name);
+                .For(m => m)
+                .Assert(with_method_build);
             rule
                 .For(m => m.Size)
-                .Assert(validate_with_method_size);
+                .Assert(with_method_build_size);
 
             var result = new ValidationRuleValidator<ModelA>(builder)
                 .Validate(new ModelA
@@ -226,28 +246,56 @@ namespace Antix.Tests.Services.Validation
                 .StartsWith("Size:min"));
         }
 
-        void validate_with_method_name(
-            IValidationRule<string> rule)
+        [Fact]
+        public void with_method_stops_on_first_assert_fail_but_runs_next_rule()
+        {
+            var builder = GetBuilder();
+            var rule = GetRule(builder);
+            rule
+                .Assert(with_method_build)
+                .For(m => m.Name)
+                .Assert(_is.NotEmpty);
+
+            rule
+                .For(m => m.B)
+                .Assert(_is.NotNull);
+
+            var result = new ValidationRuleValidator<ModelA>(builder)
+                .Validate(new ModelA
+                {
+                    Name = string.Empty,
+                    Size = 0
+                });
+
+            foreach (var error in result)
+                Console.WriteLine(error);
+
+            Assert.Equal(new[] { "Name:not-empty", "B:not-null" }, result);
+        }
+
+        void with_method_build(
+            IValidationRule<ModelA> rule)
         {
             rule
+                .For(m => m.Name)
                 .Assert(_is.NotNull)
                 .Assert(_is.NotEmpty);
         }
 
-        void validate_with_method_size(
+        void with_method_build_size(
             IValidationRule<int> rule)
         {
             rule.Assert(_is.Min(1));
         }
 
         [Fact]
-        public void validate_with_method_predicate()
+        public void with_method_predicate()
         {
             var builder = GetBuilder();
             var rule = GetRule(builder);
             rule
                 .For(m => m.Name)
-                .Assert("a-function", validate_with_method_predicate_name);
+                .Assert("a-function", with_method_predicate_name);
 
             var result = new ValidationRuleValidator<ModelA>(builder)
                 .Validate(new ModelA
@@ -263,7 +311,7 @@ namespace Antix.Tests.Services.Validation
                 .StartsWith("Name:a-function"));
         }
 
-        static bool validate_with_method_predicate_name(string arg)
+        static bool with_method_predicate_name(string model)
         {
             return false;
         }
@@ -322,67 +370,43 @@ namespace Antix.Tests.Services.Validation
             Assert.Equal(new string[] {}, result);
         }
 
-        //        [Fact]
-        //        public void when_3_chars_xxx_else_4_chars_yyyy()
-        //        {
-        //            var builder = GetService2();
-        //            builder
-        //                .For(m => m.Name)
-        //                .When(_is.Length(3, 3))
-        //                .Assert(_is.Email)
+        [Fact]
+        public void validate_accross_graph_hierarchy()
+        {
+            var builder = GetBuilder();
+            var rule = GetRule(builder);
+            rule
+                .When(b =>
+                    b.For(m => m.Name)
+                        .Assert(_is.NotNullOrEmpty)
+                )
+                .Assert(b =>
+                    b.For(m => m.B)
+                        .Assert(_is.NotNull)
+                );
 
-        //                .Else()
-        //                .When(_is.Length(4, 4))
-        //                .Assert(_is.Equals("xxxx"))
-        //                .Else()
-        //                .Assert(_is.Empty);
-        //;
+            var result = new ValidationRuleValidator<ModelA>(builder)
+                .Validate(new ModelA
+                {
+                    Name = string.Empty
+                });
 
-        //            var result = new RuleValidator<ModelA>(builder)
-        //                .Validate(new ModelA
-        //                {
-        //                    Name = "AAA"
-        //                });
+            Assert.Equal(new string[] {}, result);
 
-        //            Assert.Equal(new[] { "Name:email" }, result);
+            result = new ValidationRuleValidator<ModelA>(builder)
+                .Validate(new ModelA
+                {
+                    Name = "NOT EMPTY",
+                    B = null
+                });
 
-        //            result = new RuleValidator<ModelA>(builder)
-        //                .Validate(new ModelA
-        //                {
-        //                    Name = "AAAA"
-        //                });
+            Assert.Equal(new[] {"B:not-null"}, result);
+        }
 
-        //            Assert.Equal(new [] { "Name:equal" }, result);
-        //        }
-
-        //[Fact]
-        //public void reuse_builder_in_then_fail_on_size_when_name_not_empty()
-        //{
-        //    var builder = GetService2();
-        //    builder
-        //        .For(m => m.Name)
-        //        .Assert(_is.NotEmpty)
-        //        .Then()
-        //            .Parent()
-        //            .For(m => m.Size)
-        //                .Assert(_is.Min(1)));
-
-        //    var result = new RuleValidator<ModelA>(builder)
-        //        .Validate(new ModelA
-        //    {
-        //        Name = "NOT EMPTY",
-        //        Size = 0
-        //    });
-
-        //    Assert.Equal(new[] {"Size:min"}, result);
-
-        //    result = builder.Build(new ModelA
-        //    {
-        //        Name = string.Empty,
-        //        Size = 0
-        //    });
-
-        //    Assert.Equal(new[] {"Name:not-empty"}, result);
-        //}
+        [Fact]
+        public void with_else()
+        {
+          
+        }
     }
 }

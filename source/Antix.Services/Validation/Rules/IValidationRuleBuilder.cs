@@ -18,9 +18,19 @@ namespace Antix.Services.Validation.Rules
         IValidationRulePredicated<TModel> When(
             IEnumerable<IValidationPredicate<TModel>> predicates);
 
+        IValidationRulePredicated<TModel> When(
+            IValidator<TModel> validator);
+
+        IValidationRulePredicated<TModel> When(
+            Action<IValidationRule<TModel>> action);
+
         IValidationRulePredicated<TModel> Assert(
             IEnumerable<IValidationPredicate<TModel>> predicates);
 
-        void Assert(IValidator<TModel> validator);
+        IValidationRulePredicated<TModel> Assert(
+            IValidator<TModel> validator);
+
+        IValidationRulePredicated<TModel> Assert(
+            Action<IValidationRule<TModel>> action);
     }
 }

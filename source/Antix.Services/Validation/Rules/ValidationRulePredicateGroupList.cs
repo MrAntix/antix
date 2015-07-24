@@ -5,7 +5,8 @@ using Antix.Services.Validation.Predicates;
 
 namespace Antix.Services.Validation.Rules
 {
-    public class ValidationRulePredicateGroupList<TModel>
+    public class ValidationRulePredicateGroupList<TModel> :
+        IValidator<TModel>
     {
         readonly List<IValidationPredicate<TModel>[]> _predicateGroups
             = new List<IValidationPredicate<TModel>[]>();
@@ -16,7 +17,7 @@ namespace Antix.Services.Validation.Rules
             _predicateGroups.Add(predicates);
         }
 
-        public async Task<string[]> EvaluateAsync(ValidateRequest<TModel> request)
+        public async Task<string[]> ExecuteAsync(ValidateRequest<TModel> request)
         {
             var allErrors = new List<string>();
             foreach (var predicates in _predicateGroups)

@@ -63,6 +63,29 @@ namespace Antix.Services.Validation.Rules
             return rule;
         }
 
+        public IValidationRulePredicated<TModel> When(
+            IValidator<TModel> validator)
+        {
+            var builder = new ValidationRuleBuilder<TModel>();
+            var rule = new ValidationRulePredicated<TModel>(
+                builder, new ValidationRulePredicateGroupList<TModel>());
+
+            _validators.Add(
+                new ValidationRuleConditionalValidator<TModel>(
+                    validator,
+                    true, false,
+                    builder)
+                );
+
+            return rule;
+        }
+
+        public IValidationRulePredicated<TModel> When(
+            Action<IValidationRule<TModel>> action)
+        {
+            return When(CreateValidator(action));
+        }
+
         public IValidationRulePredicated<TModel> Assert(
             IEnumerable<IValidationPredicate<TModel>> predicates)
         {
@@ -73,7 +96,7 @@ namespace Antix.Services.Validation.Rules
             var builder = new ValidationRuleBuilder<TModel>();
             var rule = new ValidationRulePredicated<TModel>(builder, predicateGroups);
 
-            Assert(
+            _validators.Add(
                 new ValidationRuleConditionalValidator<TModel>(
                     predicateGroups,
                     true, true,
@@ -83,10 +106,39 @@ namespace Antix.Services.Validation.Rules
             return rule;
         }
 
-        public void Assert(
+        public IValidationRulePredicated<TModel> Assert(
             IValidator<TModel> validator)
         {
-            _validators.Add(validator);
+            var builder = new ValidationRuleBuilder<TModel>();
+            var rule = new ValidationRulePredicated<TModel>(
+                builder, new ValidationRulePredicateGroupList<TModel>());
+
+            _validators.Add(
+                new ValidationRuleConditionalValidator<TModel>(
+                    validator,
+                    true, true,
+                    builder)
+                );
+
+            return rule;
+        }
+
+        public IValidationRulePredicated<TModel> Assert(
+            Action<IValidationRule<TModel>> action)
+        {
+            return Assert(CreateValidator(action));
+        }
+
+        static IValidator<TModel> CreateValidator(
+            Action<IValidationRule<TModel>> action)
+        {
+            var builder = new ValidationRuleBuilder<TModel>();
+            var rule = new ValidationRulePredicated<TModel>(builder,
+                new ValidationRulePredicateGroupList<TModel>());
+
+            action(rule);
+
+            return new ValidationRuleValidator<TModel>(builder);
         }
     }
 }

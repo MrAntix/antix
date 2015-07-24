@@ -1,18 +1,11 @@
 using System;
+using System.Linq.Expressions;
 using Antix.Services.Validation.Predicates;
 
 namespace Antix.Services.Validation.Rules
 {
-    public interface IValidationRulePredicate<TModel>
+    public interface IValidationRuleAssert<TModel> 
     {
-        IValidationRulePredicated<TModel> When(
-            IValidationPredicate<TModel> predicate,
-            params IValidationPredicate<TModel>[] predicates);
-
-        IValidationRulePredicated<TModel> When(
-            Func<TModel, bool> function,
-            params Func<TModel, bool>[] functions);
-
         IValidationRulePredicated<TModel> Assert(
             IValidationPredicate<TModel> predicate,
             params IValidationPredicate<TModel>[] predicates);
@@ -21,5 +14,11 @@ namespace Antix.Services.Validation.Rules
             string name,
             Func<TModel, bool> function,
             params Func<TModel, bool>[] functions);
+
+        IValidationRulePredicated<TModel> Assert(
+            IValidator<TModel> validator);
+
+        IValidationRulePredicated<TModel> Assert(
+            Action<IValidationRule<TModel>> action);
     }
 }

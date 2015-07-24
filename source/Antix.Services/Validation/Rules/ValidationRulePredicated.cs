@@ -4,7 +4,8 @@ using Antix.Services.Validation.Predicates;
 namespace Antix.Services.Validation.Rules
 {
     public class ValidationRulePredicated<TModel> :
-        ValidationRule<TModel>, IValidationRulePredicated<TModel>
+        ValidationRule<TModel>, 
+        IValidationRulePredicated<TModel>
     {
         readonly ValidationRulePredicateGroupList<TModel> _predicateGroups;
 
