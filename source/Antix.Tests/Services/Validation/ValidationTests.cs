@@ -416,14 +416,14 @@ namespace Antix.Tests.Services.Validation
                 {
                     Name = "YYY"
                 });
-            Assert.Equal(new string[] { }, result);
+            Assert.Equal(new string[] {}, result);
 
             result = new ValidationRuleValidator<ModelA>(builder)
                 .Validate(new ModelA
                 {
                     Name = "ZZZ"
                 });
-            Assert.Equal(new string[] { }, result);
+            Assert.Equal(new string[] {}, result);
         }
 
         [Fact]
@@ -443,16 +443,82 @@ namespace Antix.Tests.Services.Validation
                 {
                     Name = "ZZZ"
                 });
-            Assert.Equal(new string[] { }, result);
+            Assert.Equal(new string[] {}, result);
 
             result = new ValidationRuleValidator<ModelA>(builder)
                 .Validate(null);
-            Assert.Equal(new string[] { }, result);
+            Assert.Equal(new string[] {}, result);
         }
 
         [Fact]
-        public void with_else()
+        public void with_when()
         {
+            var builder = GetBuilder();
+            var rule = GetRule(builder);
+            rule
+                .For(m => m.Name)
+                .When(_is.Equal("ZZZ"))
+                .Assert(_is.Null);
+
+            rule
+                .For(m => m.Name)
+                .When(_is.Equal("YYY"))
+                .Assert(_is.Email);
+
+            var result = new ValidationRuleValidator<ModelA>(builder)
+                .Validate(new ModelA
+                {
+                    Name = "ZZZ"
+                });
+            Assert.Equal(new[] { "Name:null" }, result);
+
+            result = new ValidationRuleValidator<ModelA>(builder)
+                .Validate(new ModelA
+                {
+                    Name = "YYY"
+                });
+            Assert.Equal(new[] { "Name:email" }, result);
+        }
+
+        [Fact]
+        public void with_more_ors()
+        {
+            var builder = GetBuilder();
+            var rule = GetRule(builder);
+            rule
+                .For(m => m.Name)
+                .When(_is.NotNull)
+                .Assert(_is.Empty)
+                .Or(_is.Email)
+                .Or(_is.Equal("Test", StringComparison.OrdinalIgnoreCase));
+
+            var result = new ValidationRuleValidator<ModelA>(builder)
+                .Validate(new ModelA
+                {
+                    Name = "ZZZ"
+                });
+            Assert.Equal(new[] { "Name:empty", "Name:email", "Name:equal" }, result);
+
+            result = new ValidationRuleValidator<ModelA>(builder)
+                .Validate(new ModelA
+                {
+                    Name = ""
+                });
+            Assert.Equal(new string[] { }, result);
+
+            result = new ValidationRuleValidator<ModelA>(builder)
+                .Validate(new ModelA
+                {
+                    Name = "test@example.com"
+                });
+            Assert.Equal(new string[] { }, result);
+
+            result = new ValidationRuleValidator<ModelA>(builder)
+                .Validate(new ModelA
+                {
+                    Name = "test"
+                });
+            Assert.Equal(new string[] { }, result);
         }
     }
 }
