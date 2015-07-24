@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Antix.Services.Validation.Predicates;
 
 namespace Antix.Services.Validation.Rules
 {
@@ -22,17 +23,28 @@ namespace Antix.Services.Validation.Rules
         public async Task<string[]> ExecuteAsync(
             ValidateRequest<TModel> request)
         {
-            var forRequest = new ValidateRequest<TProperty>(
-                _propertyExpression.Compile()(request.Model),
-                ConcatPath(request.Path, _propertyExpression)
-                );
-
-            var validators = _builder.Build();
             var errors = new List<string>();
-            foreach (var validator in validators)
+
+            if (request.Model == null)
             {
-                errors.AddRange(
-                    await validator.ExecuteAsync(forRequest));
+                errors.Add(request
+                    .FormatError(NotNullPredicate.Name)
+                    );
+            }
+            else
+            {
+
+                var forRequest = new ValidateRequest<TProperty>(
+                    _propertyExpression.Compile()(request.Model),
+                    ConcatPath(request.Path, _propertyExpression)
+                    );
+
+                var validators = _builder.Build();
+                foreach (var validator in validators)
+                {
+                    errors.AddRange(
+                        await validator.ExecuteAsync(forRequest));
+                }
             }
 
             return errors.ToArray();

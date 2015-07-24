@@ -118,7 +118,7 @@
     <Compile Include="Validation\ValidateRequest.cs" />
     <Compile Include="Validation\ValidationConstants.cs" />
     <Compile Include="Validation\ValidationExtensions.cs" />
-    <Compile Include="Validation\Rules\ValidationRulePredicateGroupList.cs" />
+    <Compile Include="Validation\Rules\ValidationRulePredicateGroupsValidator.cs" />
     <Compile Include="Validation\ValidatorBase.cs" />
   </ItemGroup>
   <ItemGroup>

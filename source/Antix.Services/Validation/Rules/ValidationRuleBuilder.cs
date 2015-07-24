@@ -47,7 +47,7 @@ namespace Antix.Services.Validation.Rules
             IEnumerable<IValidationPredicate<TModel>> predicates)
         {
             var predicateGroups
-                = new ValidationRulePredicateGroupList<TModel>();
+                = new ValidationRulePredicateGroupsValidator<TModel>();
             predicateGroups.Add(predicates.ToArray());
 
             var builder = new ValidationRuleBuilder<TModel>();
@@ -66,13 +66,16 @@ namespace Antix.Services.Validation.Rules
         public IValidationRulePredicated<TModel> When(
             IValidator<TModel> validator)
         {
+            var predicateGroups
+                = new ValidationRulePredicateGroupsValidator<TModel>(validator);
+
             var builder = new ValidationRuleBuilder<TModel>();
             var rule = new ValidationRulePredicated<TModel>(
-                builder, new ValidationRulePredicateGroupList<TModel>());
+                builder, predicateGroups);
 
             _validators.Add(
                 new ValidationRuleConditionalValidator<TModel>(
-                    validator,
+                    predicateGroups,
                     true, false,
                     builder)
                 );
@@ -90,7 +93,7 @@ namespace Antix.Services.Validation.Rules
             IEnumerable<IValidationPredicate<TModel>> predicates)
         {
             var predicateGroups
-                = new ValidationRulePredicateGroupList<TModel>();
+                = new ValidationRulePredicateGroupsValidator<TModel>();
             predicateGroups.Add(predicates.ToArray());
 
             var builder = new ValidationRuleBuilder<TModel>();
@@ -109,13 +112,16 @@ namespace Antix.Services.Validation.Rules
         public IValidationRulePredicated<TModel> Assert(
             IValidator<TModel> validator)
         {
+            var predicateGroups =
+                new ValidationRulePredicateGroupsValidator<TModel>(validator);
+
             var builder = new ValidationRuleBuilder<TModel>();
             var rule = new ValidationRulePredicated<TModel>(
-                builder, new ValidationRulePredicateGroupList<TModel>());
+                builder, predicateGroups);
 
             _validators.Add(
                 new ValidationRuleConditionalValidator<TModel>(
-                    validator,
+                    predicateGroups,
                     true, true,
                     builder)
                 );
@@ -132,9 +138,10 @@ namespace Antix.Services.Validation.Rules
         static IValidator<TModel> CreateValidator(
             Action<IValidationRule<TModel>> action)
         {
+            var predicateGroups =
+                new ValidationRulePredicateGroupsValidator<TModel>();
             var builder = new ValidationRuleBuilder<TModel>();
-            var rule = new ValidationRulePredicated<TModel>(builder,
-                new ValidationRulePredicateGroupList<TModel>());
+            var rule = new ValidationRulePredicated<TModel>(builder, predicateGroups);
 
             action(rule);
 

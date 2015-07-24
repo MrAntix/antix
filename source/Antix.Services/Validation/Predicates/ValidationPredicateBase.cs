@@ -1,31 +1,24 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Antix.Services.Validation.Predicates
 {
-    public abstract class ValidationPredicateBase<TModel> :
-        IValidationPredicate<TModel>
+    public abstract class ValidationPredicate
     {
         const string Suffix = "Predicate";
         const string StringPrefix = "String";
         const string NumberPrefix = "Number";
 
-        readonly string _name;
-
-        protected ValidationPredicateBase(string name)
+        public static string GetDefaultName(Type type)
         {
-            _name = name;
-        }
-
-        protected ValidationPredicateBase()
-        {
-            var typeName = GetType().Name;
+            var typeName = type.Name;
             typeName = typeName
                 .TrimEnd(Suffix)
                 .TrimStart(StringPrefix)
                 .TrimStart(NumberPrefix);
 
-            _name = string.Join(
+            return string.Join(
                 "",
                 typeName
                     .Select((c, i) => char.IsUpper(c)
@@ -33,18 +26,29 @@ namespace Antix.Services.Validation.Predicates
                         : char.ToString(c))
                 );
         }
+    }
+
+    public abstract class ValidationPredicateBase<TModel> :
+        ValidationPredicate, IValidationPredicate<TModel>
+    {
+        protected ValidationPredicateBase(string name)
+        {
+            Name = name;
+        }
+
+        protected ValidationPredicateBase()
+        {
+            Name = GetDefaultName(GetType());
+        }
 
         public abstract Task<bool> IsAsync(TModel model);
 
-        public string Name
-        {
-            get { return _name; }
-        }
+        public string Name { get; }
 
         protected string NameFormat(params object[] parameters)
         {
             return string.Format("{0}[{1}]",
-                _name,
+                Name,
                 string.Join("",
                     parameters.Select(
                         (p, i) => (i%2 == 0 ? p : string.Concat(":\'", p, "',")))

@@ -25,10 +25,18 @@ namespace Antix.Services.Validation.Rules
                 if (!result)
                 {
                     errors.Add(
-                        string.Format("{0}:{1}", request.Path, predicate.Name));
+                        request.FormatError(predicate.Name)
+                        );
                 }
             }
             return errors.ToArray();
+        }
+
+        public static string FormatError<TModel>(
+            this ValidateRequest<TModel> request,
+            string name)
+        {
+            return string.Format("{0}:{1}", request.Path, name);
         }
     }
 

@@ -7,11 +7,11 @@ namespace Antix.Services.Validation.Rules
         ValidationRule<TModel>, 
         IValidationRulePredicated<TModel>
     {
-        readonly ValidationRulePredicateGroupList<TModel> _predicateGroups;
+        readonly ValidationRulePredicateGroupsValidator<TModel> _predicateGroups;
 
         public ValidationRulePredicated(
             IValidationRuleBuilder<TModel> builder,
-            ValidationRulePredicateGroupList<TModel> predicateGroups) :
+            ValidationRulePredicateGroupsValidator<TModel> predicateGroups) :
                 base(builder)
         {
             _predicateGroups = predicateGroups;

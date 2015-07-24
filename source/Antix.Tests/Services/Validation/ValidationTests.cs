@@ -270,7 +270,7 @@ namespace Antix.Tests.Services.Validation
             foreach (var error in result)
                 Console.WriteLine(error);
 
-            Assert.Equal(new[] { "Name:not-empty", "B:not-null" }, result);
+            Assert.Equal(new[] {"Name:not-empty", "B:not-null"}, result);
         }
 
         void with_method_build(
@@ -390,7 +390,6 @@ namespace Antix.Tests.Services.Validation
                 {
                     Name = string.Empty
                 });
-
             Assert.Equal(new string[] {}, result);
 
             result = new ValidationRuleValidator<ModelA>(builder)
@@ -399,14 +398,61 @@ namespace Antix.Tests.Services.Validation
                     Name = "NOT EMPTY",
                     B = null
                 });
-
             Assert.Equal(new[] {"B:not-null"}, result);
+        }
+
+        [Fact]
+        public void with_or()
+        {
+            var builder = GetBuilder();
+            var rule = GetRule(builder);
+            rule
+                .For(m => m.Name)
+                .Assert(_is.Equal("ZZZ"))
+                .Or(_is.Equal("YYY"));
+
+            var result = new ValidationRuleValidator<ModelA>(builder)
+                .Validate(new ModelA
+                {
+                    Name = "YYY"
+                });
+            Assert.Equal(new string[] { }, result);
+
+            result = new ValidationRuleValidator<ModelA>(builder)
+                .Validate(new ModelA
+                {
+                    Name = "ZZZ"
+                });
+            Assert.Equal(new string[] { }, result);
+        }
+
+        [Fact]
+        public void with_or_deep_assert()
+        {
+            var builder = GetBuilder();
+            var rule = GetRule(builder);
+            rule
+                .Assert(b => b
+                    .For(m => m.Name)
+                    .Assert(_is.Equal("ZZZ"))
+                )
+                .Or(_is.Null);
+
+            var result = new ValidationRuleValidator<ModelA>(builder)
+                .Validate(new ModelA
+                {
+                    Name = "ZZZ"
+                });
+            Assert.Equal(new string[] { }, result);
+
+            result = new ValidationRuleValidator<ModelA>(builder)
+                .Validate(null);
+            Assert.Equal(new string[] { }, result);
         }
 
         [Fact]
         public void with_else()
         {
-          
         }
     }
 }
