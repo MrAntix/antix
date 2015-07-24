@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,8 @@ namespace Antix.Services.Validation.Rules
     public class ValidationRulePredicateGroupsValidator<TModel> :
         IValidator<TModel>
     {
+        readonly ConcurrentDictionary<ValidateRequest<TModel>, Task<string[]>> _cache;
+
         readonly List<Func<ValidateRequest<TModel>, Task<string[]>>> _validateFunctions
             = new List<Func<ValidateRequest<TModel>, Task<string[]>>>();
 
@@ -17,6 +20,8 @@ namespace Antix.Services.Validation.Rules
         {
             if (validator != null)
                 _validateFunctions.Add(validator.ExecuteAsync);
+
+            _cache = new ConcurrentDictionary<ValidateRequest<TModel>, Task<string[]>>();
         }
 
         public ValidationRulePredicateGroupsValidator() : this(null)
@@ -31,6 +36,11 @@ namespace Antix.Services.Validation.Rules
 
         public async Task<string[]> ExecuteAsync(
             ValidateRequest<TModel> request)
+        {
+            return await _cache.GetOrAdd(request, Validate);
+        }
+
+        async Task<string[]> Validate(ValidateRequest<TModel> request)
         {
             var allErrors = new List<string>();
 
