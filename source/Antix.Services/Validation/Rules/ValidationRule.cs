@@ -60,7 +60,7 @@ namespace Antix.Services.Validation.Rules
         public IValidationRulePredicated<TModel> When(
             IValidator<TModel> validator)
         {
-            if (validator == null) throw new ArgumentNullException(nameof(validator));
+            if (validator == null) throw new ArgumentNullException("validator");
 
             return Builder.When(validator);
         }
@@ -75,7 +75,7 @@ namespace Antix.Services.Validation.Rules
             IValidationPredicate<TModel> predicate,
             params IValidationPredicate<TModel>[] predicates)
         {
-            if (predicate == null) throw new ArgumentNullException(nameof(predicate));
+            if (predicate == null) throw new ArgumentNullException("predicate");
 
             return Builder.Assert(
                 predicate.And(predicates).ToArray());
@@ -85,7 +85,7 @@ namespace Antix.Services.Validation.Rules
             string name,
             Func<TModel, Task<bool>> function)
         {
-            if (function == null) throw new ArgumentNullException(nameof(function));
+            if (function == null) throw new ArgumentNullException("function");
 
             return Builder.Assert(
                 new[] {new FunctionPredicateAsync<TModel>(name, function)}
