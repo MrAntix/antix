@@ -6,11 +6,12 @@ namespace Antix.Services.Validation.Rules
         IValidationRules<TModel>
     {
         readonly IValidationRuleBuilder<TModel> _builder;
+        readonly IValidationRule<TModel> _first;
 
         public ValidationRules()
         {
             _builder = new ValidationRuleBuilder<TModel>();
-            First = new ValidationRule<TModel>(_builder);
+            _first = new ValidationRule<TModel>(_builder);
         }
 
         public async Task<string[]> ExecuteAsync(
@@ -21,6 +22,9 @@ namespace Antix.Services.Validation.Rules
             return await validator.ExecuteAsync(request);
         }
 
-        public IValidationRule<TModel> First { get; }
+        public IValidationRule<TModel> First
+        {
+            get { return _first; }
+        }
     }
 }

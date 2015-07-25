@@ -11,12 +11,13 @@ namespace Antix.Services.Validation
         where TPredicates : IObjectPredicates
     {
         readonly Func<IValidationRules<TModel>> _getRules;
+        readonly TPredicates _is;
 
         public ValidatorBase(
             TPredicates @is,
             Func<IValidationRules<TModel>> getRules)
         {
-            Is = @is;
+            _is = @is;
             _getRules = getRules;
         }
 
@@ -30,7 +31,10 @@ namespace Antix.Services.Validation
             return await rules.ExecuteAsync(request);
         }
 
-        protected TPredicates Is { get; }
+        protected TPredicates Is
+        {
+            get { return _is; }
+        }
 
         protected abstract void Validate(IValidationRule<TModel> validationRules);
     }

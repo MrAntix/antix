@@ -31,19 +31,24 @@ namespace Antix.Services.Validation.Predicates
     public abstract class ValidationPredicateBase<TModel> :
         ValidationPredicate, IValidationPredicate<TModel>
     {
+        readonly string _name;
+
         protected ValidationPredicateBase(string name)
         {
-            Name = name;
+            _name = name;
         }
 
         protected ValidationPredicateBase()
         {
-            Name = GetDefaultName(GetType());
+            _name = GetDefaultName(GetType());
         }
 
         public abstract Task<bool> IsAsync(TModel model);
 
-        public string Name { get; }
+        public string Name
+        {
+            get { return _name; }
+        }
 
         protected string NameFormat(params object[] parameters)
         {
