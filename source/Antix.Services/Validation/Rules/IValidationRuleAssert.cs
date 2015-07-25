@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Antix.Services.Validation.Predicates;
 
 namespace Antix.Services.Validation.Rules
@@ -12,8 +13,7 @@ namespace Antix.Services.Validation.Rules
 
         IValidationRulePredicated<TModel> Assert(
             string name,
-            Func<TModel, bool> function,
-            params Func<TModel, bool>[] functions);
+            Func<TModel, Task<bool>> function);
 
         IValidationRulePredicated<TModel> Assert(
             IValidator<TModel> validator);

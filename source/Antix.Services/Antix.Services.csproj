@@ -75,7 +75,7 @@
     <Compile Include="Validation\Rules\IValidationRules.cs" />
     <Compile Include="Validation\IValidator.cs" />
     <Compile Include="Validation\Predicates\EmailPredicate.cs" />
-    <Compile Include="Validation\Predicates\FunctionPredicate.cs" />
+    <Compile Include="Validation\Predicates\FunctionPredicateAsync.cs" />
     <Compile Include="Validation\Predicates\IObjectPredicates.cs" />
     <Compile Include="Validation\Predicates\IStandardValidationPredicates.cs" />
     <Compile Include="Validation\Predicates\IStringPredicates.cs" />

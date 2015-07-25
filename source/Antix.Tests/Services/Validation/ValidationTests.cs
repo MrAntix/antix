@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Antix.Services.Validation;
 using Antix.Services.Validation.Predicates;
 using Antix.Services.Validation.Rules;
@@ -311,10 +312,11 @@ namespace Antix.Tests.Services.Validation
                 .StartsWith("Name:a-function"));
         }
 
-        static bool with_method_predicate_name(string model)
+        static async Task<bool> with_method_predicate_name(string model)
         {
             return false;
         }
+
 
         [Fact]
         public void when_first_assert_fails_stop()

@@ -3,13 +3,13 @@ using System.Threading.Tasks;
 
 namespace Antix.Services.Validation.Predicates
 {
-    public class FunctionPredicate<TModel> : ValidationPredicateBase<TModel>
+    public class FunctionPredicateAsync<TModel> : ValidationPredicateBase<TModel>
     {
-        readonly Func<TModel, bool> _function;
+        readonly Func<TModel, Task<bool>> _function;
 
-        public FunctionPredicate(
+        public FunctionPredicateAsync(
             string name,
-            Func<TModel, bool> function) :
+            Func<TModel, Task<bool>> function) :
                 base(name)
         {
             _function = function;
@@ -17,7 +17,7 @@ namespace Antix.Services.Validation.Predicates
 
         public override async Task<bool> IsAsync(TModel model)
         {
-            return _function(model);
+            return await _function(model);
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Antix.Services.Validation.Predicates;
 
 namespace Antix.Services.Validation.Rules
@@ -37,18 +38,30 @@ namespace Antix.Services.Validation.Rules
         }
 
         public IValidationRulePredicated<TModel> When(
+            Func<TModel, Task<bool>> function,
+            params Func<TModel, Task<bool>>[] functions)
+        {
+            return Builder.When(
+                new FunctionPredicateAsync<TModel>(string.Empty, function)
+                    .And(functions.Select(f => new FunctionPredicateAsync<TModel>(string.Empty, f)))
+                );
+        }
+
+        public IValidationRulePredicated<TModel> When(
             Func<TModel, bool> function,
             params Func<TModel, bool>[] functions)
         {
             return Builder.When(
-                new FunctionPredicate<TModel>(string.Empty, function)
-                    .And(functions.Select(f => new FunctionPredicate<TModel>(string.Empty, f)))
+                new FunctionPredicateAsync<TModel>(string.Empty, async m => function(m))
+                    .And(functions.Select(f => new FunctionPredicateAsync<TModel>(string.Empty, async m => function(m))))
                 );
         }
 
         public IValidationRulePredicated<TModel> When(
             IValidator<TModel> validator)
         {
+            if (validator == null) throw new ArgumentNullException(nameof(validator));
+
             return Builder.When(validator);
         }
 
@@ -62,18 +75,28 @@ namespace Antix.Services.Validation.Rules
             IValidationPredicate<TModel> predicate,
             params IValidationPredicate<TModel>[] predicates)
         {
+            if (predicate == null) throw new ArgumentNullException(nameof(predicate));
+
             return Builder.Assert(
                 predicate.And(predicates).ToArray());
         }
 
         public IValidationRulePredicated<TModel> Assert(
             string name,
-            Func<TModel, bool> function,
-            params Func<TModel, bool>[] functions)
+            Func<TModel, Task<bool>> function)
+        {
+            if (function == null) throw new ArgumentNullException(nameof(function));
+
+            return Builder.Assert(
+                new[] {new FunctionPredicateAsync<TModel>(name, function)}
+                );
+        }
+
+        public IValidationRulePredicated<TModel> Assert(
+            string name, Func<TModel, bool> function)
         {
             return Builder.Assert(
-                new FunctionPredicate<TModel>(name, function)
-                    .And(functions.Select(f => new FunctionPredicate<TModel>(name, f)))
+                new[] { new FunctionPredicateAsync<TModel>(name, async m=>function(m)) }
                 );
         }
 
