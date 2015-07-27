@@ -93,14 +93,6 @@ namespace Antix.Services.Validation.Rules
         }
 
         public IValidationRulePredicated<TModel> Assert(
-            string name, Func<TModel, bool> function)
-        {
-            return Builder.Assert(
-                new[] { new FunctionPredicateAsync<TModel>(name, async m=>function(m)) }
-                );
-        }
-
-        public IValidationRulePredicated<TModel> Assert(
             IValidator<TModel> validator)
         {
             return Builder.Assert(validator);

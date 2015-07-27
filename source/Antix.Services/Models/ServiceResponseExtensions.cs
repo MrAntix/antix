@@ -6,6 +6,18 @@ namespace Antix.Services.Models
 {
     public static class ServiceResponseExtensions
     {
+        public static bool IsSuccess(
+            this IServiceResponse model)
+        {
+            return !model.Errors.Any();
+        }
+
+        public static bool IsFailure(
+            this IServiceResponse model)
+        {
+            return model.Errors.Any();
+        }
+
         public static ServiceResponse<TData> WithData<TData>(
             this IServiceResponse model, TData data)
         {
