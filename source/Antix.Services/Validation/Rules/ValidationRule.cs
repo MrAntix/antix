@@ -38,22 +38,10 @@ namespace Antix.Services.Validation.Rules
         }
 
         public IValidationRulePredicated<TModel> When(
-            Func<TModel, Task<bool>> function,
-            params Func<TModel, Task<bool>>[] functions)
+            Func<TModel, Task<bool>> function)
         {
             return Builder.When(
-                new FunctionPredicateAsync<TModel>(string.Empty, function)
-                    .And(functions.Select(f => new FunctionPredicateAsync<TModel>(string.Empty, f)))
-                );
-        }
-
-        public IValidationRulePredicated<TModel> When(
-            Func<TModel, bool> function,
-            params Func<TModel, bool>[] functions)
-        {
-            return Builder.When(
-                new FunctionPredicateAsync<TModel>(string.Empty, async m => function(m))
-                    .And(functions.Select(f => new FunctionPredicateAsync<TModel>(string.Empty, async m => function(m))))
+                new[] {new FunctionPredicateAsync<TModel>(string.Empty, function)}
                 );
         }
 

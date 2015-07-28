@@ -11,12 +11,7 @@ namespace Antix.Services.Validation.Rules
             params IValidationPredicate<TModel>[] predicates);
 
         IValidationRulePredicated<TModel> When(
-            Func<TModel, Task<bool>> function,
-            params Func<TModel, Task<bool>>[] functions);
-
-        IValidationRulePredicated<TModel> When(
-            Func<TModel, bool> function,
-            params Func<TModel, bool>[] functions);
+            Func<TModel, Task<bool>> function);
 
         IValidationRulePredicated<TModel> When(
             IValidator<TModel> validator);
