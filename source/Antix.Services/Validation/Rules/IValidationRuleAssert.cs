@@ -1,11 +1,10 @@
 using System;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Antix.Services.Validation.Predicates;
 
 namespace Antix.Services.Validation.Rules
 {
-    public interface IValidationRuleAssert<TModel> 
+    public interface IValidationRuleAssert<TModel>
     {
         IValidationRulePredicated<TModel> Assert(
             IValidationPredicate<TModel> predicate,

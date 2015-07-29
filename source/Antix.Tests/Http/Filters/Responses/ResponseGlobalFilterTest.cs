@@ -103,6 +103,27 @@ namespace Antix.Tests.Http.Filters.Responses
         }
 
         [Fact]
+        public void using_created_http_response_only_on_success()
+        {
+            //var data = new {frog = true};
+            const string url = "/somewhere";
+            const string error = "OH NO!";
+
+            var serviceResponse = ServiceResponse.Empty
+                //.WithData(data)
+                .WithErrors(error)
+                .AsHttpCreated(url);
+
+            var processResponse =
+                ServiceResponseGlobalFilter
+                    .Process(serviceResponse);
+
+            Assert.NotEqual(HttpStatusCode.Created, processResponse.StatusCode);
+            Assert.Equal(new[] {error}, processResponse.Content);
+            Assert.False(processResponse.Headers.ContainsKey("location"));
+        }
+
+        [Fact]
         public void when_http_response_has_errors_default_status_code_is_sent()
         {
             var errors = new[] {"Eek"};

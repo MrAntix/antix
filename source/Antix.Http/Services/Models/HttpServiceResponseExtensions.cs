@@ -73,37 +73,44 @@ namespace Antix.Http.Services.Models
 
         public static HttpServiceResponse AsHttpCreated(
             this IServiceResponse model,
-            string location)
+            string route, object routeData)
         {
-            return new HttpServiceResponse(
-                HttpStatusCode.Created,
-                new Dictionary<string, string>
-                {
-                    {"location", location}
-                },
-                model.Errors);
+            return model.AsHttpCreated(route.MergeRouteData(routeData));
         }
 
         public static HttpServiceResponse AsHttpCreated(
             this IServiceResponse model,
-            string route, object routeData)
+            string location)
         {
-            return model.AsHttpCreated(route.MergeRouteData(routeData));
+            return model.IsSuccess()
+                ? new HttpServiceResponse(
+                    HttpStatusCode.Created,
+                    new Dictionary<string, string>
+                    {
+                        {"location", location}
+                    },
+                    null)
+                : new HttpServiceResponse(
+                    null, null, model.Errors);
+            ;
         }
 
         public static HttpServiceResponse<TData> AsHttpCreated<TData>(
             this IServiceResponse<TData> model,
             string location)
         {
-            return new HttpServiceResponse<TData>(
-                HttpStatusCode.Created,
-                model.Data,
-                new Dictionary<string, string>
-                {
-                    {"location", location}
-                },
-                model.Errors
-                );
+            return model.IsSuccess()
+                ? new HttpServiceResponse<TData>(
+                    HttpStatusCode.Created,
+                    model.Data,
+                    new Dictionary<string, string>
+                    {
+                        {"location", location}
+                    },
+                    null
+                    )
+                : new HttpServiceResponse<TData>(
+                    null, model.Data, null, model.Errors);
         }
 
         public static HttpServiceResponse<TData> AsHttpCreated<TData>(
