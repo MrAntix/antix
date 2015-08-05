@@ -30,7 +30,7 @@ namespace Antix.Services.Validation.Services
             return await ThenAsync(model);
         }
 
-        protected abstract Task<ServiceResponse<TResult>> ThenAsync(
+        protected abstract Task<IServiceResponse<TResult>> ThenAsync(
             TModel model);
 
         protected virtual async Task<bool> CatchAsync(
@@ -66,7 +66,7 @@ namespace Antix.Services.Validation.Services
             return await ThenAsync(model);
         }
 
-        protected abstract Task<ServiceResponse> ThenAsync(
+        protected abstract Task<IServiceResponse> ThenAsync(
             TModel model);
 
         protected virtual async Task<bool> CatchAsync(
