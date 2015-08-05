@@ -5,7 +5,7 @@ using Antix.Services.Models;
 namespace Antix.Services.Validation.Services
 {
     public abstract class ValidatingServiceBase<TModel, TResult> :
-        IServiceInOut<TModel, ServiceResponse<TResult>>
+        IServiceInOut<TModel, IServiceResponse<TResult>>
     {
         readonly IValidator<TModel> _validator;
 
@@ -15,7 +15,7 @@ namespace Antix.Services.Validation.Services
             _validator = validator;
         }
 
-        public async Task<ServiceResponse<TResult>> ExecuteAsync(
+        public async Task<IServiceResponse<TResult>> ExecuteAsync(
             TModel model)
         {
             var errors = await _validator
@@ -41,7 +41,7 @@ namespace Antix.Services.Validation.Services
     }
 
     public abstract class ValidatingServiceBase<TModel> :
-        IServiceInOut<TModel, ServiceResponse>
+        IServiceInOut<TModel, IServiceResponse>
     {
         readonly IValidator<TModel> _validator;
 
@@ -51,7 +51,7 @@ namespace Antix.Services.Validation.Services
             _validator = validator;
         }
 
-        public async Task<ServiceResponse> ExecuteAsync(
+        public async Task<IServiceResponse> ExecuteAsync(
             TModel model)
         {
             var errors =await _validator
