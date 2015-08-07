@@ -73,21 +73,21 @@ namespace Antix.Http.Services.Models
 
         public static HttpServiceResponse AsHttpCreated(
             this IServiceResponse model,
-            string route, object routeData)
+            string location)
         {
-            return model.AsHttpCreated(route.MergeRouteData(routeData));
+            return model.AsHttpCreated(location, () => null);
         }
 
         public static HttpServiceResponse AsHttpCreated(
             this IServiceResponse model,
-            string location)
+            string route, Func<object> getRouteData)
         {
             return model.IsSuccess()
                 ? new HttpServiceResponse(
                     HttpStatusCode.Created,
                     new Dictionary<string, string>
                     {
-                        {"location", location}
+                        {"location", route.MergeRouteData(getRouteData())}
                     },
                     null)
                 : new HttpServiceResponse(
@@ -99,13 +99,20 @@ namespace Antix.Http.Services.Models
             this IServiceResponse<TData> model,
             string location)
         {
+            return model.AsHttpCreated(location, m => m);
+        }
+
+        public static HttpServiceResponse<TData> AsHttpCreated<TData>(
+            this IServiceResponse<TData> model,
+            string route, Func<TData, object> getRouteData)
+        {
             return model.IsSuccess()
                 ? new HttpServiceResponse<TData>(
                     HttpStatusCode.Created,
                     model.Data,
                     new Dictionary<string, string>
                     {
-                        {"location", location}
+                        {"location", route.MergeRouteData(getRouteData(model.Data))}
                     },
                     null
                     )
@@ -113,23 +120,19 @@ namespace Antix.Http.Services.Models
                     null, model.Data, null, model.Errors);
         }
 
-        public static HttpServiceResponse<TData> AsHttpCreated<TData>(
-            this IServiceResponse<TData> model,
-            string route, object routeData)
-        {
-            return model.AsHttpCreated(route.MergeRouteData(routeData));
-        }
-
         public static string MergeRouteData(
             this string route,
             object routeData)
         {
-            foreach (var property in routeData.GetType().GetProperties())
+            if (routeData != null)
             {
-                route = route.Replace(
-                    string.Format("{{{0}}}", property.Name),
-                    string.Format("{0}", property.GetValue(routeData)),
-                    StringComparison.OrdinalIgnoreCase);
+                foreach (var property in routeData.GetType().GetProperties())
+                {
+                    route = route.Replace(
+                        string.Format("{{{0}}}", property.Name),
+                        string.Format("{0}", property.GetValue(routeData)),
+                        StringComparison.OrdinalIgnoreCase);
+                }
             }
 
             return route;

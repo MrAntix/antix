@@ -86,7 +86,7 @@ namespace Antix.Tests.Http.Filters.Responses
         [Fact]
         public void using_created_http_response_set_data_first()
         {
-            var data = new {frog = true};
+            var data = new { frog = true };
             var url = "/somewhere";
 
             var serviceResponse = ServiceResponse.Empty
@@ -100,6 +100,46 @@ namespace Antix.Tests.Http.Filters.Responses
             Assert.Equal(HttpStatusCode.Created, processResponse.StatusCode);
             Assert.Equal(data, processResponse.Content);
             Assert.Equal(url, processResponse.Headers["location"]);
+        }
+
+        [Fact]
+        public void using_created_http_response_merges_data()
+        {
+            var data = new { frogName = "Bob" };
+            var placeHolder = "{frogName}";
+            var url = "/somewhere/" + placeHolder;
+
+            var serviceResponse = ServiceResponse.Empty
+                .WithData(data)
+                .AsHttpCreated(url);
+
+            var processResponse =
+                ServiceResponseGlobalFilter
+                    .Process(serviceResponse);
+
+            Assert.Equal(HttpStatusCode.Created, processResponse.StatusCode);
+            Assert.Equal(data, processResponse.Content);
+            Assert.Equal(url.Replace(placeHolder, data.frogName), processResponse.Headers["location"]);
+        }
+
+        [Fact]
+        public void using_created_http_response_merges_data_override()
+        {
+            var data = new { frogId = "Bob" };
+            var placeHolder = "{frogName}";
+            var url = "/somewhere/" + placeHolder;
+
+            var serviceResponse = ServiceResponse.Empty
+                .WithData(data)
+                .AsHttpCreated(url, m => new {frogName = m.frogId});
+
+            var processResponse =
+                ServiceResponseGlobalFilter
+                    .Process(serviceResponse);
+
+            Assert.Equal(HttpStatusCode.Created, processResponse.StatusCode);
+            Assert.Equal(data, processResponse.Content);
+            Assert.Equal(url.Replace(placeHolder, data.frogId), processResponse.Headers["location"]);
         }
 
         [Fact]
