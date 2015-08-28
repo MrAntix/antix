@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Antix.Logging
 {
@@ -14,7 +15,7 @@ namespace Antix.Logging
             {
                 if (f == null) return;
 
-                var m = string.Format(f, a);
+                var m = Format(f, a);
                 Console.WriteLine(
                     MessageFormat,
                     DateTime.UtcNow,
@@ -32,7 +33,7 @@ namespace Antix.Logging
             {
                 if (f == null) return;
 
-                var m = string.Format(f, a);
+                var m = Format(f, a);
                 System.Diagnostics.Debug.WriteLine(
                     MessageFormat,
                     DateTime.UtcNow,
@@ -50,7 +51,7 @@ namespace Antix.Logging
             {
                 if (f == null) return;
 
-                var m = string.Format(f, a);
+                var m = Format(f, a);
                 Trace.WriteLine(
                     string.Format(
                         MessageFormatWithId,
@@ -67,10 +68,15 @@ namespace Antix.Logging
                 Trace.Close();
             };
 
+        static string Format(string f, object[] a)
+        {
+            return a == null || !a.Any() ? f : string.Format(f, a);
+        }
+
         public static Delegate ToList(List<Event> list)
         {
             return (l, id, ex, tags) =>
-                    (f, a) => list.Add(new Event(id, l, ex, string.Format(f, a), tags));
+                (f, a) => list.Add(new Event(id, l, ex, Format(f, a), tags));
         }
     }
 }
