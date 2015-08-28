@@ -9,8 +9,7 @@ namespace Antix.Logging
             readonly Guid _id;
             readonly Level _level;
             readonly Exception _exception;
-            readonly string _format;
-            readonly object[] _args;
+            readonly string _message;
             readonly string[] _tags;
 
             readonly DateTime _on;
@@ -19,14 +18,13 @@ namespace Antix.Logging
                 Guid id,
                 Level level,
                 Exception exception,
-                string format, object[] args,
+                string message,
                 string[] tags)
             {
                 _id = id;
                 _level = level;
                 _exception = exception;
-                _format = format;
-                _args = args;
+                _message = message;
                 _tags = tags;
 
                 _on = DateTime.UtcNow;
@@ -47,14 +45,9 @@ namespace Antix.Logging
                 get { return _exception; }
             }
 
-            public string Format
+            public string Message
             {
-                get { return _format; }
-            }
-
-            public object[] Args
-            {
-                get { return _args; }
+                get { return _message; }
             }
 
             public DateTime On

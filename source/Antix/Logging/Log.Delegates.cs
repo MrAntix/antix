@@ -70,7 +70,7 @@ namespace Antix.Logging
         public static Delegate ToList(List<Event> list)
         {
             return (l, id, ex, tags) =>
-                    (f, a) => list.Add(new Event(id, l, ex, f, a, tags));
+                    (f, a) => list.Add(new Event(id, l, ex, string.Format(f, a), tags));
         }
     }
 }
