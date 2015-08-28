@@ -21,6 +21,25 @@ namespace Antix.Tests.Logging
         }
 
         [Fact]
+        public void can_write_event()
+        {
+            var actual = new Actual();
+            var message = string.Format(EXPECTED_FORMAT, ExpectedArgs);
+
+            GetDelegate(actual)
+                .Write(new Log.Event(
+                    Guid.NewGuid(),
+                    EXPECTED_LEVEL, ExpectedException,
+                    message,
+                    ExpectedTags));
+
+            Assert.Equal(EXPECTED_LEVEL, actual.Level);
+            Assert.Equal(ExpectedException, actual.Exception);
+            Assert.Equal(message, actual.Format);
+            Assert.Equal(ExpectedTags, actual.Tags);
+        }
+
+        [Fact]
         public void can_write_exception()
         {
             var actual = new Actual();
@@ -73,7 +92,8 @@ namespace Antix.Tests.Logging
         const Log.Level EXPECTED_LEVEL = Log.Level.Error;
         const string EXPECTED_FORMAT = "{0}";
         static readonly Exception ExpectedException = new Exception();
-        static readonly object[] ExpectedArgs = {1};
+        static readonly object[] ExpectedArgs = { 1 };
+        static readonly string[] ExpectedTags = { "TAG" };
 
         const string EXPECTED_BUILD_FORMAT = "{0}\n{1}";
         static readonly object[] ExpectedBuildArgs = {"1", "1"};
@@ -84,6 +104,7 @@ namespace Antix.Tests.Logging
             public Exception Exception { get; set; }
             public string Format { get; set; }
             public object[] Args { get; set; }
+            public string[] Tags { get; set; }
         }
 
         static Log.Delegate GetDelegate(Actual actual)
@@ -94,6 +115,7 @@ namespace Antix.Tests.Logging
                 actual.Exception = ex;
                 actual.Format = f;
                 actual.Args = a;
+                actual.Tags = tags;
             };
         }
     }
