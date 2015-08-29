@@ -63,6 +63,9 @@
     <Compile Include="Serialization\SerializerIgnoreAttribute.cs" />
     <Compile Include="ServiceHandler.cs" />
     <Compile Include="ServiceSyncExtensions.cs" />
+    <Compile Include="Validation\Predicates\GuidEmptyPredicate.cs" />
+    <Compile Include="Validation\Predicates\GuidNotEmptyPredicate.cs" />
+    <Compile Include="Validation\Predicates\IGuidPredicates.cs" />
     <Compile Include="Validation\Rules\IValidationRuleAssert.cs" />
     <Compile Include="Validation\Rules\ValidationRuleExtensions.cs" />
     <Compile Include="Validation\ExpressionPathVisitor.cs" />

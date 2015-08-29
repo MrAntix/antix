@@ -35,6 +35,19 @@ namespace Antix.Services.Validation.Predicates
             get { return _notNull; }
         }
 
+        readonly IValidationPredicate<Guid> _guidEmpty = new GuidEmptyPredicate();
+        readonly IValidationPredicate<Guid> _guidNotEmpty = new GuidNotEmptyPredicate();
+
+        public IValidationPredicate<Guid> GuidEmpty
+        {
+            get { return _guidEmpty; }
+        }
+
+        public IValidationPredicate<Guid> GuidNotEmpty
+        {
+            get { return _guidNotEmpty; }
+        }
+
         readonly ValidationPredicateCache<StringEqualPredicate, Tuple<string, StringComparison>> _stringEqual
             = ValidationPredicateCache.Create(
                 (Tuple<string, StringComparison> t) => new StringEqualPredicate(t.Item1, t.Item2));

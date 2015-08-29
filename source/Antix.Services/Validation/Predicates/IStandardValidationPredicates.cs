@@ -3,7 +3,8 @@
     public interface IStandardValidationPredicates :
         IObjectPredicates,
         IStringPredicates,
-        INumberPredicates
+        INumberPredicates, 
+        IGuidPredicates
     {
     }
 }
