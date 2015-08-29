@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Antix.Services.Validation;
 
 namespace Antix.Services.Models
 {
@@ -63,6 +65,18 @@ namespace Antix.Services.Models
             Func<TData, TDataTo> mapper)
         {
             return (ServiceResponse<TDataTo>) model.WithData(mapper(model.Data));
+        }
+
+        public static async Task<bool> ValidateAsync<TValidator, TData>(
+            this TValidator validator,
+            TData data,
+            IServiceResponse response)
+            where TValidator : IValidator<TData>
+        {
+            var errors = await validator.ValidateAsync(data);
+            response.WithErrors(errors);
+
+            return errors.Any();
         }
     }
 }
