@@ -76,7 +76,7 @@ namespace Antix.Services.Models
             var errors = await validator.ValidateAsync(data);
             response.WithErrors(errors);
 
-            return errors.Any();
+            return !errors.Any();
         }
     }
 }
