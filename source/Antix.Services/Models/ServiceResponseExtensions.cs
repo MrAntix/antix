@@ -67,16 +67,15 @@ namespace Antix.Services.Models
             return (ServiceResponse<TDataTo>) model.WithData(mapper(model.Data));
         }
 
-        public static async Task<bool> ValidateAsync<TValidator, TData>(
-            this TValidator validator,
-            TData data,
-            IServiceResponse response)
-            where TValidator : IValidator<TData>
+        public async static Task<T> ValidateAsync<T, TData>(
+            this T model,
+            IValidator<TData> validator, TData data)
+            where T : IServiceResponse
         {
-            var errors = await validator.ValidateAsync(data);
-            response.WithErrors(errors);
+            var errors = await validator
+                .ValidateAsync(data);
 
-            return !errors.Any();
+            return (T)model.WithErrors(errors);
         }
     }
 }
