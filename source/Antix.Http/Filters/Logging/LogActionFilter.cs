@@ -45,19 +45,20 @@ namespace Antix.Http.Filters.Logging
                 var result = await continuation();
                 var responseEntry = new ActionResponseEntry(result);
 
-                logEntry.Append(m => m("Action Response: {0}",
-                    JsonConvert.SerializeObject(responseEntry, _jsonSerializerSettings)
-                    ));
-
-                _log.Debug(logEntry, LOG_TAG);
+                _log.Debug(
+                    logEntry.Append(m => m("Action Response: {0}",
+                        JsonConvert.SerializeObject(responseEntry, _jsonSerializerSettings)
+                        )),
+                    LOG_TAG);
 
                 return result;
             }
             catch (Exception ex)
             {
-                logEntry.Append(m => m("Action Error"));
+                _log.Error(
+                    logEntry.Append(m => m("Action Error")),
+                    ex, LOG_TAG);
 
-                _log.Error(logEntry, ex, LOG_TAG);
                 throw;
             }
         }
